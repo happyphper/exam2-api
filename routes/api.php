@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,6 +11,16 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+$api = app('Dingo\Api\Routing\Router');
+
+$api->version('v1', function ($api) {
+    $api->group(['middleware' => 'api', 'prefix' => 'admin', 'namespace' => 'App\Http\Controllers'], function ($api) {
+        // 登录相关
+        $api->group(['namespace' => 'Admin', 'prefix' => 'auth'], function ($api) {
+            $api->post('login', 'AuthController@login')->name('admin.login');
+            $api->delete('logout', 'AuthController@logout')->name('admin.logout');
+            $api->patch('refresh', 'AuthController@refresh')->name('admin.refresh');
+            $api->get('me', 'AuthController@me')->name('admin.me');
+        });
+    });
 });
