@@ -19,6 +19,8 @@ class CreateGroupsTable extends Migration
             $table->integer('category_id')->comment('群组所属分类');
             $table->integer('users_count')->default(0)->comment('用户个数');
             $table->timestamps();
+
+            $table->unique(['name', 'category_id']);
         });
     }
 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddGroupIdToUsersTable extends Migration
+class AddStudentIdToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddGroupIdToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('group_id')->nullable()->comment('群组ID')->after('password')->index();
+            $table->string('student_id')->nullable()->comment('学号')->after('password')->index();
         });
     }
 
@@ -26,7 +26,7 @@ class AddGroupIdToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('group_id');
+            $table->dropColumn('student_id');
         });
     }
 }

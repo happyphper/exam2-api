@@ -15,7 +15,7 @@ class CreateTestsTable extends Migration
     {
         Schema::create('tests', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title')->default('每日一答')->comment('今日主题');
+            $table->string('title')->default('每日一答')->index()->comment('今日主题');
             $table->string('type')->default('daily')->comment('daily, random 每日一测、随机考验');
             $table->timestamps();
         });

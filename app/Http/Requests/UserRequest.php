@@ -28,6 +28,7 @@ class UserRequest extends FormRequest
                 return [
                     'name' => 'required|string|min:1|max:191|unique:users',
                     'email' => 'required|email|max:30|unique:users,email',
+                    'student_id' => 'nullable|string|min:1|max:191|unique:users',
                     'group_id' => 'sometimes|exists:groups,id'
                 ];
                 break;
@@ -35,6 +36,7 @@ class UserRequest extends FormRequest
                 return [
                     'name' => 'required|string|min:1|max:191|unique:categories,name,' . $this->user->id,
                     'email' => 'required|email|max:30|unique:users,email,' . $this->user->id,
+                    'student_id' => 'required|string|min:1|max:191|unique:users,student_id,' . $this->student_id,
                     'group_id' => 'sometimes|exists:groups,id'
                 ];
                 break;
