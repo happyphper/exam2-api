@@ -14,8 +14,10 @@ class CreateCategoriesTable extends Migration
     public function up()
     {
         Schema::create('categories', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->comment('分类表');
+            $table->string('type')->default('question')->comment('分类群组名称：group,question');
             $table->string('name')->comment('类别名称');
+            $table->integer('parent_id')->default(0)->comment('无限极分类');
             $table->timestamps();
         });
     }

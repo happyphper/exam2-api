@@ -9,14 +9,21 @@ use App\Http\Controllers\Controller;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        if (!in_array(request()->type, ['group', 'question'])) {
+            $this->response->errorBadRequest('非法参数！');
+        }
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($type)
     {
-        $categories = Category::paginate(self::limit());
+        $categories = Category::where('type', $type)->paginate(self::limit());
 
         return $this->response->paginator($categories, new CategoryTransformer());
     }
@@ -27,9 +34,11 @@ class CategoryController extends Controller
      * @param CategoryRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoryRequest $request)
+    public function store($type, CategoryRequest $request, Category $category)
     {
-        $category = Category::create($request->all());
+        $category->type =$type;
+        $category->fill($request->all());
+        $category->save();
 
         return $this->response->item($category, new CategoryTransformer())->setStatusCode(201);
     }
@@ -40,8 +49,10 @@ class CategoryController extends Controller
      * @param Category $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($type, $category)
     {
+        $category = Category::where('type', $type)->findOrFail($category);
+
         return $this->response->item($category, new CategoryTransformer());
     }
 
@@ -52,9 +63,11 @@ class CategoryController extends Controller
      * @param Category $category
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryRequest $request, Category $category)
+    public function update(CategoryRequest $request, $type, $category)
     {
-        $category->fill($request->only(['name']))->save();
+        $category = Category::where(compact('type'))->findOrFail($category);
+
+        $category->fill($request->only(['type', 'name']))->save();
 
         return $this->response->item($category, new CategoryTransformer());
     }
@@ -66,9 +79,11 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy(Category $category)
+    public function destroy($type, $category)
     {
         // TODO 已经被使用则无法删除，否则删除。
+
+        $category = Category::where(compact('type'))->findOrFail($category);
 
         $category->delete();
 

@@ -27,7 +27,7 @@ $api->version('v1', function ($api) {
         $api->group(['prefix' => 'admin', 'namespace' => 'Admin'], function ($api) {
             $api->group(['as' => 'admin'], function ($api) {
                 // 类别 CRUD
-                $api->resource('categories', 'CategoryController');
+                $api->resource('{type}/categories', 'CategoryController');
                 // 题目 CRUD
                 $api->resource('questions', 'QuestionController');
                 // 测试 CRUD

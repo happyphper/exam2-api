@@ -26,12 +26,14 @@ class CategoryRequest extends FormRequest
         switch ($this->method()) {
             case 'POST':
                 return [
-                    'name' => 'required|string|min:1|max:191|unique:categories'
+                    'name' => 'required|string|min:1|max:191|unique:categories',
+                    'parent_id' => 'sometimes|exists:categories,id'
                 ];
                 break;
             case 'PUT':
                 return [
-                    'name' => 'required|string|min:1|max:191|unique:categories,name,' . $this->category->id
+                    'name' => 'required|string|min:1|max:191|unique:categories,name,' . $this->category,
+                    'parent_id' => 'sometimes|exists:categories,id'
                 ];
                 break;
         }
