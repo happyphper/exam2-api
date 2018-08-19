@@ -34,6 +34,8 @@ $api->version('v1', function ($api) {
                 $api->resource('tests', 'TestController');
                 // 测试题目 CRUD
                 $api->resource('tests/{test}/questions', 'TestQuestionController');
+                // 用户
+                $api->resource('users', 'UserController');
             });
         });
     });
