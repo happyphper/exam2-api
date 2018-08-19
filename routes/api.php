@@ -28,6 +28,8 @@ $api->version('v1', function ($api) {
             $api->group(['as' => 'admin'], function ($api) {
                 // 类别 CRUD
                 $api->resource('categories', 'CategoryController');
+                // 题目 CRUD
+                $api->resource('questions', 'QuestionController');
             });
         });
     });

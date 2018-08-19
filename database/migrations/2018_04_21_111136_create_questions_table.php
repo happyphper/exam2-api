@@ -19,9 +19,9 @@ class CreateQuestionsTable extends Migration
             $table->json('options')->comment('选项');
             $table->integer('right_option')->comment('正确选项');
             $table->integer('category_id')->nullable()->index()->comment('类别');
+            $table->string('parsing')->nullable()->comment('答案解析');
             $table->integer('error_count')->default(0)->comment('正确次数');
             $table->integer('correct_count')->default(0)->comment('错误次数');
-            $table->string('parsing')->comment('答案解析');
             $table->timestamps();
         });
     }
