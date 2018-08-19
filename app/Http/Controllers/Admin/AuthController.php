@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Transformers\UserTransformer;
-use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {

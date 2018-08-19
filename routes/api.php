@@ -15,32 +15,29 @@ $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function ($api) {
     $api->group(['middleware' => 'api', 'namespace' => 'App\Http\Controllers'], function ($api) {
-        // 登录相关
-        $api->group(['prefix' => 'auth'], function ($api) {
-            $api->post('login', 'AuthController@login')->name('admin.login');
-            $api->delete('logout', 'AuthController@logout')->name('admin.logout');
-            $api->patch('refresh', 'AuthController@refresh')->name('admin.refresh');
-            $api->get('me', 'AuthController@me')->name('admin.me');
-        });
-
         // 后台
         $api->group(['prefix' => 'admin', 'namespace' => 'Admin'], function ($api) {
-            $api->group(['as' => 'admin'], function ($api) {
-                // 类别 CRUD
-                $api->resource('{type}/categories', 'CategoryController');
-                // 题目 CRUD
-                $api->resource('questions', 'QuestionController');
-                // 测试 CRUD
-                $api->resource('tests', 'TestController');
-                // 测试题目 CRUD
-                $api->resource('tests/{test}/questions', 'TestQuestionController');
-                // 用户
-                $api->resource('users', 'UserController');
-                // 群组
-                $api->resource('groups', 'GroupController');
-                // 群组测试
-                $api->post('group-tests', 'GroupTestController@store');
+            // 登录相关
+            $api->group(['prefix' => 'auth'], function ($api) {
+                $api->post('login', 'AuthController@login')->name('admin.login');
+                $api->delete('logout', 'AuthController@logout')->name('admin.logout');
+                $api->patch('refresh', 'AuthController@refresh')->name('admin.refresh');
+                $api->get('me', 'AuthController@me')->name('admin.me');
             });
+            // 类别 CRUD
+            $api->resource('{type}/categories', 'CategoryController');
+            // 题目 CRUD
+            $api->resource('questions', 'QuestionController');
+            // 测试 CRUD
+            $api->resource('tests', 'TestController');
+            // 测试题目 CRUD
+            $api->resource('tests/{test}/questions', 'TestQuestionController');
+            // 用户
+            $api->resource('users', 'UserController');
+            // 群组
+            $api->resource('groups', 'GroupController');
+            // 群组测试
+            $api->post('group-tests', 'GroupTestController@store');
         });
 
         // 小程序
