@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
-
-use App\Http\Controllers\BaseController;
+namespace App\Http\Controllers;
 
 class AuthController extends BaseController
 {
