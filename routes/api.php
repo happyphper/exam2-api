@@ -36,6 +36,8 @@ $api->version('v1', function ($api) {
                 $api->resource('tests/{test}/questions', 'TestQuestionController');
                 // 用户
                 $api->resource('users', 'UserController');
+                // 群组
+                $api->resource('groups', 'GroupController');
             });
         });
     });
