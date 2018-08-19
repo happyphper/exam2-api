@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9e1264b6428b3e5e4b377584bb1e602a",
+    "content-hash": "d5f6317692efdaf4e783e920581e4983",
     "packages": [
         {
             "name": "dingo/api",
@@ -885,6 +885,120 @@
                 }
             ],
             "time": "2015-04-20T18:58:01+00:00"
+        },
+        {
+            "name": "jedrzej/searchable",
+            "version": "0.0.14",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jedrzej/searchable.git",
+                "reference": "b2c45b77e436dbff0ad5ac5cdf57951d9b253608"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jedrzej/searchable/zipball/b2c45b77e436dbff0ad5ac5cdf57951d9b253608",
+                "reference": "b2c45b77e436dbff0ad5ac5cdf57951d9b253608",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "*",
+                "illuminate/support": "*"
+            },
+            "require-dev": {
+                "codeception/codeception": "2.0.*",
+                "codeception/specify": "*"
+            },
+            "suggest": {
+                "jedrzej/sortable": "Allows sorting your models using request parameters",
+                "jedrzej/withable": "Allows eager loading of relations using request parameters"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jedrzej\\": "src/Jedrzej/",
+                    "Illuminate\\": "vendor/laravel/framework/src/Illuminate/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jędrzej Kuryło",
+                    "email": "jedrzej.kurylo@gmail.com"
+                }
+            ],
+            "description": "Searchable trait for Laravel's Eloquent models - filter your models using request parameters",
+            "homepage": "https://github.com/jedrzej/searchable",
+            "keywords": [
+                "api",
+                "eloquent",
+                "filter",
+                "laravel",
+                "model",
+                "request",
+                "search",
+                "searchable"
+            ],
+            "time": "2017-10-30T12:38:48+00:00"
+        },
+        {
+            "name": "jedrzej/sortable",
+            "version": "0.0.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jedrzej/sortable.git",
+                "reference": "070a76561fc6a47b2eb085b6421c4e14f7e0c2c0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jedrzej/sortable/zipball/070a76561fc6a47b2eb085b6421c4e14f7e0c2c0",
+                "reference": "070a76561fc6a47b2eb085b6421c4e14f7e0c2c0",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "*",
+                "illuminate/support": "*"
+            },
+            "require-dev": {
+                "codeception/codeception": "2.0.*",
+                "codeception/specify": "*",
+                "mockery/mockery": "*"
+            },
+            "suggest": {
+                "jedrzej/searchable": "Allows filtering your models using request parameters",
+                "jedrzej/withable": "Allows eager loading of relations using request parameters"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jedrzej\\": "src/Jedrzej/",
+                    "Illuminate\\": "vendor/laravel/framework/src/Illuminate/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jędrzej Kuryło",
+                    "email": "jedrzej.kurylo@gmail.com"
+                }
+            ],
+            "description": "Sortable trait for Laravel's Eloquent models - sort your models using request parameters",
+            "homepage": "https://github.com/jedrzej/sortable",
+            "keywords": [
+                "api",
+                "eloquent",
+                "laravel",
+                "model",
+                "request",
+                "sort",
+                "sortable"
+            ],
+            "time": "2016-03-23T10:08:49+00:00"
         },
         {
             "name": "laravel/framework",
@@ -3300,7 +3414,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/barryvdh/laravel-ide-helper/5c304db44fba8e9c4aa0c09739e59f7be7736fdd.zip",
+                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/5c304db44fba8e9c4aa0c09739e59f7be7736fdd",
                 "reference": "5c304db44fba8e9c4aa0c09739e59f7be7736fdd",
                 "shasum": ""
             },
@@ -3373,7 +3487,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/barryvdh/ReflectionDocBlock/3dcbd98b5d9384a5357266efba8fd29884458e5c.zip",
+                "url": "https://api.github.com/repos/barryvdh/ReflectionDocBlock/zipball/3dcbd98b5d9384a5357266efba8fd29884458e5c",
                 "reference": "3dcbd98b5d9384a5357266efba8fd29884458e5c",
                 "shasum": ""
             },
@@ -3912,7 +4026,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/phpspec/prophecy/33a7e3c4fda54e912ff6338c48823bd5c0f0b712.zip",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/33a7e3c4fda54e912ff6338c48823bd5c0f0b712",
                 "reference": "33a7e3c4fda54e912ff6338c48823bd5c0f0b712",
                 "shasum": ""
             },
@@ -4927,7 +5041,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/symfony/thanks/bade4992c46ed722162694b4af8d72f84402819a.zip",
+                "url": "https://api.github.com/repos/symfony/thanks/zipball/bade4992c46ed722162694b4af8d72f84402819a",
                 "reference": "bade4992c46ed722162694b4af8d72f84402819a",
                 "shasum": ""
             },
