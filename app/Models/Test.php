@@ -3,9 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Jedrzej\Searchable\SearchableTrait;
+use Jedrzej\Sortable\SortableTrait;
 
 class Test extends Model
 {
+    use SearchableTrait,SortableTrait;
+    public $searchable = ['*'];
+    public $sortable = ['*'];
+
     public $incrementing = true;
 
     protected $fillable = [

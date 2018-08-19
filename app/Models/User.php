@@ -4,11 +4,16 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Jedrzej\Searchable\SearchableTrait;
+use Jedrzej\Sortable\SortableTrait;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
+    use SearchableTrait,SortableTrait;
+    public $searchable = ['*'];
+    public $sortable = ['*'];
 
     /**
      * The attributes that are mass assignable.
