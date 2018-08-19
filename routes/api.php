@@ -13,7 +13,7 @@
 
 $api = app('Dingo\Api\Routing\Router');
 
-$api->version('v1', function ($api) {
+$api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function ($api) {
     $api->group(['middleware' => 'api', 'namespace' => 'App\Http\Controllers'], function ($api) {
         // 登录相关
         $api->group(['prefix' => 'auth'], function ($api) {

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Transformers\UserTransformer;
+use Illuminate\Http\Request;
+
 class AuthController extends Controller
 {
     /**
@@ -21,10 +24,25 @@ class AuthController extends Controller
      */
     public function login()
     {
-        $credentials = request(['email', 'password']);
+        $this->validate(request(), [
+            'username' => 'required',
+            'password' => 'required|min:6'
+        ]);
+
+        $credentials['password'] = request('password');
+
+        $username = request('username');
+
+        if (filter_var($username, FILTER_VALIDATE_EMAIL)) {
+            $credentials['email'] = $username;
+        } elseif (preg_match('/1[3-9]\d{9}/', $username,$matches) && count($matches)) {
+            $credentials['phone'] = $username;
+        } else {
+            $credentials['name'] = $username;
+        }
 
         if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => '账号或密码错误！'], 400);
         }
 
         return $this->respondWithToken($token);
@@ -33,11 +51,11 @@ class AuthController extends Controller
     /**
      * Get the authenticated User.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return
      */
     public function me()
     {
-        return response()->json(auth()->user());
+        return $this->response->item(auth()->user(), new UserTransformer());
     }
 
     /**
@@ -49,7 +67,7 @@ class AuthController extends Controller
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return $this->response->array(['message' => '成功登出！']);
     }
 
     /**
@@ -71,7 +89,7 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
-        return response()->json([
+        return $this->response->array([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60
