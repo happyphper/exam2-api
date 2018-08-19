@@ -19,7 +19,8 @@ class CreateRecordsTable extends Migration
             $table->integer('test_id')->comment('测试 ID');
             $table->json('answer')->comment('答案');
             $table->integer('error_count')->index()->comment('答题错题数');
-            $table->integer('total_count')->index()->comment('答题正确数');
+            $table->integer('correct_count')->index()->comment('答题正确数');
+            $table->integer('grade')->comment('考试得分');
             $table->timestamps();
 
             $table->unique(['user_id', 'test_id']);
