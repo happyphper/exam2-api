@@ -19,6 +19,8 @@ class TestTransformer extends TransformerAbstract
             'id' => $model->id,
             'title' => $model->title,
             'type' => $model->type,
+            'started_at' => $model->started_at ? $model->started_at->toDateTimeString() : null,
+            'ended_at' => $model->ended_at ? $model->ended_at->toDateTimeString() : null,
             'created_at' => $model->created_at ? $model->created_at->toDateTimeString() : null,
             'updated_at' => $model->updated_at ? $model->updated_at->toDateTimeString() : null,
         ];

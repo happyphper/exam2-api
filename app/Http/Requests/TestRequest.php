@@ -26,14 +26,18 @@ class TestRequest extends FormRequest
         switch ($this->method()) {
             case 'POST':
                 return [
-                    'title' => 'required|string|min:1|max:191|unique:tests',
+                    'title' => 'required|string|min:1|max:191',
                     'type' => 'required|in:daily,random',
+                    'started_at' => 'nullable|date',
+                    'ended_at' => 'nullable|date:after:started_at'
                 ];
                 break;
             case 'PUT':
                 return [
-                    'title' => 'required|string|min:1|max:191|unique:tests,title,' . $this->test->id,
+                    'title' => 'required|string|min:1|max:191',
                     'type' => 'required|in:daily,random',
+                    'started_at' => 'nullable|date',
+                    'ended_at' => 'nullable|date:after:started_at'
                 ];
                 break;
         }

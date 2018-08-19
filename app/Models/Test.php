@@ -11,7 +11,11 @@ class Test extends Model
     protected $fillable = [
         'title',
         'type',
+        'started_at',
+        'ended_at'
     ];
+
+    protected $dates = ['started_at', 'ended_at'];
 
     public function questions()
     {
