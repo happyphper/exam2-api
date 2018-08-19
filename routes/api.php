@@ -38,6 +38,8 @@ $api->version('v1', function ($api) {
                 $api->resource('users', 'UserController');
                 // 群组
                 $api->resource('groups', 'GroupController');
+                // 群组测试
+                $api->post('group-tests', 'GroupTestController@store');
             });
         });
     });
