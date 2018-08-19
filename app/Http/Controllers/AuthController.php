@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-class AuthController extends BaseController
+class AuthController extends Controller
 {
     /**
      * Create a new AuthController instance.
