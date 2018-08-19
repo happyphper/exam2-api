@@ -28,12 +28,14 @@ class UserRequest extends FormRequest
                 return [
                     'name' => 'required|string|min:1|max:191|unique:users',
                     'email' => 'required|email|max:30|unique:users,email',
+                    'group_id' => 'sometimes|exists:groups,id'
                 ];
                 break;
             case 'PUT':
                 return [
                     'name' => 'required|string|min:1|max:191|unique:categories,name,' . $this->user->id,
                     'email' => 'required|email|max:30|unique:users,email,' . $this->user->id,
+                    'group_id' => 'sometimes|exists:groups,id'
                 ];
                 break;
         }
