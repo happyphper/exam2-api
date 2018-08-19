@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\MiniApp;
 
 use App\Http\Requests\RecordRequest;
 use App\Models\Record;

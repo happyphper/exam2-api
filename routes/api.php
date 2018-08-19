@@ -23,7 +23,7 @@ $api->version('v1', function ($api) {
             $api->get('me', 'AuthController@me')->name('admin.me');
         });
 
-        // 后台相关
+        // 后台
         $api->group(['prefix' => 'admin', 'namespace' => 'Admin'], function ($api) {
             $api->group(['as' => 'admin'], function ($api) {
                 // 类别 CRUD
@@ -41,6 +41,16 @@ $api->version('v1', function ($api) {
                 // 群组测试
                 $api->post('group-tests', 'GroupTestController@store');
             });
+        });
+
+        // 小程序
+        $api->group(['prefix' => 'miniapp', 'namespace' => 'MiniApp', 'as' => 'miniapp'], function ($api) {
+            // 今日测验
+            $api->get('today-tests', 'TestController@today');
+            // 考试记录
+            $api->get('records', 'RecordController@index');
+            // 提交答卷
+            $api->post('records', 'RecordController@store');
         });
     });
 });
