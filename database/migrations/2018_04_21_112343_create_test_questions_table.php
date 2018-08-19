@@ -14,7 +14,6 @@ class CreateTestQuestionsTable extends Migration
     public function up()
     {
         Schema::create('test_questions', function (Blueprint $table) {
-            $table->increments('id');
             $table->integer('test_id');
             $table->integer('question_id');
             $table->unique(['test_id', 'question_id']);

@@ -30,6 +30,10 @@ $api->version('v1', function ($api) {
                 $api->resource('categories', 'CategoryController');
                 // 题目 CRUD
                 $api->resource('questions', 'QuestionController');
+                // 测试 CRUD
+                $api->resource('tests', 'TestController');
+                // 测试题目 CRUD
+                $api->resource('tests/{test}/questions', 'TestQuestionController');
             });
         });
     });
