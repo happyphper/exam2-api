@@ -14,10 +14,11 @@ class Question extends Model
 
     protected $fillable = [
         'title',
+        'type',
         'options',
-        'right_option',
+        'answers',
         'category_id',
-        'parsing',
+        'explain',
     ];
 
     protected $casts = [

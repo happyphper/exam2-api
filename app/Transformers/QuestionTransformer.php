@@ -18,10 +18,11 @@ class QuestionTransformer extends TransformerAbstract
         return [
             'id' => $model->id,
             'title' => $model->title,
+            'type' => $model->type,
             'options' => $model->options,
-            'right_option' => $model->right_option,
+            'answers' => $model->answers,
             'category_id' => $model->category_id,
-            'parsing' => $model->parsing,
+            'explain' => $model->explain,
             'error_count' => $model->error_count,
             'correct_count' => $model->correct_count,
             'created_at' => $model->created_at ? $model->created_at->toDateTimeString() : null,
