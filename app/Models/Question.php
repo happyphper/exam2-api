@@ -22,7 +22,8 @@ class Question extends Model
     ];
 
     protected $casts = [
-        'options' => 'array'
+        'options' => 'array',
+        'answers' => 'array'
     ];
 
     public function category()

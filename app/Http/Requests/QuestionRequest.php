@@ -27,18 +27,20 @@ class QuestionRequest extends FormRequest
             case 'POST':
                 return [
                     'title' => 'required|string|min:1|max:191|unique:questions',
+                    'type' => 'required|in:single,multiple',
                     'options' => 'required|array|distinct',
-                    'answers' => 'required|integer',
-                    'category_id' => 'required|exists:categories,id',
+                    'answers' => 'required|array|distinct',
+                    // 'category_id' => 'required|exists:categories,id',
                     'explain' => 'nullable|max:191',
                 ];
                 break;
             case 'PUT':
                 return [
                     'title' => 'required|string|min:1|max:191|unique:questions,title,' . $this->question->id,
+                    'type' => 'required|in:single,multiple',
                     'options' => 'required|array|distinct',
                     'answers' => 'required|integer',
-                    'category_id' => 'required|exists:categories,id',
+                    // 'category_id' => 'required|exists:categories,id',
                     'explain' => 'nullable|max:191',
                 ];
                 break;
