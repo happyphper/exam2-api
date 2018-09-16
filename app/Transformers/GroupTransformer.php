@@ -18,7 +18,6 @@ class GroupTransformer extends TransformerAbstract
         return [
             'id' => $model->id,
             'name' => $model->name,
-            'category_id' => $model->category_id,
             'created_at' => $model->created_at ? $model->created_at->toDateTimeString() : null,
             'updated_at' => $model->updated_at ? $model->updated_at->toDateTimeString() : null,
         ];

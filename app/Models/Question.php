@@ -17,7 +17,6 @@ class Question extends Model
         'type',
         'options',
         'answers',
-        'category_id',
         'explain',
     ];
 
@@ -26,8 +25,13 @@ class Question extends Model
         'answers' => 'array'
     ];
 
-    public function category()
+    /**
+     * 分类
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function categories()
     {
-        return $this->belongsTo(Category::class);
+        return $this->morphMany(ModelHasCategory::class, 'classified');
     }
 }

@@ -20,7 +20,6 @@ class CreateQuestionsTable extends Migration
             $table->json('options')->comment('选项');
             $table->json('answers')->comment('正确选项');
             $table->string('explain')->nullable()->comment('答案解析');
-            $table->integer('category_id')->nullable()->index()->comment('类别');
             $table->integer('error_count')->default(0)->comment('正确次数');
             $table->integer('correct_count')->default(0)->comment('错误次数');
             $table->timestamps();

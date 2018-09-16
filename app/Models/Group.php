@@ -12,7 +12,7 @@ class Group extends Model
     public $searchable = ['*'];
     public $sortable = ['*'];
 
-    protected $fillable = ['name', 'category_id'];
+    protected $fillable = ['name'];
 
     /**
      * 测验
@@ -27,6 +27,8 @@ class Group extends Model
 
     /**
      * 获取今日测验
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
     public function today()
     {
@@ -35,5 +37,15 @@ class Group extends Model
         return $this->hasManyThrough(Test::class, GroupTest::class, 'test_id', 'id', 'id', 'group_id')
             ->where('started_at', '<', $now)
             ->where('ended_at', '>', $now);
+    }
+
+    /**
+     * 分类
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function categories()
+    {
+        return $this->morphMany(ModelHasCategory::class, 'classified');
     }
 }

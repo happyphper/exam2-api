@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGroupsTable extends Migration
+class CreateModelHasCategoryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateGroupsTable extends Migration
      */
     public function up()
     {
-        Schema::create('groups', function (Blueprint $table) {
-            $table->increments('id')->comment('班级');
-            $table->string('name')->comment('名称');
-            $table->integer('users_count')->default(0)->comment('用户个数');
-            $table->timestamps();
+        Schema::create('model_has_category', function (Blueprint $table) {
+            $table->primary(['category_id', 'classified_id', 'classified_type'], 'primary_key');
+            $table->integer('category_id');
+            $table->morphs('classified');
         });
     }
 
@@ -28,6 +27,6 @@ class CreateGroupsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('groups');
+        Schema::dropIfExists('model_has_category');
     }
 }

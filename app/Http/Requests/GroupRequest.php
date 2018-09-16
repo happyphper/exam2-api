@@ -32,9 +32,7 @@ class GroupRequest extends FormRequest
                         'string',
                         'min:1',
                         'max:191',
-                        Rule::unique('groups')->where('category_id', $this->category_id)->where('name', $this->name)
                     ],
-                    'category_id' => 'required|exists:categories,id'
                 ];
                 break;
             case 'PUT':
@@ -44,9 +42,7 @@ class GroupRequest extends FormRequest
                         'string',
                         'min:1',
                         'max:191',
-                        Rule::unique('groups')->where('category_id', $this->category_id)->where('name', $this->name)->ignore($this->group->id),
                     ],
-                    'category_id' => 'required|exists:categories,id'
                 ];
                 break;
         }

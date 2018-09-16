@@ -21,7 +21,6 @@ class QuestionTransformer extends TransformerAbstract
             'type' => $model->type,
             'options' => $model->options,
             'answers' => $model->answers,
-            'category_id' => $model->category_id,
             'explain' => $model->explain,
             'error_count' => $model->error_count,
             'correct_count' => $model->correct_count,

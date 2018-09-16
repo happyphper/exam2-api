@@ -38,6 +38,9 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
             $api->resource('groups', 'GroupController');
             // 群组测试
             $api->post('group-tests', 'GroupTestController@store');
+            // 为 Model 添加/移除分类
+            $api->post('model/{type}/categories', 'ModelHasCategoryController@store');
+            $api->delete('model/{type}/categories/{category}', 'ModelHasCategoryController@destroy');
         });
 
         // 小程序

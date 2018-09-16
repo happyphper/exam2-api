@@ -30,7 +30,6 @@ class QuestionRequest extends FormRequest
                     'type' => 'required|in:single,multiple',
                     'options' => 'required|array|distinct',
                     'answers' => 'required|array|distinct',
-                    // 'category_id' => 'required|exists:categories,id',
                     'explain' => 'nullable|max:191',
                 ];
                 break;
@@ -40,7 +39,6 @@ class QuestionRequest extends FormRequest
                     'type' => 'required|in:single,multiple',
                     'options' => 'required|array|distinct',
                     'answers' => 'required|integer',
-                    // 'category_id' => 'required|exists:categories,id',
                     'explain' => 'nullable|max:191',
                 ];
                 break;
