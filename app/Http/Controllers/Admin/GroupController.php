@@ -16,7 +16,7 @@ class GroupController extends Controller
      */
     public function index()
     {
-        $groups = Group::paginate(self::limit());
+        $groups = Group::filtered()->paginate(self::limit());
 
         return $this->response->paginator($groups, new GroupTransformer());
     }

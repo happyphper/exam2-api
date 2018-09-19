@@ -17,7 +17,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $questions = Question::paginate(self::limit());
+        $questions = Question::filtered()->paginate(self::limit());
 
         return $this->response->paginator($questions, new QuestionTransformer());
     }

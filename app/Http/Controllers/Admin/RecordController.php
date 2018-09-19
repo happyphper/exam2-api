@@ -15,7 +15,7 @@ class RecordController extends Controller
      */
     public function index()
     {
-        $records = Record::paginate(self::limit());
+        $records = Record::filtered()->paginate(self::limit());
 
         return $this->response->paginator($records, new RecordTransformer());
     }

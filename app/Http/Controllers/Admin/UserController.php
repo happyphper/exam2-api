@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(self::limit());
+        $users = User::filtered()->paginate(self::limit());
 
         return $this->response->paginator($users, new UserTransformer());
     }
