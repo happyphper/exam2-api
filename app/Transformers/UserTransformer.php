@@ -13,6 +13,8 @@ use League\Fractal\TransformerAbstract;
 
 class UserTransformer extends TransformerAbstract
 {
+    protected $defaultIncludes = ['group'];
+
     public function transform(User $model)
     {
         return [
@@ -26,5 +28,13 @@ class UserTransformer extends TransformerAbstract
             'created_at' => $model->created_at ? $model->created_at->toDateTimeString() : null,
             'updated_at' => $model->updated_at ? $model->updated_at->toDateTimeString() : null,
         ];
+    }
+
+    protected function includeGroup(User $model)
+    {
+        if (!$model->group) {
+            return $this->null();
+        }
+        return $this->item($model->group, new GroupTransformer());
     }
 }

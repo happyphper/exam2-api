@@ -12,7 +12,7 @@ class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
     use SearchableTrait,SortableTrait;
-    public $searchable = ['*'];
+    public $searchable = ['name', 'email', 'group:name', 'student_id', 'phone'];
     public $sortable = ['*'];
 
     /**
