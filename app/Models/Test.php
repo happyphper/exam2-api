@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Jedrzej\Searchable\SearchableTrait;
 use Jedrzej\Sortable\SortableTrait;
 
 class Test extends Model
 {
-    use SearchableTrait,SortableTrait;
+    use SearchableTrait, SortableTrait;
     public $searchable = ['*'];
     public $sortable = ['*'];
 
@@ -26,5 +27,15 @@ class Test extends Model
     public function questions()
     {
         return $this->hasManyThrough(Question::class, TestQuestion::class, 'test_id', 'id', 'id', 'question_id');
+    }
+
+    public function setStartedAtAttribute($value)
+    {
+        $this->attributes['started_at'] = Carbon::parse($value)->tz(config('app.timezone'))->toDateTimeString();
+    }
+
+    public function setEndedAtAttribute($value)
+    {
+        $this->attributes['ended_at'] = Carbon::parse($value)->tz(config('app.timezone'))->toDateTimeString();
     }
 }
