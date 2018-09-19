@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Models\Category;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -14,7 +13,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Category::observe(\App\Observers\CategoryObserver::class);
+        \App\Models\Category::observe(\App\Observers\CategoryObserver::class);
+        \App\Models\User::observe(\App\Observers\UserObserver::class);
 
         \DB::listen(function ($query) {
             \Log::info($query->sql);
