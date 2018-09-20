@@ -9,7 +9,7 @@ use Jedrzej\Sortable\SortableTrait;
 class Question extends Model
 {
     use SearchableTrait,SortableTrait;
-    public $searchable = ['*'];
+    public $searchable = ['title', 'type'];
     public $sortable = ['*'];
 
     protected $fillable = [
