@@ -47,11 +47,13 @@ class Category extends Model
         // 查询多个
         if (is_array($parent)) {
             foreach ($parent as $key => $item) {
+                $parent[$key]['children'] = [];
                 if ($this->where('parent_id', $item['id'])->count()) {
-                    $parent[$key]['children'] = $this->where('parent_id', $item['id'])->get()->toArray();
-                    $this->getChildren($parent[$key]['children']);
+                    $children = $this->where('parent_id', $item['id'])->get()->toArray();
+                    $parent[$key]['children'] = $this->getChildren($children);
                 }
             }
+
             return $parent;
         }
 
