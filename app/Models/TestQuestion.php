@@ -3,15 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
-use Jedrzej\Searchable\SearchableTrait;
-use Jedrzej\Sortable\SortableTrait;
 
 class TestQuestion extends Pivot
 {
-    use SearchableTrait,SortableTrait;
-    public $searchable = ['*'];
-    public $sortable = ['*'];
-
     protected $table = 'test_questions';
 
     protected $fillable = ['test_id', 'question_id'];
@@ -19,4 +13,14 @@ class TestQuestion extends Pivot
     public $incrementing = false;
 
     public $timestamps = false;
+
+    public function test()
+    {
+        return $this->belongsTo(Test::class);
+    }
+
+    public function question()
+    {
+        return $this->belongsTo(Question::class);
+    }
 }

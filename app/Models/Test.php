@@ -10,7 +10,9 @@ use Jedrzej\Sortable\SortableTrait;
 class Test extends Model
 {
     use SearchableTrait, SortableTrait;
-    public $searchable = ['*'];
+
+    public $searchable = ['title', 'type', 'started_at', 'ended_at', 'groups:name', 'groups:id'];
+
     public $sortable = ['*'];
 
     public $incrementing = true;
@@ -27,6 +29,11 @@ class Test extends Model
     public function questions()
     {
         return $this->hasManyThrough(Question::class, TestQuestion::class, 'test_id', 'id', 'id', 'question_id');
+    }
+
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class, 'group_tests');
     }
 
     public function setStartedAtAttribute($value)

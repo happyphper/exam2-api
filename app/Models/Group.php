@@ -23,7 +23,7 @@ class Group extends Model
      */
     public function tests()
     {
-        return $this->hasManyThrough(Test::class, GroupTest::class, 'test_id', 'id', 'id','group_id');
+        return $this->hasManyThrough(Test::class, 'group_tests', 'test_id', 'id', 'id','group_id');
     }
 
 
@@ -36,7 +36,7 @@ class Group extends Model
     {
         $now = now();
 
-        return $this->hasManyThrough(Test::class, GroupTest::class, 'test_id', 'id', 'id', 'group_id')
+        return $this->hasManyThrough(Test::class, 'group_tests', 'test_id', 'id', 'id', 'group_id')
             ->where('started_at', '<', $now)
             ->where('ended_at', '>', $now);
     }
