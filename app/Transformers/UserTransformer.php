@@ -13,7 +13,7 @@ use League\Fractal\TransformerAbstract;
 
 class UserTransformer extends TransformerAbstract
 {
-    protected $defaultIncludes = ['group'];
+    protected $defaultIncludes = ['groups'];
 
     public function transform(User $model)
     {
@@ -24,17 +24,16 @@ class UserTransformer extends TransformerAbstract
             'phone' => $model->phone,
             'avatar' => $model->avatar ?? config('app.url') . '/images/avatar.png',
             'student_id' => $model->student_id,
-            'group_id' => $model->group_id,
             'created_at' => $model->created_at ? $model->created_at->toDateTimeString() : null,
             'updated_at' => $model->updated_at ? $model->updated_at->toDateTimeString() : null,
         ];
     }
 
-    protected function includeGroup(User $model)
+    protected function includeGroups(User $model)
     {
-        if (!$model->group) {
+        if (!$model->groups) {
             return $this->null();
         }
-        return $this->item($model->group, new GroupTransformer());
+        return $this->collection($model->groups, new GroupTransformer());
     }
 }

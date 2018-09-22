@@ -12,7 +12,7 @@ class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
     use SearchableTrait,SortableTrait;
-    public $searchable = ['name', 'email', 'group:name', 'group_id', 'student_id', 'phone'];
+    public $searchable = ['name', 'email', 'groups:name', 'groups:id', 'student_id', 'phone'];
     public $sortable = ['*'];
 
     /**
@@ -21,7 +21,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'group_id', 'student_id', 'phone'
+        'name', 'email', 'student_id', 'phone'
     ];
 
     /**
@@ -56,9 +56,9 @@ class User extends Authenticatable implements JWTSubject
     /**
      * 群组
      */
-    public function group()
+    public function groups()
     {
-        return $this->belongsTo(Group::class);
+        return $this->belongsToMany(Group::class, 'user_groups');
     }
 
     /**

@@ -9,7 +9,9 @@ use Jedrzej\Sortable\SortableTrait;
 class Group extends Model
 {
     use SearchableTrait,SortableTrait;
-    public $searchable = ['*'];
+
+    public $searchable = ['name'];
+
     public $sortable = ['*'];
 
     protected $fillable = ['name'];

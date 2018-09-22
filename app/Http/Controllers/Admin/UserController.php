@@ -27,13 +27,14 @@ class UserController extends Controller
      * @param UserRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request, User $user)
+    public function store(UserRequest $request)
     {
-        $user->fill($request->all());
-
+        $user = new User($request->all());
         // 生成初始密码
-        $user->password =bcrypt(123456);
+        $user->password =bcrypt($request->password ?? 123456);
         $user->save();
+
+        $user->groups()->attach($request->group_id);
 
         return $this->response->item($user, new UserTransformer())->setStatusCode(201);
     }

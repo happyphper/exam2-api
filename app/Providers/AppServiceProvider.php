@@ -14,8 +14,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         \App\Models\Category::observe(\App\Observers\CategoryObserver::class);
-        \App\Models\User::observe(\App\Observers\UserObserver::class);
-
+        \App\Models\UserGroup::observe(\App\Observers\UserGroupObserver::class);
         \DB::listen(function ($query) {
             \Log::info($query->sql);
         });
