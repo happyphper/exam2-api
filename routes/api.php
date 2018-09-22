@@ -36,9 +36,12 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
             $api->resource('users', 'UserController');
             // 群组
             $api->resource('groups', 'GroupController');
-            // 添加、移除群组
-            $api->post('/users/{user}/groups/{group}', 'UserGroupController@store');
-            $api->delete('/users/{user}/groups/{group}', 'UserGroupController@destroy');
+            // 用户添加、移除群组
+            $api->post('users/{user}/groups/{group}', 'UserGroupController@store');
+            $api->delete('users/{user}/groups/{group}', 'UserGroupController@destroy');
+            // 测试分类添加移除
+            $api->post('tests/{test}/categories', 'TestCategoryController@store');
+            $api->post('tests/{test}/categories/{category}', 'TestCategoryController@destroy');
             // 群组测试
             $api->post('group-tests', 'GroupTestController@store');
             // 为 Model 添加/移除分类

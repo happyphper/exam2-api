@@ -13,7 +13,7 @@ use League\Fractal\TransformerAbstract;
 
 class TestTransformer extends TransformerAbstract
 {
-    protected $defaultIncludes = ['groups'];
+    protected $defaultIncludes = ['groups', 'categories'];
 
     public function transform(Test $model)
     {
@@ -31,5 +31,10 @@ class TestTransformer extends TransformerAbstract
     public function includeGroups(Test $model)
     {
         return $this->collection($model->groups, new GroupTransformer());
+    }
+
+    public function includeCategories(Test $model)
+    {
+        return $this->collection($model->categories, new CategoryTransformer());
     }
 }

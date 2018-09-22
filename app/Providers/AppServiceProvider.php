@@ -17,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
         \App\Models\UserGroup::observe(\App\Observers\UserGroupObserver::class);
         \DB::listen(function ($query) {
             \Log::info($query->sql);
+            \Log::info($query->bindings);
         });
     }
 

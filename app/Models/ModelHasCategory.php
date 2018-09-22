@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class ModelHasCategory extends Pivot
 {
+    protected $table = 'model_has_category';
+
     public $timestamps = false;
 
     /**

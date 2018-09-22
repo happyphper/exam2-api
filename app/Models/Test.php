@@ -11,7 +11,16 @@ class Test extends Model
 {
     use SearchableTrait, SortableTrait;
 
-    public $searchable = ['title', 'type', 'started_at', 'ended_at', 'groups:name', 'groups:id'];
+    public $searchable = [
+        'title',
+        'type',
+        'started_at',
+        'ended_at',
+        'groups:name',
+        'groups:id',
+        'categories:name',
+        'categories:id',
+    ];
 
     public $sortable = ['*'];
 
@@ -34,6 +43,12 @@ class Test extends Model
     public function groups()
     {
         return $this->belongsToMany(Group::class, 'group_tests');
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'model_has_category', 'classified_id', 'category_id', 'id', 'id')->where('classified_type', self::class);
+        // return $this->morphMany(ModelHasCategory::class,  'classified');
     }
 
     public function setStartedAtAttribute($value)
