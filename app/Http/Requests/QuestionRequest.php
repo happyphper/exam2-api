@@ -31,6 +31,7 @@ class QuestionRequest extends FormRequest
                     'options' => 'required|array|distinct',
                     'answers' => 'required|array|distinct',
                     'explain' => 'nullable|max:191',
+                    'course_id' => 'required|exists:courses,id'
                 ];
                 break;
             case 'PUT':
@@ -40,6 +41,7 @@ class QuestionRequest extends FormRequest
                     'options' => 'required|array|distinct',
                     'answers' => 'required|array|distinct',
                     'explain' => 'nullable|max:191',
+                    'course_id' => 'required|exists:courses,id'
                 ];
                 break;
         }

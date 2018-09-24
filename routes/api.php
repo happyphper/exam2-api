@@ -36,6 +36,8 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
             $api->resource('users', 'UserController');
             // 群组
             $api->resource('groups', 'GroupController');
+            // 课程
+            $api->resource('courses', 'CourseController');
             // 用户添加、移除群组
             $api->post('users/{user}/groups/{group}', 'UserGroupController@store');
             $api->delete('users/{user}/groups/{group}', 'UserGroupController@destroy');

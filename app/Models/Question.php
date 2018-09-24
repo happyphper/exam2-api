@@ -18,6 +18,7 @@ class Question extends Model
         'options',
         'answers',
         'explain',
+        'course_id',
     ];
 
     protected $casts = [
@@ -33,5 +34,15 @@ class Question extends Model
     public function categories()
     {
         return $this->morphMany(ModelHasCategory::class, 'classified');
+    }
+
+    /**
+     * 课程
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
     }
 }

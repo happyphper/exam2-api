@@ -20,6 +20,8 @@ class Test extends Model
         'groups:id',
         'categories:name',
         'categories:id',
+        'course:title',
+        'course_id',
     ];
 
     public $sortable = ['*'];
@@ -30,7 +32,8 @@ class Test extends Model
         'title',
         'type',
         'started_at',
-        'ended_at'
+        'ended_at',
+        'course_id',
     ];
 
     protected $dates = ['started_at', 'ended_at'];
@@ -49,6 +52,11 @@ class Test extends Model
     {
         return $this->belongsToMany(Category::class, 'model_has_category', 'classified_id', 'category_id', 'id', 'id')->where('classified_type', self::class);
         // return $this->morphMany(ModelHasCategory::class,  'classified');
+    }
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
     }
 
     public function setStartedAtAttribute($value)

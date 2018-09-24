@@ -16,8 +16,8 @@ class Record extends Model
         'user_id',
         'test_id',
         'answer',
-        'error_count',
-        'correct_count',
+        'wrong_count',
+        'right_count',
         'grade',
     ];
 

@@ -1,31 +1,33 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: wangbaolong
+ * Course: wangbaolong
  * Date: 2018/8/19
  * Time: 14:52
  */
 
 namespace App\Transformers;
 
-use App\Models\Question;
+use App\Models\Course;
 use League\Fractal\TransformerAbstract;
 
-class QuestionTransformer extends TransformerAbstract
+class CourseTransformer extends TransformerAbstract
 {
-    public function transform(Question $model)
+    protected $defaultIncludes = ['user'];
+
+    public function transform(Course $model)
     {
         return [
             'id' => $model->id,
             'title' => $model->title,
-            'type' => $model->type,
-            'options' => $model->options,
-            'answers' => $model->answers,
-            'explain' => $model->explain,
-            'wrong_count' => $model->wrong_count ?? 0,
-            'right_count' => $model->right_count ?? 0,
+            'questions_count' => $model->questions_count ?? 0,
             'created_at' => $model->created_at ? $model->created_at->toDateTimeString() : null,
             'updated_at' => $model->updated_at ? $model->updated_at->toDateTimeString() : null,
         ];
+    }
+
+    public function includeUser(Course $model)
+    {
+        return $this->item($model->user, new UserTransformer());
     }
 }

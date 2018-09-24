@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\QuestionRequest;
 use App\Models\Question;
 use App\Transformers\QuestionTransformer;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class QuestionController extends Controller
@@ -17,7 +16,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $questions = Question::filtered()->paginate(self::limit());
+        $questions = Question::filtered()->orderByDesc('created_at')->paginate(self::limit());
 
         return $this->response->paginator($questions, new QuestionTransformer());
     }
@@ -30,7 +29,9 @@ class QuestionController extends Controller
      */
     public function store(QuestionRequest $request)
     {
-        $question = Question::create($request->all());
+        $question = new Question($request->all());
+        $question->user_id = auth()->id();
+        $question->save();
 
         return $this->response->item($question, new QuestionTransformer())->setStatusCode(201);
     }

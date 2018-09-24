@@ -13,7 +13,7 @@ class CategoryController extends Controller
 
     public function __construct()
     {
-        if (request() && !in_array(request()->type, ['group', 'question'])) {
+        if (request() && !in_array(request()->type, ['group', 'question', 'course'])) {
             $this->response->errorBadRequest('非法参数！');
         }
     }

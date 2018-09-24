@@ -19,6 +19,7 @@ class CreateTestsTable extends Migration
             $table->string('type')->default('daily')->comment('daily, random 每日一测、随机考验');
             $table->timestamp('started_at')->nullable()->index()->comment('开考时间');
             $table->timestamp('ended_at')->nullable()->index()->comment('结束时间');
+            $table->integer('course_id')->index()->comment('课程');
             $table->timestamps();
         });
     }
