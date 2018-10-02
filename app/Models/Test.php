@@ -40,7 +40,7 @@ class Test extends Model
 
     public function questions()
     {
-        return $this->hasManyThrough(Question::class, TestQuestion::class, 'test_id', 'id', 'id', 'question_id');
+        return $this->belongsToMany(Question::class, 'test_questions')->withPivot('score');
     }
 
     public function groups()

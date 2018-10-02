@@ -8,7 +8,7 @@ class TestQuestion extends Pivot
 {
     protected $table = 'test_questions';
 
-    protected $fillable = ['test_id', 'question_id'];
+    protected $fillable = ['test_id', 'question_id', 'score'];
 
     public $incrementing = false;
 

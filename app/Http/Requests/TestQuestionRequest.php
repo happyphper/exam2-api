@@ -32,6 +32,11 @@ class TestQuestionRequest extends FormRequest
                         'exists:questions,id',
                         Rule::unique('test_questions')->where('question_id', $this->question_id)->where('test_id', $this->test)
                     ],
+                    'score' => [
+                        'required',
+                        'integer',
+                        'max:100'
+                    ]
                 ];
                 break;
         }

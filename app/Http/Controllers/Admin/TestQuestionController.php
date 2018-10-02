@@ -32,7 +32,8 @@ class TestQuestionController extends Controller
     {
         TestQuestion::create([
             'test_id' => $test,
-            'question_id' => $request->question_id
+            'question_id' => $request->question_id,
+            'score' => $request->score
         ]);
 
         $question = Question::find($request->question_id);

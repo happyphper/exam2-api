@@ -16,6 +16,7 @@ class CreateTestQuestionsTable extends Migration
         Schema::create('test_questions', function (Blueprint $table) {
             $table->integer('test_id');
             $table->integer('question_id');
+            $table->integer('score');
             $table->unique(['test_id', 'question_id']);
         });
     }
