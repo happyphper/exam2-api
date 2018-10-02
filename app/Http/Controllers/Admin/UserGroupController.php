@@ -2,12 +2,37 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\UserGroupRequest;
 use App\Models\Group;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 
 class UserGroupController extends Controller
 {
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param User $user
+     * @param Group $group
+     * @return \Dingo\Api\Http\Response
+     */
+    public function bulk(UserGroupRequest $request)
+    {
+        $groupId = $request->group_id;
+
+        $users = $request->users;
+
+        foreach ($users as $userData) {
+            $user = new User();
+            $user->fill($userData);
+            $user->password = bcrypt(123456);
+            $user->save();
+            $user->groups()->attach($groupId);
+        }
+
+        return $this->response->noContent();
+    }
+
     /**
      * Store a newly created resource in storage.
      *
