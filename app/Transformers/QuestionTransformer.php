@@ -13,6 +13,8 @@ use League\Fractal\TransformerAbstract;
 
 class QuestionTransformer extends TransformerAbstract
 {
+    protected $availableIncludes = ['course'];
+
     public function transform(Question $model)
     {
         return [
@@ -27,5 +29,15 @@ class QuestionTransformer extends TransformerAbstract
             'created_at' => $model->created_at ? $model->created_at->toDateTimeString() : null,
             'updated_at' => $model->updated_at ? $model->updated_at->toDateTimeString() : null,
         ];
+    }
+
+    public function includeUser(Question $model)
+    {
+        return $this->item($model->user, new UserTransformer());
+    }
+
+    public function includeCourse(Question $model)
+    {
+        return $this->item($model->course, new CourseTransformer());
     }
 }
