@@ -50,6 +50,11 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
                 // 为 Model 添加/移除分类
                 $api->post('model/{type}/categories', 'ModelHasCategoryController@store');
                 $api->delete('model/{type}/categories/{category}', 'ModelHasCategoryController@destroy');
+                // 权限
+                $api->resource('permissions', 'PermissionController');
+                $api->resource('roles', 'RoleController');
+                $api->resource('users.roles', 'UserRoleController');
+                $api->resource('roles.permissions', 'RolePermissionController');
             });
         });
 

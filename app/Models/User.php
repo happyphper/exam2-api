@@ -6,14 +6,33 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Jedrzej\Searchable\SearchableTrait;
 use Jedrzej\Sortable\SortableTrait;
+use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable;
-    use SearchableTrait,SortableTrait;
+    use Notifiable, SearchableTrait,SortableTrait, HasRoles;
+
+    /**
+     * For searchable package
+     *
+     * @var array
+     */
     public $searchable = ['name', 'email', 'groups:name', 'groups:id', 'student_id', 'phone'];
+
+    /**
+     * For sortable package
+     *
+     * @var array
+     */
     public $sortable = ['*'];
+
+    /**
+     * For laravel-permission package
+     *
+     * @var array
+     */
+    protected $guard_name = 'api';
 
     /**
      * The attributes that are mass assignable.
