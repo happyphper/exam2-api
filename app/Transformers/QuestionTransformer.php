@@ -22,7 +22,7 @@ class QuestionTransformer extends TransformerAbstract
             'title' => $model->title,
             'type' => $model->type,
             'options' => $model->options,
-            'answers' => $model->answers,
+            'answer' => $model->answer,
             'explain' => $model->explain,
             'wrong_count' => $model->wrong_count ?? 0,
             'right_count' => $model->right_count ?? 0,

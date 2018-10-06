@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RecordRequest extends FormRequest
+class QuestionResultRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,6 +27,7 @@ class RecordRequest extends FormRequest
             case 'POST':
                 return [
                     'test_id' => 'required|exists:tests,id',
+                    'question_id' => 'required|exists:questions,id',
                     'answer' => 'required|array'
                 ];
                 break;

@@ -32,8 +32,6 @@ class TestController extends Controller
     {
         $test = Test::create($request->all());
 
-        $test->groups()->attach($request->group_ids);
-
         return $this->response->item($test, new TestTransformer())->setStatusCode(201);
     }
 
@@ -59,8 +57,6 @@ class TestController extends Controller
     {
         $test->fill($request->all())->save();
 
-        $test->groups()->sync($request->group_ids);
-
         return $this->response->item($test, new TestTransformer());
     }
 
@@ -73,8 +69,6 @@ class TestController extends Controller
      */
     public function destroy(Test $test)
     {
-        GroupTest::where('test_id', $test->id)->delete();
-
         $test->delete();
 
         return $this->response->noContent();

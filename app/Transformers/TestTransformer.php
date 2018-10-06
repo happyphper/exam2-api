@@ -13,14 +13,15 @@ use League\Fractal\TransformerAbstract;
 
 class TestTransformer extends TransformerAbstract
 {
-    protected $defaultIncludes = ['groups', 'categories', 'course'];
+    protected $availableIncludes = ['groups'];
+
+    protected $defaultIncludes = ['categories', 'course'];
 
     public function transform(Test $model)
     {
         return [
             'id' => $model->id,
             'title' => $model->title,
-            'type' => $model->type,
             'started_at' => $model->started_at ? $model->started_at->toDateTimeString() : null,
             'ended_at' => $model->ended_at ? $model->ended_at->toDateTimeString() : null,
             'created_at' => $model->created_at ? $model->created_at->toDateTimeString() : null,

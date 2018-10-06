@@ -42,18 +42,20 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
                 $api->get('manage-courses', 'UserCourseController@index');
                 $api->get('manage-groups', 'UserGroupController@index');
                 // 用户添加、移除群组
-                $api->post('users/{user}/groups/{group}', 'UserGroupController@store');
+                $api->get('users/{user}/groups', 'UserGroupController@index');
+                $api->post('users/{user}/groups', 'UserGroupController@store');
                 $api->post('bulk-import-users', 'UserGroupController@bulk');
                 $api->delete('users/{user}/groups/{group}', 'UserGroupController@destroy');
-
                 // 测试分类添加移除
                 $api->post('tests/{test}/categories', 'TestCategoryController@store');
                 $api->post('tests/{test}/categories/{category}', 'TestCategoryController@destroy');
                 // 群组测试
-                $api->post('group-tests', 'GroupTestController@store');
+                $api->resource('groups.tests', 'GroupTestController');
                 // 为 Model 添加/移除分类
                 $api->post('model/{type}/categories', 'ModelHasCategoryController@store');
                 $api->delete('model/{type}/categories/{category}', 'ModelHasCategoryController@destroy');
+                // 考试记录
+                $api->get('tests/{test}/groups/{group}/results', 'TestResultController@index');
                 // 权限
                 $api->resource('permissions', 'PermissionController');
                 $api->resource('roles', 'RoleController');
@@ -66,10 +68,13 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
         $api->group(['prefix' => 'miniapp', 'namespace' => 'MiniApp', 'as' => 'miniapp'], function ($api) {
             // 今日测验
             $api->get('today-tests', 'TestController@today');
-            // 考试记录
-            $api->get('records', 'RecordController@index');
-            // 提交答卷
-            $api->post('records', 'RecordController@store');
+            // 开始考试
+            $api->get('tests/{test}/start', 'TestController@start');
+            // 提交答案
+            $api->post('tests/{test}/questions', 'QuestionResultController@store');
+            // 答题记录
+            $api->get('tests/{test}/groups/{group}/results', 'TestResultController@index');
+            $api->get('tests/{test}/groups/{group}/results/{result}', 'TestResultController@show');
         });
     });
 });

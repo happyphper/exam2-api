@@ -27,7 +27,7 @@ class TestRequest extends FormRequest
             case 'POST':
                 return [
                     'title' => 'required|string|min:1|max:191',
-                    'type' => 'required|in:daily,random',
+                    'course_id' => 'required|exists:courses,id',
                     'started_at' => 'nullable|date',
                     'ended_at' => 'nullable|date:after:started_at'
                 ];
@@ -35,7 +35,7 @@ class TestRequest extends FormRequest
             case 'PUT':
                 return [
                     'title' => 'required|string|min:1|max:191',
-                    'type' => 'required|in:daily,random',
+                    'course_id' => 'required|exists:courses,id',
                     'started_at' => 'nullable|date',
                     'ended_at' => 'nullable|date:after:started_at'
                 ];

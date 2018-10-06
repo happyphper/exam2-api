@@ -14,9 +14,11 @@ class CreateGroupTestsTable extends Migration
     public function up()
     {
         Schema::create('group_tests', function (Blueprint $table) {
-            $table->primary(['group_id', 'test_id']);
+            $table->increments('id');
             $table->integer('test_id')->comment('测试与群组的关联表');
             $table->integer('group_id');
+            $table->timestamps();
+            $table->index(['test_id', 'group_id']);
         });
     }
 

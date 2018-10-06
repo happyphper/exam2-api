@@ -16,14 +16,14 @@ class Question extends Model
         'title',
         'type',
         'options',
-        'answers',
+        'answer',
         'explain',
         'course_id',
     ];
 
     protected $casts = [
         'options' => 'array',
-        'answers' => 'array'
+        'answer' => 'array'
     ];
 
     /**

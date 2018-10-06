@@ -25,12 +25,7 @@ class GroupTestRequest extends FormRequest
     public function rules()
     {
         return [
-            'test_id' => [
-                'required',
-                'exists:tests,id',
-                Rule::unique('group_tests')->where('test_id', $this->test_id)->where('group_id', $this->group_id)
-            ],
-            'group_id' => 'required|exists:groups,id'
+            'test_id' => 'required|exists:tests,id',
         ];
     }
 }

@@ -19,11 +19,11 @@ class Group extends Model
     /**
      * 测验
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function tests()
     {
-        return $this->hasManyThrough(Test::class, 'group_tests', 'test_id', 'id', 'id','group_id');
+        return $this->belongsToMany(Test::class, 'group_tests');
     }
 
 

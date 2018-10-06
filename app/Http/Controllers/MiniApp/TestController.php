@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\MiniApp;
 
-use App\Http\Requests\TestRequest;
+use App\Models\GroupTest;
 use App\Models\Test;
-use App\Transformers\TestTransformer;
+use App\Models\TestResult;
+use App\Transformers\QuestionTransformer;
 use App\Http\Controllers\Controller;
+use App\Transformers\TestTransformer;
 
 class TestController extends Controller
 {
@@ -14,13 +16,15 @@ class TestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function today()
     {
-        $me = auth()->user();
+        $groupIds = auth()->user()->groups()->pluck('id')->toArray();
 
-        $tests = $me->tests()->paginate(self::limit());
+        $testIds = GroupTest::whereIn('group_id', $groupIds)->pluck('test_id');
 
-        return $this->response->paginator($tests, new TestTransformer());
+        $tests = Test::today()->whereIn('id', $testIds)->get();
+
+        return $this->response->collection($tests, new TestTransformer());
     }
 
     /**
@@ -29,28 +33,29 @@ class TestController extends Controller
      * @param Test $test
      * @return \Illuminate\Http\Response
      */
-    public function show($test)
+    public function start($test)
     {
-        $group = auth()->user()->group;
+        $me = auth()->user();
 
-        $test = $group->tests()->findOrFail($test);
+        $groupTest = GroupTest::whereIn('group_id', $me->groups()->pluck('id')->toArray())
+            ->where('test_id', $test)
+            ->firstOrFail();
 
-        return $this->response->item($test, new TestTransformer());
-    }
+        Test::today()->findOrFail($test);
 
-    /**
-     * 今日测试
-     *
-     * @param TestRequest $request
-     * @param Test $test
-     * @return \Dingo\Api\Http\Response
-     */
-    public function today()
-    {
-        $group = auth()->user()->group;
+        $result = TestResult::where('user_id', $me->id)->where('test_id', $groupTest->test_id)->first();
+        if (!$result) {
+            TestResult::create([
+                'user_id' => $me->id,
+                'test_id' => $groupTest->test_id,
+                'questions_count' => $groupTest->test->questions_count,
+                'total_score' => $groupTest->test->total_score,
+                'group_id' => $groupTest->group_id
+            ]);
+        }
 
-        $tests = $group->today()->get();
+        $questions = $groupTest->test->questions()->select(['id', 'title', 'options', 'type'])->get();
 
-        return $this->response->collection($tests, new TestTransformer());
+        return $this->response->collection($questions, new QuestionTransformer());
     }
 }

@@ -12,6 +12,8 @@ class GroupTest extends Pivot
 
     public $timestamps = false;
 
+    public $fillable = ['test_id',];
+
     public function group()
     {
         return $this->belongsTo(Group::class);

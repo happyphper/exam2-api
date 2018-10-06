@@ -18,7 +18,7 @@ class CreateQuestionsTable extends Migration
             $table->string('title')->unique()->comment('题目');
             $table->string('type')->comment('题目:single、multiple');
             $table->json('options')->comment('选项');
-            $table->json('answers')->comment('正确选项');
+            $table->json('answer')->comment('正确选项');
             $table->string('explain')->nullable()->comment('答案解析');
             $table->integer('wrong_count')->default(0)->comment('错误次数');
             $table->integer('right_count')->default(0)->comment('正确次数');

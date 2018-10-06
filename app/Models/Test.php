@@ -13,15 +13,9 @@ class Test extends Model
 
     public $searchable = [
         'title',
-        'type',
-        'started_at',
-        'ended_at',
-        'groups:name',
-        'groups:id',
-        'categories:name',
-        'categories:id',
-        'course:title',
         'course_id',
+        'started_at',
+        'ended_at'
     ];
 
     public $sortable = ['*'];
@@ -30,13 +24,12 @@ class Test extends Model
 
     protected $fillable = [
         'title',
-        'type',
-        'started_at',
-        'ended_at',
         'course_id',
+        'started_at',
+        'ended_at'
     ];
 
-    protected $dates = ['started_at', 'ended_at'];
+    public $dates = ['started_at', 'ended_at'];
 
     public function questions()
     {
@@ -51,7 +44,6 @@ class Test extends Model
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'model_has_category', 'classified_id', 'category_id', 'id', 'id')->where('classified_type', self::class);
-        // return $this->morphMany(ModelHasCategory::class,  'classified');
     }
 
     public function course()
@@ -67,5 +59,11 @@ class Test extends Model
     public function setEndedAtAttribute($value)
     {
         $this->attributes['ended_at'] = Carbon::parse($value)->tz(config('app.timezone'))->toDateTimeString();
+    }
+
+    public function scopeToday($query)
+    {
+        $now = now()->toDateTimeString();
+        return $query->where('started_at', '<', $now)->where('ended_at', '>', $now);
     }
 }

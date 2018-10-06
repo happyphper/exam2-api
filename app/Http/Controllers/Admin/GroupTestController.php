@@ -8,24 +8,67 @@
 
 namespace App\Http\Controllers\Admin;
 
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GroupTestRequest;
+use App\Models\Group;
 use App\Models\GroupTest;
-use App\Models\Test;
+use App\Transformers\GroupTestTransformer;
 use App\Transformers\TestTransformer;
 
 class GroupTestController extends Controller
 {
     /**
-     * 为测试指定群组
+     *
+     *
+     * @param GroupTestRequest $request
+     * @return \Dingo\Api\Http\Response
      */
-    public function store(GroupTestRequest $request)
+    public function index(Group $group)
     {
-        GroupTest::create($request->all());
+        $data = $group->tests()->paginate(self::limit());
 
-        $test = Test::find($request->test_id);
+        return $this->response->paginator($data, new TestTransformer());
+    }
 
-        return $this->response->item($test, new TestTransformer())->setStatusCode(201);
+    /**
+     *
+     *
+     * @param GroupTestRequest $request
+     * @return \Dingo\Api\Http\Response
+     */
+    public function store(GroupTestRequest $request, Group $group)
+    {
+        $groupTest = new GroupTest($request->all());
+        $groupTest->group_id = $group->id;
+        $groupTest->save();
+
+        return $this->response->item($groupTest, new GroupTestTransformer())->setStatusCode(201);
+    }
+
+    /**
+     *
+     *
+     * @param GroupTestRequest $request
+     * @return \Dingo\Api\Http\Response
+     */
+    public function update(GroupTestRequest $request, Group $group, GroupTest $test)
+    {
+        $test->fill($request->all());
+        $test->save();
+
+        return $this->response->item($test, new GroupTestTransformer())->setStatusCode(201);
+    }
+
+    /**
+     *
+     *
+     * @param GroupTestRequest $request
+     * @return \Dingo\Api\Http\Response
+     */
+    public function destroy(Group $group, GroupTest $test)
+    {
+        $test = $test->delete();
+
+        return $this->response->noContent();
     }
 }

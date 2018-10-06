@@ -7,12 +7,13 @@ use App\Models\Group;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Transformers\GroupTransformer;
+use Illuminate\Http\Request;
 
 class UserGroupController extends Controller
 {
-    public function index()
+    public function index(User $user)
     {
-        $courses = Group::where('user_id', auth()->id())->get();
+        $courses = $user->groups()->get();
 
         return $this->response->collection($courses, new GroupTransformer());
     }
@@ -48,9 +49,13 @@ class UserGroupController extends Controller
      * @param Group $group
      * @return \Dingo\Api\Http\Response
      */
-    public function store(User $user, Group $group)
+    public function store(Request $request, User $user)
     {
-        $user->groups()->attach($group->id);
+        $this->validate($request, [
+            'group_id' => 'required|exists:groups,id'
+        ]);
+
+        $user->groups()->attach($request->group_id);
 
         return $this->response->noContent();
     }
