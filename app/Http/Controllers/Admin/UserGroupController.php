@@ -6,9 +6,17 @@ use App\Http\Requests\UserGroupRequest;
 use App\Models\Group;
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Transformers\GroupTransformer;
 
 class UserGroupController extends Controller
 {
+    public function index()
+    {
+        $courses = Group::where('user_id', auth()->id())->get();
+
+        return $this->response->collection($courses, new GroupTransformer());
+    }
+
     /**
      * Store a newly created resource in storage.
      *

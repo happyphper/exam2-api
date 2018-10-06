@@ -38,10 +38,14 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
                 $api->resource('groups', 'GroupController');
                 // 课程
                 $api->resource('courses', 'CourseController');
+                // 用户管理班级、课程
+                $api->get('manage-courses', 'UserCourseController@index');
+                $api->get('manage-groups', 'UserGroupController@index');
                 // 用户添加、移除群组
                 $api->post('users/{user}/groups/{group}', 'UserGroupController@store');
                 $api->post('bulk-import-users', 'UserGroupController@bulk');
                 $api->delete('users/{user}/groups/{group}', 'UserGroupController@destroy');
+
                 // 测试分类添加移除
                 $api->post('tests/{test}/categories', 'TestCategoryController@store');
                 $api->post('tests/{test}/categories/{category}', 'TestCategoryController@destroy');
