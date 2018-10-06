@@ -30,6 +30,7 @@ class GroupController extends Controller
     public function store(GroupRequest $request, Group $group)
     {
         $group->fill($request->all());
+        $group->user_id = auth()->id();
         $group->save();
 
         return $this->response->item($group, new GroupTransformer())->setStatusCode(201);
