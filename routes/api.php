@@ -66,6 +66,9 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
 
         // 小程序
         $api->group(['prefix' => 'miniapp', 'namespace' => 'MiniApp', 'as' => 'miniapp'], function ($api) {
+            // 登录
+            $api->post('auth/login', 'AuthController@login')->name('miniapp.login');
+            $api->get('auth/me', 'AuthController@me')->name('miniapp.me');
             // 今日测验
             $api->get('today-tests', 'TestController@today');
             // 开始考试
