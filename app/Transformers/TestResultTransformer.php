@@ -13,6 +13,8 @@ use League\Fractal\TransformerAbstract;
 
 class TestResultTransformer extends TransformerAbstract
 {
+    public $availableIncludes = ['test', 'group'];
+
     public function transform(TestResult $model)
     {
         return [
@@ -29,5 +31,15 @@ class TestResultTransformer extends TransformerAbstract
             'created_at' => $model->created_at ? $model->created_at->toDateTimeString() : null,
             'updated_at' => $model->updated_at ? $model->updated_at->toDateTimeString() : null,
         ];
+    }
+
+    public function includeTest(TestResult $result)
+    {
+        return $this->item($result->test, new TestTransformer());
+    }
+
+    public function includeGroup(TestResult $result)
+    {
+        return $this->item($result->group, new GroupTransformer());
     }
 }

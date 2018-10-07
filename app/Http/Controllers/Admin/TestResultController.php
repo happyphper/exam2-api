@@ -15,9 +15,9 @@ class TestResultController extends Controller
      */
     public function index($test, $group)
     {
-        $records = TestResult::where('test_id', $test)->where('group_id', $group)->paginate(self::limit());
+        $data = TestResult::where('test_id', $test)->where('group_id', $group)->paginate(self::limit());
 
-        return $this->response->paginator($records, new TestResultTransformer());
+        return $this->response->paginator($data, new TestResultTransformer());
     }
 
     /**

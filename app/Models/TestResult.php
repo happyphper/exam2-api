@@ -17,4 +17,14 @@ class TestResult extends Model
     protected $casts = [
         'answer' => 'array'
     ];
+
+    public function test()
+    {
+        return $this->belongsTo(Test::class);
+    }
+
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
 }
