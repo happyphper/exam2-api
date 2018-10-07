@@ -21,6 +21,9 @@ class QuestionResultController extends Controller
      */
     public function store(QuestionResultRequest $request, Test $test)
     {
+        // 携带正确答案返回
+        $request->offsetSet('include', 'question');
+
         $result = QuestionResult::where('test_id', $test->id)
             ->where('user_id', auth()->id())
             ->where('test_id', $test->id)

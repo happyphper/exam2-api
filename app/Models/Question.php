@@ -45,4 +45,12 @@ class Question extends Model
     {
         return $this->belongsTo(Course::class);
     }
+
+    public function setOptionsAttribute($value)
+    {
+        foreach ($value as $index => $option) {
+            $value[$index]['status'] = 0;
+        }
+        $this->attributes['options'] = $value;
+    }
 }

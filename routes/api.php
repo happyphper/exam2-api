@@ -76,8 +76,8 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
             // 提交答案
             $api->post('tests/{test}/questions', 'QuestionResultController@store');
             // 答题记录
-            $api->get('tests/{test}/groups/{group}/results', 'TestResultController@index');
-            $api->get('tests/{test}/groups/{group}/results/{result}', 'TestResultController@show');
+            $api->get('test-results', 'TestResultController@index');
+            $api->get('test-results/{result}', 'TestResultController@show');
         });
     });
 });

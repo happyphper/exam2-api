@@ -13,6 +13,8 @@ use League\Fractal\TransformerAbstract;
 
 class QuestionResultTransformer extends TransformerAbstract
 {
+    protected $availableIncludes = ['question'];
+
     public function transform(QuestionResult $model)
     {
         return [
@@ -25,5 +27,10 @@ class QuestionResultTransformer extends TransformerAbstract
             'created_at' => $model->created_at ? $model->created_at->toDateTimeString() : null,
             'updated_at' => $model->updated_at ? $model->updated_at->toDateTimeString() : null,
         ];
+    }
+
+    public function includeQuestion(QuestionResult $model)
+    {
+        return $this->item($model->question, new QuestionTransformer());
     }
 }

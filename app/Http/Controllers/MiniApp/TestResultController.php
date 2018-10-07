@@ -13,9 +13,9 @@ class TestResultController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($test)
+    public function index()
     {
-        $data = TestResult::where('user_id', auth()->id())->where('test_id', $test)->paginate(self::limit());
+        $data = TestResult::where('user_id', auth()->id())->orderBy('created_at', 'desc')->paginate(self::limit());
 
         return $this->response->paginator($data, new TestResultTransformer());
     }
@@ -25,9 +25,9 @@ class TestResultController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($test, $result)
+    public function show($result)
     {
-        $result = TestResult::where('user_id', auth()->id())->where('test_id', $test)->find($result);
+        $result = TestResult::where('user_id', auth()->id())->find($result);
 
         return $this->response->item($result, new TestResultTransformer());
     }

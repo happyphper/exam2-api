@@ -51,6 +51,11 @@ class Test extends Model
         return $this->belongsTo(Course::class);
     }
 
+    public function result()
+    {
+        return $this->hasOne(TestResult::class);
+    }
+
     public function setStartedAtAttribute($value)
     {
         $this->attributes['started_at'] = Carbon::parse($value)->tz(config('app.timezone'))->toDateTimeString();

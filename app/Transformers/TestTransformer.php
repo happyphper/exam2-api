@@ -13,7 +13,7 @@ use League\Fractal\TransformerAbstract;
 
 class TestTransformer extends TransformerAbstract
 {
-    protected $availableIncludes = ['groups'];
+    protected $availableIncludes = ['groups', 'result'];
 
     protected $defaultIncludes = ['categories', 'course'];
 
@@ -42,5 +42,13 @@ class TestTransformer extends TransformerAbstract
     public function includeCourse(Test $model)
     {
         return $this->item($model->course, new CourseTransformer());
+    }
+
+    public function includeResult(Test $model)
+    {
+        if ($result = $model->result()->where('user_id', auth()->id())->first()) {
+            return $this->item($result, new TestResultTransformer());
+        }
+        return $this->null();
     }
 }
