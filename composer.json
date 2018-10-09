@@ -16,7 +16,8 @@
         "laravel/tinker": "~1.0",
         "liyu/dingo-serializer-switch": "^0.3.0",
         "spatie/laravel-permission": "^2.21",
-        "tymon/jwt-auth": ">=1.0.0-rc.2"
+        "tymon/jwt-auth": ">=1.0.0-rc.2",
+        "zgldh/qiniu-laravel-storage": "^0.10.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.4",
