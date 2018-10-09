@@ -39,7 +39,7 @@ class QuestionRequest extends FormRequest
                     'title' => 'required|string|min:1|max:191|unique:questions,title,' . $this->question->id,
                     'type' => 'required|in:single,multiple',
                     'options' => 'required|array|distinct',
-                    'answers' => 'required|array|distinct',
+                    'answer' => 'required|array|distinct',
                     'explain' => 'nullable|max:191',
                     'course_id' => 'required|exists:courses,id'
                 ];

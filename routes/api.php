@@ -17,6 +17,7 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
     $api->group(['middleware' => 'api', 'namespace' => 'App\Http\Controllers'], function ($api) {
         // 登录
         $api->post('admin/auth/login', 'Admin\AuthController@login')->name('admin.login');
+
         // 后台
         $api->group(['prefix' => 'admin', 'namespace' => 'Admin'], function ($api) {
             $api->group(['middleware' => 'auth'], function ($api) {
@@ -61,6 +62,9 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
                 $api->resource('roles', 'RoleController');
                 $api->resource('users.roles', 'UserRoleController');
                 $api->resource('roles.permissions', 'RolePermissionController');
+                // 云存储 七牛
+                $api->post('cloud-storage', 'CloudStorageController@token');
+                $api->delete('cloud-storage/{name}', 'CloudStorageController@destroy');
             });
         });
 

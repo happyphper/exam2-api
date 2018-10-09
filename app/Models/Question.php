@@ -48,9 +48,16 @@ class Question extends Model
 
     public function setOptionsAttribute($value)
     {
-        foreach ($value as $index => $option) {
-            $value[$index]['status'] = 0;
-        }
-        $this->attributes['options'] = $value;
+        $options = collect($value)->map(function ($item) {
+            return [
+                'id' => $item['id'],
+                'content' => $item['type'] === 'image'
+                    ? config('filesystems.disks.qiniu.domains.default') . '/' . $item['content']
+                    : $item['content'],
+                'type' => $item['type'],
+                'status' => 0
+            ];
+        })->toJson();
+        $this->attributes['options'] = $options;
     }
 }
