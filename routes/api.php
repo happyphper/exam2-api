@@ -21,6 +21,8 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
         // 后台
         $api->group(['prefix' => 'admin', 'namespace' => 'Admin'], function ($api) {
             $api->group(['middleware' => 'auth'], function ($api) {
+                // 控制台
+                $api->get('dashboard', 'DashboardController@index');
                 // 登出、刷新、个人信息
                 $api->delete('auth/logout', 'AuthController@logout')->name('admin.logout');
                 $api->patch('auth/refresh', 'AuthController@refresh')->name('admin.refresh');

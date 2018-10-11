@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\TestRequest;
-use App\Models\GroupTest;
 use App\Models\Test;
 use App\Transformers\TestTransformer;
 use App\Http\Controllers\Controller;
@@ -30,7 +29,9 @@ class TestController extends Controller
      */
     public function store(TestRequest $request)
     {
-        $test = Test::create($request->all());
+        $test = new Test($request->all());
+        $test->user_id = 1;
+        $test->save();
 
         return $this->response->item($test, new TestTransformer())->setStatusCode(201);
     }

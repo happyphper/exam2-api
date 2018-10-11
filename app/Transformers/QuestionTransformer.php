@@ -27,6 +27,7 @@ class QuestionTransformer extends TransformerAbstract
             'wrong_count' => $model->wrong_count ?? 0,
             'right_count' => $model->right_count ?? 0,
             'score' => $model->pivot->score ?? null,
+            'course_id' => $model->course_id,
             'created_at' => $model->created_at ? $model->created_at->toDateTimeString() : null,
             'updated_at' => $model->updated_at ? $model->updated_at->toDateTimeString() : null,
         ];

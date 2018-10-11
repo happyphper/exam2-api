@@ -21,6 +21,7 @@ class CreateTestsTable extends Migration
             $table->integer('course_id')->index()->comment('课程');
             $table->integer('questions_count')->default(0)->index()->comment('题目个数');
             $table->integer('total_score')->default(0)->index()->comment('总分');
+            $table->integer('user_id')->index()->comment('创建人');
             $table->timestamps();
         });
     }
