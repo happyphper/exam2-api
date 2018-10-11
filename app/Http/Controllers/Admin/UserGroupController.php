@@ -34,9 +34,10 @@ class UserGroupController extends Controller
         foreach ($users as $userData) {
             $user = new User();
             $user->fill($userData);
-            $user->password = bcrypt(123456);
+            $user->password = $request->password ? bcrypt($request->password) : bcrypt(123456);
             $user->save();
             $user->groups()->attach($groupId);
+            Group::find($groupId)->increment('users_count');
         }
 
         return $this->response->noContent();
@@ -51,11 +52,10 @@ class UserGroupController extends Controller
      */
     public function store(Request $request, User $user)
     {
-        $this->validate($request, [
-            'group_id' => 'required|exists:groups,id'
-        ]);
+        $group = Group::findOrFail($request->group_id);
 
         $user->groups()->attach($request->group_id);
+        $group->increment('users_count');
 
         return $this->response->noContent();
     }

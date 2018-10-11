@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use Dingo\Api\Facade\API;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -14,8 +13,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        \App\Models\User::observe(\App\Observers\UserObserver::class);
         \App\Models\Category::observe(\App\Observers\CategoryObserver::class);
-        \App\Models\UserGroup::observe(\App\Observers\UserGroupObserver::class);
         \App\Models\Question::observe(\App\Observers\QuestionObserver::class);
         \App\Models\QuestionResult::observe(\App\Observers\QuestionResultObserver::class);
         \App\Models\TestQuestion::observe(\App\Observers\TestQuestionObserver::class);

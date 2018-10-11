@@ -31,6 +31,7 @@ class UserGroupRequest extends FormRequest
                     'users.*.email' => ['sometimes', 'string', 'email'],
                     'users.*.phone' => ['sometimes', 'regex:/1[3-9]\d{9}/'],
                     'users.*.student_id' => ['required',],
+                    'users.*.password' => ['sometimes', 'regex:/.{6,}/']
                 ];
                 break;
             case 'PUT':
