@@ -13,6 +13,8 @@ use League\Fractal\TransformerAbstract;
 
 class UserTransformer extends TransformerAbstract
 {
+    protected $availableIncludes = ['roles'];
+
     protected $defaultIncludes = ['groups'];
 
     public function transform(User $model)
@@ -35,5 +37,10 @@ class UserTransformer extends TransformerAbstract
             return $this->null();
         }
         return $this->collection($model->groups, new GroupTransformer());
+    }
+
+    protected function includeRoles(User $model)
+    {
+        return $this->collection($model->roles, new RoleTransformer());
     }
 }
