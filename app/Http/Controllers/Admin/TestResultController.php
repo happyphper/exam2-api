@@ -15,7 +15,7 @@ class TestResultController extends Controller
      */
     public function index()
     {
-        $data = TestResult::filtered()->paginate(self::limit());
+        $data = TestResult::orderBy('score', 'desc')->filtered()->paginate(self::limit());
 
         return $this->response->paginator($data, new TestResultTransformer());
     }

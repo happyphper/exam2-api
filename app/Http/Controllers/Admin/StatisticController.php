@@ -21,13 +21,22 @@ class StatisticController extends Controller
 
         $stat = [
             ['name' => '60以下', 'label' => '60以下', 'value' => $data->where('score', '<', 60)->count()],
-            ['name' => '60以下', 'label' => '60以下', 'value' => $data->where('score', '>', 59)->where('score', '<', 69)->count()],
-            ['name' => '60以下', 'label' => '60以下', 'value' => $data->where('score', '>', 69)->where('score', '<', 79)->count()],
-            ['name' => '60以下', 'label' => '60以下', 'value' => $data->where('score', '>', 79)->where('score', '<', 89)->count()],
-            ['name' => '60以下', 'label' => '60以下', 'value' => $data->where('score', '>', 89)->where('score', '<=', 100)->count()],
+            ['name' => '60-69', 'label' => '60-69', 'value' => $data->where('score', '>', 59)->where('score', '<', 69)->count()],
+            ['name' => '70-79', 'label' => '70-79', 'value' => $data->where('score', '>', 69)->where('score', '<', 79)->count()],
+            ['name' => '80-89', 'label' => '80-89', 'value' => $data->where('score', '>', 79)->where('score', '<', 89)->count()],
+            ['name' => '90-100', 'label' => '90-100', 'value' => $data->where('score', '>', 89)->where('score', '<=', 100)->count()],
         ];
 
-        return $this->response->array(['data' => $stat]);
+        $headers = array_pluck($stat, 'name');
+        $values = array_pluck($stat, 'value');
+
+        return $this->response->array([
+            'data' => $stat,
+            'meta' => [
+                'headers' => $headers,
+                'values' => $values
+            ]
+        ]);
     }
 
     /**
@@ -43,7 +52,7 @@ class StatisticController extends Controller
             ->selectRaw('question_id, count(*) as error_count')
             ->groupBy('question_id')->orderBy('error_count', 'desc')->get();
 
-        $names = $data->map(function ($item) {
+        $headers = $data->map(function ($item) {
             return $item->question->title;
         });
         $values = $data->pluck('error_count');
@@ -51,7 +60,7 @@ class StatisticController extends Controller
         return $this->response->array([
             'data' => $data,
             'meta' => [
-                'names' => $names,
+                'headers' => $headers,
                 'values' => $values
             ]
         ]);
