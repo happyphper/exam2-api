@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\OwnTrait;
 use Illuminate\Database\Eloquent\Model;
 use Jedrzej\Searchable\SearchableTrait;
 use Jedrzej\Sortable\SortableTrait;
 
 class Course extends Model
 {
+    use OwnTrait;
+
     use SearchableTrait,SortableTrait;
 
     public $searchable = ['title', 'user:name'];

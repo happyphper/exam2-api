@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\OwnTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Jedrzej\Searchable\SearchableTrait;
@@ -9,6 +10,7 @@ use Jedrzej\Sortable\SortableTrait;
 
 class Test extends Model
 {
+    use OwnTrait;
     use SearchableTrait, SortableTrait;
 
     public $searchable = [

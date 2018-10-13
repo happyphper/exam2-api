@@ -16,7 +16,7 @@ class TestController extends Controller
      */
     public function index()
     {
-        $tests = Test::filtered()->paginate(self::limit());
+        $tests = Test::own()->filtered()->paginate(self::limit());
 
         return $this->response->paginator($tests, new TestTransformer());
     }

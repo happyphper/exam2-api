@@ -18,7 +18,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $questions = Question::filtered()->orderByDesc('created_at')->paginate(self::limit());
+        $questions = Question::ofShare(auth()->id())->filtered()->orderByDesc('created_at')->paginate(self::limit());
 
         return $this->response->paginator($questions, new QuestionTransformer());
     }
@@ -26,9 +26,9 @@ class QuestionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param User $user
-     * @param Group $group
+     * @param Request $request
      * @return \Dingo\Api\Http\Response
+     * @throws \Throwable
      */
     public function bulk(Request $request)
     {

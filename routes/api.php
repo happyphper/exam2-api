@@ -32,6 +32,8 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
                 // 题目 CRUD
                 $api->resource('questions', 'QuestionController');
                 $api->post('bulk-import-questions', 'QuestionController@bulk');
+                // 共享题库
+                $api->resource('share-questions', 'ShareQuestionController');
                 // 测试 CRUD
                 $api->resource('tests', 'TestController');
                 // 测试题目 CRUD

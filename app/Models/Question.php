@@ -64,4 +64,12 @@ class Question extends Model
         })->toJson();
         $this->attributes['options'] = $options;
     }
+
+    public function scopeOfShare($query, $userId)
+    {
+        $userIds = ShareQuestion::where('user_id', $userId)->pluck('share_user_id')->toArray();
+        $userIds[] = $userId;
+
+        return $query->whereIn('user_id', $userIds);
+    }
 }

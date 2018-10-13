@@ -16,7 +16,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $data = Course::filtered()->orderByDesc('created_at')->paginate(request('per_page', 25));
+        $data = Course::own()->filtered()->orderByDesc('created_at')->paginate(request('per_page', 25));
 
         return $this->response->paginator($data, new CourseTransformer());
     }
