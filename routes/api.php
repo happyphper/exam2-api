@@ -39,6 +39,7 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
                 // 测试题目 CRUD
                 $api->resource('tests/{test}/questions', 'TestQuestionController');
                 // 用户
+                $api->resource('admin-users', 'AdminUserController');
                 $api->resource('users', 'UserController');
                 // 群组
                 $api->resource('groups', 'GroupController');

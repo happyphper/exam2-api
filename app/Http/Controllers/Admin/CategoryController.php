@@ -11,13 +11,6 @@ class CategoryController extends Controller
 {
     public $ids = [];
 
-    public function __construct()
-    {
-        if (request() && !in_array(request()->type, ['group', 'question', 'course'])) {
-            $this->response->errorBadRequest('非法参数！');
-        }
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -25,6 +18,10 @@ class CategoryController extends Controller
      */
     public function index($type, Category $category)
     {
+        if (request() && !in_array(request()->type, ['group', 'question', 'course'])) {
+            $this->response->errorBadRequest('非法参数！');
+        }
+
         $data = $category->tree($type);
 
         return $this->response->array(compact('data'));
@@ -38,6 +35,10 @@ class CategoryController extends Controller
      */
     public function store($type, CategoryRequest $request, Category $category)
     {
+        if (request() && !in_array(request()->type, ['group', 'question', 'course'])) {
+            $this->response->errorBadRequest('非法参数！');
+        }
+
         $category->type = $type;
         $category->fill($request->all());
         $category->save();
@@ -54,6 +55,10 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, $type, $category)
     {
+        if (request() && !in_array(request()->type, ['group', 'question', 'course'])) {
+            $this->response->errorBadRequest('非法参数！');
+        }
+
         $category = Category::where(compact('type'))->findOrFail($category);
 
         $category->fill($request->only(['type', 'name']))->save();
@@ -70,6 +75,10 @@ class CategoryController extends Controller
      */
     public function destroy($type, $category)
     {
+        if (request() && !in_array(request()->type, ['group', 'question', 'course'])) {
+            $this->response->errorBadRequest('非法参数！');
+        }
+
         $category = Category::where(compact('type'))->findOrFail($category);
 
         $category->delete();
