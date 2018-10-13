@@ -73,6 +73,9 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
                 $api->delete('cloud-storage/{name}', 'CloudStorageController@destroy');
                 // 考试记录
                 $api->get('test-results', 'TestResultController@index');
+                // 统计
+                $api->get('stat/grade-distribution', 'StatisticsController@gradeDistribution');
+                $api->get('stat/error-question', 'StatisticController@errorQuestion');
             });
         });
 

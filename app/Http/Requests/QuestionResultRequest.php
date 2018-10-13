@@ -26,6 +26,7 @@ class QuestionResultRequest extends FormRequest
         switch ($this->method()) {
             case 'POST':
                 return [
+                    'group_id' => 'group_id',
                     'question_id' => 'required|exists:questions,id',
                     'answer' => 'required|array'
                 ];

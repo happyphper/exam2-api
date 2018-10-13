@@ -26,6 +26,7 @@ class QuestionResultController extends Controller
 
         $result = QuestionResult::where('test_id', $test->id)
             ->where('user_id', auth()->id())
+            ->where('group_id', $request->group_id)
             ->where('test_id', $test->id)
             ->first();
         if ($result) {
