@@ -13,21 +13,10 @@ class TestResultController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($test, $group)
+    public function index()
     {
-        $data = TestResult::where('test_id', $test)->where('group_id', $group)->paginate(self::limit());
+        $data = TestResult::filtered()->paginate(self::limit());
 
         return $this->response->paginator($data, new TestResultTransformer());
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param TestResult $record
-     * @return \Illuminate\Http\Response
-     */
-    public function show(TestResult $record)
-    {
-        return $this->response->item($record, new TestResultTransformer());
     }
 }

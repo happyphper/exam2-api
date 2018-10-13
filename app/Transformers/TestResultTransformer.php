@@ -13,7 +13,7 @@ use League\Fractal\TransformerAbstract;
 
 class TestResultTransformer extends TransformerAbstract
 {
-    public $availableIncludes = ['test', 'group'];
+    public $availableIncludes = ['test', 'group', 'user'];
 
     public function transform(TestResult $model)
     {
@@ -41,5 +41,10 @@ class TestResultTransformer extends TransformerAbstract
     public function includeGroup(TestResult $result)
     {
         return $this->item($result->group, new GroupTransformer());
+    }
+
+    public function includeUser(TestResult $result)
+    {
+        return $this->item($result->user, new UserTransformer());
     }
 }

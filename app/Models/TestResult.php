@@ -9,7 +9,13 @@ use Jedrzej\Sortable\SortableTrait;
 class TestResult extends Model
 {
     use SearchableTrait,SortableTrait;
-    public $searchable = ['*'];
+    public $searchable = [
+        'test_id',
+        'group_id',
+        'test:title',
+        'group:name',
+        'user:name'
+    ];
     public $sortable = ['*'];
 
     protected $guarded = ['id'];
@@ -26,5 +32,10 @@ class TestResult extends Model
     public function group()
     {
         return $this->belongsTo(Group::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

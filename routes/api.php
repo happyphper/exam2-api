@@ -71,6 +71,8 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
                 // 云存储 七牛
                 $api->post('cloud-storage', 'CloudStorageController@token');
                 $api->delete('cloud-storage/{name}', 'CloudStorageController@destroy');
+                // 考试记录
+                $api->get('test-results', 'TestResultController@index');
             });
         });
 

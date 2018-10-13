@@ -13,7 +13,9 @@ use League\Fractal\TransformerAbstract;
 
 class CourseTransformer extends TransformerAbstract
 {
-    protected $defaultIncludes = ['user'];
+    protected $availableIncludes = ['user'];
+
+    protected $defaultIncludes = [];
 
     public function transform(Course $model)
     {

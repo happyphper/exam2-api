@@ -13,9 +13,7 @@ use League\Fractal\TransformerAbstract;
 
 class TestTransformer extends TransformerAbstract
 {
-    protected $availableIncludes = ['groups', 'result'];
-
-    protected $defaultIncludes = ['categories', 'course'];
+    protected $availableIncludes = ['groups', 'result', 'course', 'categories'];
 
     public function transform(Test $model)
     {
