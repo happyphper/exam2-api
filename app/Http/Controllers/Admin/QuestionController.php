@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\QuestionRequest;
+use App\Models\Course;
 use App\Models\Question;
 use App\Transformers\QuestionTransformer;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
@@ -19,6 +21,52 @@ class QuestionController extends Controller
         $questions = Question::filtered()->orderByDesc('created_at')->paginate(self::limit());
 
         return $this->response->paginator($questions, new QuestionTransformer());
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param User $user
+     * @param Group $group
+     * @return \Dingo\Api\Http\Response
+     */
+    public function bulk(Request $request)
+    {
+        $course = Course::findOrFail($request->course_id);
+
+        $questions = $request->questions;
+
+        $questions = collect($questions)->map(function ($question, $index) use ($questions) {
+            if (in_array($question['title'], $questions)) {
+                $this->response->errorBadRequest("第 {$index} 道题目在 Excel 中重复出现，请处理。");
+            }
+            if (Question::where('title', $question['title'])->exists()) {
+                $this->response->errorBadRequest('『' . $question['title'] . '』题目已存在于数据库之中，请移除后再导入。');
+            }
+            return [
+                'title' => $question['title'],
+                'type' => $question['type'],
+                'options' => [
+                    ['id' => 1, 'content' => $question['option1'], 'type' => 'text', 'status' => 0],
+                    ['id' => 2, 'content' => $question['option2'], 'type' => 'text', 'status' => 0],
+                    ['id' => 3, 'content' => $question['option3'], 'type' => 'text', 'status' => 0],
+                    ['id' => 4, 'content' => $question['option4'], 'type' => 'text', 'status' => 0],
+                ],
+                'answer' => $question['answer'],
+                'explain' => $question['explain'] ?? null,
+            ];
+        });
+
+        \DB::transaction(function ()  use( $questions, $course){
+            $questions->each(function ($question) use($course) {
+                $item = new Question($question);
+                $item->user_id = auth()->id();
+                $item->course_id = $course->id;
+                $item->save();
+            });
+        });
+
+        return $this->response->created();
     }
 
     /**

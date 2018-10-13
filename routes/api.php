@@ -31,6 +31,7 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
                 $api->resource('{type}/categories', 'CategoryController');
                 // 题目 CRUD
                 $api->resource('questions', 'QuestionController');
+                $api->post('bulk-import-questions', 'QuestionController@bulk');
                 // 测试 CRUD
                 $api->resource('tests', 'TestController');
                 // 测试题目 CRUD
