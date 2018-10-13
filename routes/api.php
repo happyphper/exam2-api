@@ -74,7 +74,7 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
                 // 考试记录
                 $api->get('test-results', 'TestResultController@index');
                 // 统计
-                $api->get('stat/grade-distribution', 'StatisticsController@gradeDistribution');
+                $api->get('stat/grade-distribution', 'StatisticController@gradeDistribution');
                 $api->get('stat/error-question', 'StatisticController@errorQuestion');
             });
         });

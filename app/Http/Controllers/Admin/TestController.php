@@ -32,6 +32,7 @@ class TestController extends Controller
         $test = new Test($request->all());
         $test->user_id = 1;
         $test->save();
+        $test->groups()->attach($request->group_ids);
 
         return $this->response->item($test, new TestTransformer())->setStatusCode(201);
     }
@@ -57,6 +58,8 @@ class TestController extends Controller
     public function update(TestRequest $request, Test $test)
     {
         $test->fill($request->all())->save();
+
+        $test->groups()->sync($request->group_ids);
 
         return $this->response->item($test, new TestTransformer());
     }
