@@ -65,4 +65,29 @@ class StatisticController extends Controller
             ]
         ]);
     }
+
+    /**
+     * 用户成绩曲线图
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function userGradeCurve(Request $request)
+    {
+        $data = TestResult::where('user_id', $request->user_id)->orderBy('created_at', 'desc')->get(['score', 'created_at']);
+
+        $headers = $data->pluck('created_at')->map(function ($item) {
+            return $item->toDateString();
+        });
+
+        $values = $data->pluck('score');
+
+        return $this->response->array([
+            'data' => $data,
+            'meta' => [
+                'headers' => $headers,
+                'values' => $values
+            ]
+        ]);
+    }
 }

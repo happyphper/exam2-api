@@ -73,9 +73,10 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
                 $api->delete('cloud-storage/{name}', 'CloudStorageController@destroy');
                 // 考试记录
                 $api->get('test-results', 'TestResultController@index');
-                // 统计
+                // 考试成绩分布、考试错题分布、个人成绩曲线
                 $api->get('stat/grade-distribution', 'StatisticController@gradeDistribution');
                 $api->get('stat/error-question', 'StatisticController@errorQuestion');
+                $api->get('stat/user-grade-curve', 'StatisticController@userGradeCurve');
             });
         });
 
