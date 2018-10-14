@@ -50,7 +50,8 @@ class TestController extends Controller
                 'test_id' => $groupTest->test_id,
                 'questions_count' => $groupTest->test->questions_count,
                 'total_score' => $groupTest->test->total_score,
-                'group_id' => $me->group_id
+                'group_id' => $me->group_id,
+                'course_id' => $test->course_id,
             ]);
         }
 

@@ -71,6 +71,7 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
                 $api->get('stat/grade-distribution', 'StatisticController@gradeDistribution');
                 $api->get('stat/error-question', 'StatisticController@errorQuestion');
                 $api->get('stat/user-grade-curve', 'StatisticController@userGradeCurve');
+                $api->get('stat/user-grade-data', 'StatisticController@userGradeData');
             });
         });
 

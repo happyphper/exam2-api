@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\QuestionResult;
 use App\Models\TestResult;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class StatisticController extends Controller
@@ -89,5 +90,28 @@ class StatisticController extends Controller
                 'values' => $values
             ]
         ]);
+    }
+
+    /**
+     * 用户成绩数据
+     *
+     * @param Request $request
+     * @return
+     */
+    public function userGradeData(Request $request)
+    {
+        $data = TestResult::when($request->course_id, function ($query) use ($request) {
+            return $query->where($request->only('course_id'));
+        })->when($request->group_id, function ($query) use ($request) {
+            return $query->where($request->only('group_id'));
+        })->when($request->created_at, function ($query) use ($request) {
+            $date = $request->input('created_at');
+            $dataArray = collect($date)->map(function ($item) { return Carbon::parse($item); })->toArray();
+            return $query->whereBetween('created_at', $dataArray);
+        })->with('user:id,name')->with('course:id,title')->with('group:id,name')->orderBy('user_id')->get();
+
+        $data = $data->groupBy('user_id')->values()->toArray();
+
+        return $this->response->array(compact('data'));
     }
 }
