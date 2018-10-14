@@ -164,5 +164,6 @@ return [
         'stopped_at' => '结束时间',
         'student_id' => '学号',
         'answer' => '答案',
+        'group_id' => '班级',
     ],
 ];

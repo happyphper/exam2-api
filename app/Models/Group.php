@@ -52,4 +52,12 @@ class Group extends Model
     {
         return $this->morphMany(ModelHasCategory::class, 'classified');
     }
+
+    /**
+     * 用户
+     */
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }

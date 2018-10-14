@@ -41,18 +41,12 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
                 // 用户
                 $api->resource('admin-users', 'AdminUserController');
                 $api->resource('users', 'UserController');
+                // 用户批量导入
+                $api->post('bulk-import-users', 'UserController@bulk');
                 // 群组
                 $api->resource('groups', 'GroupController');
                 // 课程
                 $api->resource('courses', 'CourseController');
-                // 用户管理班级、课程
-                $api->get('manage-courses', 'UserCourseController@index');
-                $api->get('manage-groups', 'UserGroupController@index');
-                // 用户添加、移除群组
-                $api->get('users/{user}/groups', 'UserGroupController@index');
-                $api->post('users/{user}/groups', 'UserGroupController@store');
-                $api->post('bulk-import-users', 'UserGroupController@bulk');
-                $api->delete('users/{user}/groups/{group}', 'UserGroupController@destroy');
                 // 测试分类添加移除
                 $api->post('tests/{test}/categories', 'TestCategoryController@store');
                 $api->post('tests/{test}/categories/{category}', 'TestCategoryController@destroy');

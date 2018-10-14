@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\BulkUserRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use App\Http\Controllers\Controller;
@@ -33,8 +34,6 @@ class UserController extends Controller
         // 生成初始密码
         $user->password =bcrypt($request->password ?? 123456);
         $user->save();
-
-        $user->groups()->attach($request->group_id);
 
         return $this->response->item($user, new UserTransformer())->setStatusCode(201);
     }
@@ -74,6 +73,25 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
+
+        return $this->response->noContent();
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return \Dingo\Api\Http\Response
+     */
+    public function bulk(BulkUserRequest $request)
+    {
+        $users = $request->users;
+
+        foreach ($users as $userData) {
+            $user = new User($userData);
+            $user->group_id = $request->group_id;
+            $user->password = $request->password ? bcrypt($request->password) : bcrypt(123456);
+            $user->save();
+        }
 
         return $this->response->noContent();
     }

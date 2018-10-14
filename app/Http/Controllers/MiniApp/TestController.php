@@ -18,9 +18,9 @@ class TestController extends Controller
      */
     public function today()
     {
-        $groupIds = auth()->user()->groups()->pluck('id')->toArray();
+        $me = auth()->user();
 
-        $testIds = GroupTest::whereIn('group_id', $groupIds)->pluck('test_id');
+        $testIds = GroupTest::where('group_id', $me->group_id)->pluck('test_id');
 
         $tests = Test::today()->whereIn('id', $testIds)->get();
 
