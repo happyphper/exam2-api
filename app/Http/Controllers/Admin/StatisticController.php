@@ -108,10 +108,27 @@ class StatisticController extends Controller
             $date = $request->input('created_at');
             $dataArray = collect($date)->map(function ($item) { return Carbon::parse($item); })->toArray();
             return $query->whereBetween('created_at', $dataArray);
-        })->with('user:id,name')->with('course:id,title')->with('group:id,name')->orderBy('user_id')->get();
+        })->with('test:id,title')->with('user:id,name')->with('course:id,title')->with('group:id,name')->orderBy('user_id')->get();
 
         $data = $data->groupBy('user_id')->values()->toArray();
 
-        return $this->response->array(compact('data'));
+        $container = [];
+        foreach ($data as $index => $dataGroup) {
+            $container[$index]['name'] = $dataGroup[0]['user']['name'];
+            $container[$index]['course'] = $dataGroup[0]['course']['title'];
+            $container[$index]['group'] = $dataGroup[0]['group']['name'];
+            $totalScore = 0;
+            foreach ($dataGroup as $item) {
+                $totalScore += $item['score'];
+                $container[$index]['tests'][] = [
+                    'id' => $item['id'],
+                    'title' => $item['test']['title'],
+                    'score' => $item['score']
+                ];
+            }
+            $container[$index]['average'] = number_format($totalScore / count($dataGroup), 2);
+        }
+
+        return $this->response->array(['data' => $container]);
     }
 }
