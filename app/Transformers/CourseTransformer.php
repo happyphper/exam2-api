@@ -15,8 +15,6 @@ class CourseTransformer extends TransformerAbstract
 {
     protected $availableIncludes = ['user'];
 
-    protected $defaultIncludes = [];
-
     public function transform(Course $model)
     {
         return [

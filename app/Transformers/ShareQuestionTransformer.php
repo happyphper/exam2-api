@@ -13,7 +13,7 @@ use League\Fractal\TransformerAbstract;
 
 class ShareQuestionTransformer extends TransformerAbstract
 {
-    protected $defaultIncludes = ['share_user'];
+    protected $availableIncludes = ['user', 'share_user'];
 
     public function transform(ShareQuestion $model)
     {
@@ -26,5 +26,10 @@ class ShareQuestionTransformer extends TransformerAbstract
     public function includeShareUser(ShareQuestion $model)
     {
         return $this->item($model->share_user, new UserTransformer());
+    }
+
+    public function includeUser(ShareQuestion $model)
+    {
+        return $this->item($model->user, new UserTransformer());
     }
 }
