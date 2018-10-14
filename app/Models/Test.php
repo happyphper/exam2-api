@@ -18,7 +18,8 @@ class Test extends Model
         'course_id',
         'started_at',
         'ended_at',
-        'course:title'
+        'course:title',
+        'groups:name',
     ];
 
     public $sortable = ['*'];

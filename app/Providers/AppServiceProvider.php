@@ -18,10 +18,11 @@ class AppServiceProvider extends ServiceProvider
         \App\Models\Question::observe(\App\Observers\QuestionObserver::class);
         \App\Models\QuestionResult::observe(\App\Observers\QuestionResultObserver::class);
         \App\Models\TestQuestion::observe(\App\Observers\TestQuestionObserver::class);
-        \DB::listen(function ($query) {
-            \Log::info($query->sql);
-            \Log::info($query->bindings);
-        });
+        \App\Models\Test::observe(\App\Observers\TestObserver::class);
+        // \DB::listen(function ($query) {
+        //     \Log::info($query->sql);
+        //     \Log::info($query->bindings);
+        // });
     }
 
     /**
