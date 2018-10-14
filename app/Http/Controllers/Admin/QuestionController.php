@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\BulkQuestionRequest;
 use App\Http\Requests\QuestionRequest;
 use App\Models\Course;
 use App\Models\Question;
@@ -30,19 +31,13 @@ class QuestionController extends Controller
      * @return \Dingo\Api\Http\Response
      * @throws \Throwable
      */
-    public function bulk(Request $request)
+    public function bulk(BulkQuestionRequest $request)
     {
-        $course = Course::findOrFail($request->course_id);
+        $course = Course::find($request->course_id);
 
         $questions = $request->questions;
 
-        $questions = collect($questions)->map(function ($question, $index) use ($questions) {
-            if (in_array($question['title'], $questions)) {
-                $this->response->errorBadRequest("第 {$index} 道题目在 Excel 中重复出现，请处理。");
-            }
-            if (Question::where('title', $question['title'])->exists()) {
-                $this->response->errorBadRequest('『' . $question['title'] . '』题目已存在于数据库之中，请移除后再导入。');
-            }
+        $questions = collect($questions)->map(function ($question, $index) use ($request, $questions) {
             return [
                 'title' => $question['title'],
                 'type' => $question['type'],

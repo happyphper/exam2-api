@@ -32,7 +32,7 @@ class UserController extends Controller
     {
         $user = new User($request->all());
         // 生成初始密码
-        $user->password =bcrypt($request->password ?? 123456);
+        $user->password = bcrypt($request->password ?? 123456);
         $user->save();
 
         return $this->response->item($user, new UserTransformer())->setStatusCode(201);
@@ -53,7 +53,7 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param UserRequest $request
-     * @param User $user
+     * @param User        $user
      * @return \Illuminate\Http\Response
      */
     public function update(UserRequest $request, User $user)
@@ -87,7 +87,7 @@ class UserController extends Controller
         $users = $request->users;
 
         foreach ($users as $userData) {
-            $user = new User($userData);
+            $user           = new User($userData);
             $user->group_id = $request->group_id;
             $user->password = $request->password ? bcrypt($request->password) : bcrypt(123456);
             $user->save();

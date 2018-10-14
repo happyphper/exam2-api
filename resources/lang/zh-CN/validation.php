@@ -99,7 +99,7 @@ return [
     |
     */
 
-    'custom'               => [
+    'custom'     => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
@@ -115,7 +115,7 @@ return [
     | of 'email'. This simply helps us make messages a little cleaner.
     |
     */
-    'attributes'           => [
+    'attributes' => [
         'name'                  => '名称',
         'username'              => '用户名',
         'email'                 => '邮箱',
@@ -145,25 +145,32 @@ return [
         'time'                  => '时间',
         'available'             => '可用的',
         'size'                  => '大小',
-
-        'options.0.is_answer' => '第一个选项的答案',
-        'options.1.is_answer' => '第二个选项的答案',
-        'options.2.is_answer' => '第三个选项的答案',
-        'options.3.is_answer' => '第四个选项的答案',
-        'options.0.content' => '第一个选项的内容',
-        'options.1.content' => '第二个选项的内容',
-        'options.2.content' => '第三个选项的内容',
-        'options.3.content' => '第四个选项的内容',
-        'options.0.id' => '第一个的索引',
-        'options.1.id' => '第二个的索引',
-        'options.2.id' => '第三个的索引',
-        'options.3.id' => '第四个的索引',
-        'options' => '选项',
-        'started_at' => '开始时间',
-        'now' => '当前时间',
-        'stopped_at' => '结束时间',
-        'student_id' => '学号',
-        'answer' => '答案',
-        'group_id' => '班级',
+        'questions'             => '题目',
+        'questions.*.title'     => '题目',
+        'questions.*.type'      => '类型',
+        'questions.*.options'   => '选项',
+        'questions.*.option1'   => '选项1',
+        'questions.*.option2'   => '选项2',
+        'questions.*.option3'   => '选项3',
+        'questions.*.option4'   => '选项4',
+        'questions.*.answer'    => '答案',
+        'questions.*.explain'   => '题目解析',
+        'options'               => '选项',
+        'options.*.is_answer'   => '答案',
+        'options.*.content'     => '选项内容',
+        'options.*.id'          => '选项 ID',
+        'users'                 => '用户',
+        'users.*.student_id'    => '学号',
+        'users.*.name'          => '姓名',
+        'users.*.email'         => '邮箱',
+        'users.*.phone'         => '手机',
+        'users.*.password'      => '密码',
+        'started_at'            => '开始时间',
+        'now'                   => '当前时间',
+        'stopped_at'            => '结束时间',
+        'student_id'            => '学号',
+        'answer'                => '答案',
+        'group_id'              => '班级',
+        'course_id'             => '课程',
     ],
 ];

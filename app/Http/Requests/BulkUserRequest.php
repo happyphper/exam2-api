@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
+use App\Rules\ArrayUniqueInDatabaseRule;
+use App\Rules\ArrayUserUniqueRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class BulkUserRequest extends FormRequest
@@ -23,22 +26,14 @@ class BulkUserRequest extends FormRequest
      */
     public function rules()
     {
-        switch ($this->method()) {
-            case 'POST':
-                return [
-                    'group_id' => 'required|exists:groups,id',
-                    'users.*.name' => ['required', 'string', 'min:1', 'max:16',],
-                    'users.*.email' => ['sometimes', 'string', 'email'],
-                    'users.*.phone' => ['sometimes', 'regex:/1[3-9]\d{9}/'],
-                    'users.*.student_id' => ['required',],
-                    'users.*.password' => ['sometimes', 'regex:/.{6,}/']
-                ];
-                break;
-            case 'PUT':
-                return [];
-                break;
-        }
-
-
+        return [
+            'group_id'           => ['required', 'exists:groups,id'],
+            'users' => ['required', 'array', new ArrayUserUniqueRule()],
+            'users.*.name'       => ['required', 'string', 'min:1', 'max:16',],
+            'users.*.email'      => ['sometimes', 'string', 'email', new ArrayUniqueInDatabaseRule('email', new User())],
+            'users.*.phone'      => ['sometimes', 'regex:/1[3-9]\d{9}/', new ArrayUniqueInDatabaseRule('phone', new User())],
+            'users.*.student_id' => ['required', new ArrayUniqueInDatabaseRule('student_id', new User())],
+            'users.*.password'   => ['sometimes', 'regex:/.{6,}/'],
+        ];
     }
 }

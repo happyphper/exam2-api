@@ -88,6 +88,8 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
             // 答题记录
             $api->get('test-results', 'TestResultController@index');
             $api->get('test-results/{result}', 'TestResultController@show');
+            // 同班同学
+            $api->get('users', 'UserController@index');
         });
     });
 });

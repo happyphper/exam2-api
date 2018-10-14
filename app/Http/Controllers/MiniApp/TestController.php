@@ -37,7 +37,7 @@ class TestController extends Controller
     {
         $me = auth()->user();
 
-        $groupTest = GroupTest::whereIn('group_id', $me->groups()->pluck('id')->toArray())
+        $groupTest = GroupTest::where('group_id', $me->group_id)
             ->where('test_id', $test)
             ->firstOrFail();
 
@@ -50,7 +50,7 @@ class TestController extends Controller
                 'test_id' => $groupTest->test_id,
                 'questions_count' => $groupTest->test->questions_count,
                 'total_score' => $groupTest->test->total_score,
-                'group_id' => $groupTest->group_id
+                'group_id' => $me->group_id
             ]);
         }
 

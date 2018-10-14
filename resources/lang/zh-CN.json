@@ -1,0 +1,5 @@
+{
+  ":value :attribute has already been used.": ":value :attribute 已经被使用。",
+  ":value :attribute repeating in form data.": ":value :attribute 在提交数据中重复。",
+  ":value :attribute is required.": ":value :attribute 为必填项。"
+}

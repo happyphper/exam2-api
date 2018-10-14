@@ -26,7 +26,6 @@ class QuestionResultController extends Controller
 
         $result = QuestionResult::where('test_id', $test->id)
             ->where('user_id', auth()->id())
-            ->where('group_id', $request->group_id)
             ->where('test_id', $test->id)
             ->first();
         if ($result) {
@@ -37,6 +36,7 @@ class QuestionResultController extends Controller
         $result->fill($request->all());
         $result->user_id = auth()->id();
         $result->test_id = $test->id;
+        $result->group_id = auth()->user()->group_id;
 
         // 正确与否
         $userAnswer = $request->input('answer');

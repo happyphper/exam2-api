@@ -16,7 +16,6 @@ class QuestionResultObserver
      */
     public function created(QuestionResult $result)
     {
-
         $testResult = TestResult::where('user_id', $result->user_id)->where('test_id', $result->test_id)->first();
         $testResult->finished_count++;
         $testResult->score += $result->score;
