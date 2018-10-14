@@ -50,6 +50,15 @@ class Question extends Model
         return $this->belongsTo(Course::class);
     }
 
+    public function setAnswerAttribute($value)
+    {
+        $answer = collect($value)->map(function ($item) {
+            return (int)$item;
+        })->toJson();
+
+        $this->attributes['answer'] = $answer;
+    }
+
     public function setOptionsAttribute($value)
     {
         $options = collect($value)->map(function ($item) {

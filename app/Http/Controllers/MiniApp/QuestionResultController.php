@@ -32,21 +32,24 @@ class QuestionResultController extends Controller
             return $this->response->item($result, new QuestionResultTransformer())->setStatusCode(201);
         }
 
-        $result = new QuestionResult();
-        $result->fill($request->all());
-        $result->user_id = auth()->id();
-        $result->test_id = $test->id;
-        $result->group_id = auth()->user()->group_id;
-
         // 正确与否
         $userAnswer = $request->input('answer');
+        $userAnswer = collect($userAnswer)->map(function($item) {
+            return (int)$item;
+        })->toArray();
         sort($userAnswer);
-
-        $score = TestQuestion::where('test_id', $result->test_id)
+        $score = TestQuestion::where('test_id', $test->id)
             ->where('question_id', $request->question_id)
             ->value('score');
         $answer = Question::where('id', $request->question_id)->value('answer');
         $isRight = $userAnswer === $answer;
+
+        $result = new QuestionResult();
+        $result->answer = $userAnswer;
+        $result->question_id = $request->question_id;
+        $result->user_id = auth()->id();
+        $result->test_id = $test->id;
+        $result->group_id = auth()->user()->group_id;
         $result->score = $isRight ? $score : 0;
         $result->is_right = $isRight;
         $result->save();

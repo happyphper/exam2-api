@@ -22,6 +22,8 @@ class CreateQuestionsTable extends Migration
             $table->string('explain')->nullable()->comment('答案解析');
             $table->integer('wrong_count')->default(0)->comment('错误次数');
             $table->integer('right_count')->default(0)->comment('正确次数');
+            $table->integer('answered_count')->default(0)->comment('答题次数');
+            $table->integer('accuracy')->default(0)->comment('正确率');
             $table->integer('course_id')->comment('课程');
             $table->integer('user_id')->comment('创建人');
             $table->timestamps();

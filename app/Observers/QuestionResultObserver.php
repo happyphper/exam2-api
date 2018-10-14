@@ -19,13 +19,17 @@ class QuestionResultObserver
         $testResult = TestResult::where('user_id', $result->user_id)->where('test_id', $result->test_id)->first();
         $testResult->finished_count++;
         $testResult->score += $result->score;
+        $question = $result->question;
         if ($result->is_right) {
-            $result->question->increment('right_count');
-            $testResult->right_count++;
+            $question->right_count += 1;
+            $testResult->right_count += 1;
         } else {
-            $result->question->increment('wrong_count');
-            $testResult->wrong_count++;
+            $question->wrong_count += 1;
+            $testResult->wrong_count += 1;
         }
+        $question->answered_count += 1;
+        $question->accuracy = round($question->right_count/$question->answered_count) * 100;
+        $question->save();
         if ($testResult->finished_count === $result->test->questions_count) {
             $testResult->is_finished = true;
         }
