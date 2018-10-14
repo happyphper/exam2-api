@@ -42,7 +42,7 @@ class AuthController extends Controller
         }
 
         if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => '账号或密码错误！'], 400);
+            $this->response->errorBadRequest('账号或密码错误');
         }
 
         return $this->respondWithToken($token);
