@@ -19,7 +19,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $questions = Question::ofShare(auth()->id())->filtered()->orderByDesc('created_at')->paginate(self::limit());
+        $questions = Question::ofShare(auth()->id())->filtered()->sorted()->orderByDesc('created_at')->paginate(self::limit());
 
         return $this->response->paginator($questions, new QuestionTransformer());
     }
