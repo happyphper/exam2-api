@@ -91,6 +91,8 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
             $api->get('test-results/{result}', 'TestResultController@show');
             // 同班同学
             $api->get('users', 'UserController@index');
+            // 修改密码
+            $api->put('password', 'PasswordController@update');
         });
     });
 });
