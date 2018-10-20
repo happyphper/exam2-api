@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\MiniApp;
 
 use App\Http\Controllers\Controller;
+use App\Models\QuestionResult;
+use App\Models\TestResult;
 use App\Transformers\UserTransformer;
 
 class AuthController extends Controller
@@ -55,7 +57,12 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return $this->response->item(auth()->user(), new UserTransformer());
+        $me = auth()->user();
+
+        return $this->response->item($me, new UserTransformer())->setMeta([
+            'tests_count' => TestResult::where('user_id', $me->id)->count(),
+            'questions_count' => QuestionResult::where('user_id', $me->id)->count(),
+        ]);
     }
 
     /**
