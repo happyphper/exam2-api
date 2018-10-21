@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\TestStatus;
 use App\Traits\OwnTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -20,6 +21,7 @@ class Test extends Model
         'ended_at',
         'course:title',
         'groups:name',
+        'status'
     ];
 
     public $sortable = ['*'];
@@ -73,6 +75,6 @@ class Test extends Model
     public function scopeToday($query)
     {
         $now = now()->toDateTimeString();
-        return $query->where('started_at', '<', $now)->where('ended_at', '>', $now);
+        return $query->where('started_at', '<', $now)->where('ended_at', '>', $now)->where('status', TestStatus::Ongoing);
     }
 }

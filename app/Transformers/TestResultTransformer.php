@@ -28,6 +28,7 @@ class TestResultTransformer extends TransformerAbstract
             'total_score' => $model->total_score ?? 0,
             'finished_count' => $model->finished_count ?? 0,
             'is_finished' => (bool)$model->is_finished,
+            'is_participated' => (bool)$model->is_participated,
             'consumed_seconds' => $this->getConsumeTime($model),
             'created_at' => $model->created_at ? $model->created_at->toDateTimeString() : null,
             'updated_at' => $model->updated_at ? $model->updated_at->toDateTimeString() : null,

@@ -1,5 +1,8 @@
 {
   ":value :attribute has already been used.": ":value :attribute 已经被使用。",
   ":value :attribute repeating in form data.": ":value :attribute 在提交数据中重复。",
-  ":value :attribute is required.": ":value :attribute 为必填项。"
+  ":value :attribute is required.": ":value :attribute 为必填项。",
+  "Only unstart status allows delete or update.": "为保证数据一致性，仅允许未开考的状态的考试进行修改/删除。",
+  "Test has answer record,so you can not edit or delete.": "为保证数据一致性，已经有学员参加的考试无法修改/删除。",
+  "Test is not ongoing.": "考试未开考。"
 }

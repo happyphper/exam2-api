@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\TestStatus;
 use App\Http\Requests\TestQuestionRequest;
 use App\Http\Requests\TestRequest;
 use App\Models\Question;
@@ -30,6 +31,10 @@ class TestQuestionController extends Controller
      */
     public function store(TestQuestionRequest $request, $test)
     {
+        if ($test->status !== TestStatus::Unstart) {
+            $this->response->errorForbidden(__('Only unstart status allows delete or update.'));
+        }
+
         TestQuestion::create([
             'test_id' => $test,
             'question_id' => $request->question_id,
@@ -50,6 +55,10 @@ class TestQuestionController extends Controller
      */
     public function destroy($test, $question)
     {
+        if ($test->status !== TestStatus::Unstart) {
+            $this->response->errorForbidden(__('Only unstart status allows delete or update.'));
+        }
+
         TestQuestion::where('test_id', $test)->where('question_id', $question)->delete();
 
         return $this->response->noContent();

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\MiniApp;
 
+use App\Enums\TestStatus;
 use App\Models\GroupTest;
 use App\Models\Test;
 use App\Models\TestResult;
@@ -35,13 +36,15 @@ class TestController extends Controller
      */
     public function start($test)
     {
+        $test = Test::today()->findOrFail($test);
+        if ($test->status !== TestStatus::Ongoing) {
+            $this->response->errorForbidden(__('Test is not ongoing.'));
+        }
         $me = auth()->user();
 
         $groupTest = GroupTest::where('group_id', $me->group_id)
             ->where('test_id', $test)
             ->firstOrFail();
-
-        $test = Test::today()->findOrFail($test);
 
         $result = TestResult::where('user_id', $me->id)->where('test_id', $groupTest->test_id)->first();
         if (!$result) {

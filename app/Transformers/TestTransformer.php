@@ -8,6 +8,7 @@
 
 namespace App\Transformers;
 
+use App\Enums\TestStatus;
 use App\Models\Test;
 use League\Fractal\TransformerAbstract;
 
@@ -22,6 +23,8 @@ class TestTransformer extends TransformerAbstract
             'title' => $model->title,
             'started_at' => $model->started_at ? $model->started_at->toDateTimeString() : null,
             'ended_at' => $model->ended_at ? $model->ended_at->toDateTimeString() : null,
+            'status' => $model->status,
+            'status_translate' => TestStatus::getDescription($model->status),
             'created_at' => $model->created_at ? $model->created_at->toDateTimeString() : null,
             'updated_at' => $model->updated_at ? $model->updated_at->toDateTimeString() : null,
         ];

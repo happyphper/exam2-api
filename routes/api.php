@@ -35,6 +35,7 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
                 // 共享题库
                 $api->resource('share-questions', 'ShareQuestionController');
                 // 测试 CRUD
+                $api->patch('tests/{test}/end', 'TestController@end');
                 $api->resource('tests', 'TestController');
                 // 测试题目 CRUD
                 $api->resource('tests/{test}/questions', 'TestQuestionController');

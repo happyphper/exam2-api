@@ -26,6 +26,7 @@ class CreateTestResultsTable extends Migration
             $table->integer('total_score')->default(0)->comment('总分');
             $table->integer('finished_count')->default(0)->comment('已答题个数');
             $table->boolean('is_finished')->default(false)->comment('是否答完');
+            $table->boolean('is_participated')->default(true)->comment('是否参加');
             $table->timestamps();
 
             $table->unique(['user_id', 'test_id']);
