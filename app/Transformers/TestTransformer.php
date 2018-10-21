@@ -23,8 +23,8 @@ class TestTransformer extends TransformerAbstract
             'title' => $model->title,
             'started_at' => $model->started_at ? $model->started_at->toDateTimeString() : null,
             'ended_at' => $model->ended_at ? $model->ended_at->toDateTimeString() : null,
-            'status' => $model->status,
-            'status_translate' => TestStatus::getDescription($model->status),
+            'status' => $model->status ?? TestStatus::Unstart,
+            'status_translate' => $model->status ? TestStatus::getDescription($model->status) : TestStatus::getDescription(TestStatus::Unstart),
             'created_at' => $model->created_at ? $model->created_at->toDateTimeString() : null,
             'updated_at' => $model->updated_at ? $model->updated_at->toDateTimeString() : null,
         ];

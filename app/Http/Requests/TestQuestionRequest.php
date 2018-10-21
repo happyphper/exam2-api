@@ -30,7 +30,7 @@ class TestQuestionRequest extends FormRequest
                     'question_id' => [
                         'required',
                         'exists:questions,id',
-                        Rule::unique('test_questions')->where('question_id', $this->question_id)->where('test_id', $this->test)
+                        Rule::unique('test_questions')->where('question_id', $this->question_id)->where('test_id', $this->test->id)
                     ],
                     'score' => [
                         'required',

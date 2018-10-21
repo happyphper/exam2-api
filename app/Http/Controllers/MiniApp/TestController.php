@@ -41,12 +41,14 @@ class TestController extends Controller
             $this->response->errorForbidden(__('Test is not ongoing.'));
         }
         $me = auth()->user();
+        $result = TestResult::where('user_id', $me->id)->where('test_id', $test->id)->first();
+        if ($result && $result->is_finished) {
+            $this->response->errorForbidden(__('Test is end.'));
+        }
 
         $groupTest = GroupTest::where('group_id', $me->group_id)
-            ->where('test_id', $test)
+            ->where('test_id', $test->id)
             ->firstOrFail();
-
-        $result = TestResult::where('user_id', $me->id)->where('test_id', $groupTest->test_id)->first();
         if (!$result) {
             TestResult::create([
                 'user_id' => $me->id,

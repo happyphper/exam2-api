@@ -70,6 +70,10 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
+        if ($group->users()->exists() || $group->tests()->exists()) {
+            $this->response->errorForbidden(__('Test has users or tests,so you can not operate it.'));
+        }
+
         $group->delete();
 
         return $this->response->noContent();

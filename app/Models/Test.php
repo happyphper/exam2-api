@@ -75,6 +75,6 @@ class Test extends Model
     public function scopeToday($query)
     {
         $now = now()->toDateTimeString();
-        return $query->where('started_at', '<', $now)->where('ended_at', '>', $now)->where('status', TestStatus::Ongoing);
+        return $query->where('started_at', '<', $now)->where('ended_at', '>', $now);
     }
 }

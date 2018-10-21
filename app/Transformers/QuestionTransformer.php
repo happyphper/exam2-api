@@ -9,6 +9,7 @@
 namespace App\Transformers;
 
 use App\Models\Question;
+use App\Models\QuestionResult;
 use League\Fractal\TransformerAbstract;
 
 class QuestionTransformer extends TransformerAbstract
@@ -47,7 +48,10 @@ class QuestionTransformer extends TransformerAbstract
 
     public function includeResult(Question $model)
     {
-        $item = $model->result()->where('user_id', auth()->id())->where('test_id', request('test'))->first();
+        $item = QuestionResult::where('user_id', auth()->id())
+            ->where('test_id', request()->test)
+            ->where('question_id', $model->id)
+            ->first();
         if (!$item) {
             return $this->null();
         }

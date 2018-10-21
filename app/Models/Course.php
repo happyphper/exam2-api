@@ -38,4 +38,14 @@ class Course extends Model
     {
         return $this->hasMany(Question::class);
     }
+
+    /**
+     * 考试
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function tests()
+    {
+        return $this->belongsTo(Test::class);
+    }
 }

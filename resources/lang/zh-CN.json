@@ -4,5 +4,10 @@
   ":value :attribute is required.": ":value :attribute 为必填项。",
   "Only unstart status allows delete or update.": "为保证数据一致性，仅允许未开考的状态的考试进行修改/删除。",
   "Test has answer record,so you can not edit or delete.": "为保证数据一致性，已经有学员参加的考试无法修改/删除。",
-  "Test is not ongoing.": "考试未开考。"
+  "Test is not ongoing.": "考试未开考。",
+  "Test is end.": "考试已结束。",
+  "Course has questions or tests,so you can not operate it.": "课程已经关联题目或考试，为保证数据的一致性，您无法进行此操作。",
+  "Test has users or tests,so you can not operate it.": "班级已经关联用户或考试，为保证数据的一致性，您无法进行此操作。",
+  "Users joined the test, so you can not operate it.": "已经有该班级成员参加了此次考试，为保证数据一致性，您无法进行此操作。",
+  "Users answered the question, so you can not operate it.": "已经有该学员答过了本题目，为保证数据一致性，您无法进行此操作。"
 }

@@ -106,7 +106,7 @@ class TestController extends Controller
             $results = TestResult::whereIn('user_id', $users->pluck('id')->toArray())->where('test_id', $test->id)->get();
             foreach ($users as $user) {
                 $result = $results->where('user_id', $user->id)->first();
-                if ($result) {
+                if ($result && !$result->is_finished) {
                     $result->is_finished = true;
                     $result->save();
                 } else {

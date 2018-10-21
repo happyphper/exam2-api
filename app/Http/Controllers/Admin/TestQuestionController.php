@@ -29,14 +29,14 @@ class TestQuestionController extends Controller
      * @param TestRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TestQuestionRequest $request, $test)
+    public function store(TestQuestionRequest $request, Test $test)
     {
         if ($test->status !== TestStatus::Unstart) {
             $this->response->errorForbidden(__('Only unstart status allows delete or update.'));
         }
 
         TestQuestion::create([
-            'test_id' => $test,
+            'test_id' => $test->id,
             'question_id' => $request->question_id,
             'score' => $request->score
         ]);

@@ -2,6 +2,8 @@
 
 namespace App\Observers;
 
+use App\Models\QuestionResult;
+use App\Models\TestResult;
 use App\Models\User;
 
 class UserObserver
@@ -20,6 +22,11 @@ class UserObserver
      */
     public function deleting(User $user)
     {
-        $user->group->decrement('users_count');
+        // 移除用户所有数据
+        \DB::transaction(function () use($user){
+            TestResult::where('user_id', $user->id)->delete();
+            QuestionResult::where('user_id', $user->id)->delete();
+            $user->group->decrement('users_count');
+        });
     }
 }

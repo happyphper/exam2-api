@@ -6,6 +6,7 @@ use App\Http\Requests\BulkQuestionRequest;
 use App\Http\Requests\QuestionRequest;
 use App\Models\Course;
 use App\Models\Question;
+use App\Models\QuestionResult;
 use App\Transformers\QuestionTransformer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -113,7 +114,9 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question)
     {
-        // TODO 当未完成测试包含该题目的测试时，则无法删除，否则删除
+        if (QuestionResult::where('question_id', $question->id)->exists()) {
+            $this->response->errorForbidden(__('Users answered the question, so you can not operate it.'));
+        }
 
         $question->delete();
 

@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\GroupTestRequest;
 use App\Models\Group;
 use App\Models\GroupTest;
+use App\Models\TestResult;
 use App\Transformers\GroupTestTransformer;
 use App\Transformers\TestTransformer;
 
@@ -65,9 +66,15 @@ class GroupTestController extends Controller
      * @param GroupTestRequest $request
      * @return \Dingo\Api\Http\Response
      */
-    public function destroy(Group $group, GroupTest $test)
+    public function destroy(Group $group, GroupTest $groupTest)
     {
-        $test = $test->delete();
+        $userIds = $group->users()->pluck('id');
+
+        if (TestResult::where('test_id', $groupTest->test_id)->whereIn('user_id', $userIds->toArray())->exists()) {
+            $this->response->errorForbidden(__('Users joined the test, so you can not operate it.'));
+        }
+
+        $groupTest->delete();
 
         return $this->response->noContent();
     }

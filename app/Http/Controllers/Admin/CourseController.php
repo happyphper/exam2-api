@@ -59,6 +59,9 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
+        if ($course->tests()->exists() || $course->questions()->exists()) {
+            $this->response->errorForbidden(__('Course has questions or tests,so you can not operate it.'));
+        }
         $course->delete();
 
         return $this->response->noContent();
