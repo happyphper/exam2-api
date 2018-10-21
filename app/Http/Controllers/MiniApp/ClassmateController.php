@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Transformers\UserTransformer;
 
-class UserController extends Controller
+class ClassmateController extends Controller
 {
     /**
      * Display a listing of the resource.

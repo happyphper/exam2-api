@@ -41,7 +41,7 @@ class TestController extends Controller
             ->where('test_id', $test)
             ->firstOrFail();
 
-        Test::today()->findOrFail($test);
+        $test = Test::today()->findOrFail($test);
 
         $result = TestResult::where('user_id', $me->id)->where('test_id', $groupTest->test_id)->first();
         if (!$result) {
@@ -55,8 +55,12 @@ class TestController extends Controller
             ]);
         }
 
-        $questions = $groupTest->test->questions()->select(['id', 'title', 'options', 'type'])->get();
+        $questions = $groupTest->test->questions()->select(['id', 'title', 'options', 'type', 'accuracy', 'answered_count'])->get();
 
-        return $this->response->collection($questions, new QuestionTransformer());
+        $answeringCount = TestResult::where('test_id', $test->id)->count();
+
+        return $this->response->collection($questions, new QuestionTransformer())->setMeta([
+            'answering_count' => $answeringCount
+        ]);
     }
 }

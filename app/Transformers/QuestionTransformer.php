@@ -13,7 +13,7 @@ use League\Fractal\TransformerAbstract;
 
 class QuestionTransformer extends TransformerAbstract
 {
-    protected $availableIncludes = ['course'];
+    protected $availableIncludes = ['course', 'result'];
 
     public function transform(Question $model)
     {
@@ -43,5 +43,14 @@ class QuestionTransformer extends TransformerAbstract
     public function includeCourse(Question $model)
     {
         return $this->item($model->course, new CourseTransformer());
+    }
+
+    public function includeResult(Question $model)
+    {
+        $item = $model->result()->where('user_id', auth()->id())->where('test_id', request('test'))->first();
+        if (!$item) {
+            return $this->null();
+        }
+        return $this->item($item, new QuestionResultTransformer());
     }
 }

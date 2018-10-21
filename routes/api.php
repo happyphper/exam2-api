@@ -79,20 +79,24 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
         $api->group(['prefix' => 'miniapp', 'namespace' => 'MiniApp', 'as' => 'miniapp'], function ($api) {
             // 登录
             $api->post('auth/login', 'AuthController@login')->name('miniapp.login');
-            $api->get('auth/me', 'AuthController@me')->name('miniapp.me');
-            // 今日测验
-            $api->get('today-tests', 'TestController@today');
-            // 开始考试
-            $api->get('tests/{test}/start', 'TestController@start');
-            // 提交答案
-            $api->post('tests/{test}/questions', 'QuestionResultController@store');
-            // 答题记录
-            $api->get('test-results', 'TestResultController@index');
-            $api->get('test-results/{result}', 'TestResultController@show');
-            // 同班同学
-            $api->get('users', 'UserController@index');
-            // 修改密码
-            $api->put('password', 'PasswordController@update');
+            $api->group(['middleware' => 'auth'], function ($api) {
+                $api->get('auth/me', 'AuthController@me')->name('miniapp.me');
+                // 今日测验
+                $api->get('today-tests', 'TestController@today');
+                // 开始考试
+                $api->get('tests/{test}/start', 'TestController@start');
+                // 提交答案
+                $api->post('tests/{test}/questions', 'QuestionResultController@store');
+                // 答题记录
+                $api->get('test-results', 'TestResultController@index');
+                $api->get('test-results/{result}', 'TestResultController@show');
+                // 同班同学
+                $api->get('classmates', 'ClassmateController@index');
+                // 修改密码
+                $api->put('password', 'PasswordController@update');
+                // 绑定手机
+                $api->put('phone', 'PhoneController@update');
+            });
         });
     });
 });

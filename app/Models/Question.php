@@ -50,6 +50,11 @@ class Question extends Model
         return $this->belongsTo(Course::class);
     }
 
+    public function result()
+    {
+        return $this->belongsTo(QuestionResult::class);
+    }
+
     public function setAnswerAttribute($value)
     {
         $answer = collect($value)->map(function ($item) {

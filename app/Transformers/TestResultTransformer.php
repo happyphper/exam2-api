@@ -13,7 +13,7 @@ use League\Fractal\TransformerAbstract;
 
 class TestResultTransformer extends TransformerAbstract
 {
-    public $availableIncludes = ['test', 'group', 'user'];
+    public $availableIncludes = ['test', 'group', 'user', 'course'];
 
     public function transform(TestResult $model)
     {
@@ -28,6 +28,7 @@ class TestResultTransformer extends TransformerAbstract
             'total_score' => $model->total_score ?? 0,
             'finished_count' => $model->finished_count ?? 0,
             'is_finished' => (bool)$model->is_finished,
+            'consumed_seconds' => $this->getConsumeTime($model),
             'created_at' => $model->created_at ? $model->created_at->toDateTimeString() : null,
             'updated_at' => $model->updated_at ? $model->updated_at->toDateTimeString() : null,
         ];
@@ -38,6 +39,11 @@ class TestResultTransformer extends TransformerAbstract
         return $this->item($result->test, new TestTransformer());
     }
 
+    public function includeCourse(TestResult $result)
+    {
+        return $this->item($result->course, new CourseTransformer());
+    }
+
     public function includeGroup(TestResult $result)
     {
         return $this->item($result->group, new GroupTransformer());
@@ -46,5 +52,10 @@ class TestResultTransformer extends TransformerAbstract
     public function includeUser(TestResult $result)
     {
         return $this->item($result->user, new UserTransformer());
+    }
+
+    private function getConsumeTime(TestResult $result)
+    {
+        return $result->created_at->diffInSeconds($result->updated_at);
     }
 }
