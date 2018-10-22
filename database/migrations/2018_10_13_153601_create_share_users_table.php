@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateShareQuestionsTable extends Migration
+class CreateShareUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateShareQuestionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('share_questions', function (Blueprint $table) {
+        Schema::create('share_users', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->comment('收益者');
+            $table->integer('user_id')->comment('受益人');
             $table->integer('share_user_id')->comment('被共享者');
             $table->timestamps();
 
@@ -30,6 +30,6 @@ class CreateShareQuestionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('share_questions');
+        Schema::dropIfExists('share_users');
     }
 }

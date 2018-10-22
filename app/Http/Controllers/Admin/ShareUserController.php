@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\QuestionRequest;
 use App\Models\Question;
-use App\Models\ShareQuestion;
+use App\Models\ShareUser;
 use App\Models\User;
 use App\Transformers\ShareQuestionTransformer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ShareQuestionController extends Controller
+class ShareUserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +19,7 @@ class ShareQuestionController extends Controller
      */
     public function index()
     {
-        $data = ShareQuestion::own()->get();
+        $data = ShareUser::own()->get();
 
         return $this->response->collection($data, new ShareQuestionTransformer());
     }
@@ -34,11 +34,11 @@ class ShareQuestionController extends Controller
     {
         $shareUser = User::where('phone', $request->phone)->firstOrFail();
 
-        $item = new ShareQuestion();
+        $item = new ShareUser();
         $item->user_id = auth()->id();
         $item->share_user_id = $shareUser->id;
         $item->save();
-        $antherItem = new ShareQuestion();
+        $antherItem = new ShareUser();
         $antherItem->share_user_id = auth()->id();
         $antherItem->user_id = $shareUser->id;
         $antherItem->save();
@@ -55,10 +55,10 @@ class ShareQuestionController extends Controller
      */
     public function destroy($shareQuestion)
     {
-        $item = ShareQuestion::where('user_id', auth()->id())->where('share_user_id', $shareQuestion)->first();
+        $item = ShareUser::where('user_id', auth()->id())->where('share_user_id', $shareQuestion)->first();
         $item->delete();
 
-        $anotherItem = ShareQuestion::where('share_user_id', auth()->id())->where('user_id', $shareQuestion)->first();
+        $anotherItem = ShareUser::where('share_user_id', auth()->id())->where('user_id', $shareQuestion)->first();
         $anotherItem->delete();
         return $this->response->noContent();
     }

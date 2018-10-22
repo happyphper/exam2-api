@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Traits\OwnTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class ShareQuestion extends Model
+class ShareUser extends Model
 {
     use OwnTrait;
 

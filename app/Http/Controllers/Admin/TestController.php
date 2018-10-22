@@ -33,7 +33,7 @@ class TestController extends Controller
     public function store(TestRequest $request)
     {
         $test = new Test($request->all());
-        $test->user_id = 1;
+        $test->user_id = auth()->id();
         $test->save();
         $test->groups()->attach($request->group_ids);
 

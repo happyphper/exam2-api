@@ -8,14 +8,14 @@
 
 namespace App\Transformers;
 
-use App\Models\ShareQuestion;
+use App\Models\ShareUser;
 use League\Fractal\TransformerAbstract;
 
 class ShareQuestionTransformer extends TransformerAbstract
 {
     protected $availableIncludes = ['user', 'share_user'];
 
-    public function transform(ShareQuestion $model)
+    public function transform(ShareUser $model)
     {
         return [
             'user_id' => $model->user_id,
@@ -23,12 +23,12 @@ class ShareQuestionTransformer extends TransformerAbstract
         ];
     }
 
-    public function includeShareUser(ShareQuestion $model)
+    public function includeShareUser(ShareUser $model)
     {
         return $this->item($model->share_user, new UserTransformer());
     }
 
-    public function includeUser(ShareQuestion $model)
+    public function includeUser(ShareUser $model)
     {
         return $this->item($model->user, new UserTransformer());
     }

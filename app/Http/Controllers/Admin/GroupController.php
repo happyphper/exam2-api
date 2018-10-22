@@ -16,7 +16,7 @@ class GroupController extends Controller
      */
     public function index()
     {
-        $groups = Group::own()->filtered()->paginate(self::limit());
+        $groups = Group::ofShare(auth()->id())->filtered()->paginate(self::limit());
 
         return $this->response->paginator($groups, new GroupTransformer());
     }

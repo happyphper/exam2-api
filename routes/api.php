@@ -33,7 +33,7 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
                 $api->resource('questions', 'QuestionController');
                 $api->post('bulk-import-questions', 'QuestionController@bulk');
                 // 共享题库
-                $api->resource('share-questions', 'ShareQuestionController');
+                $api->resource('share-users', 'ShareUserController');
                 // 测试 CRUD
                 $api->patch('tests/{test}/end', 'TestController@end');
                 $api->resource('tests', 'TestController');

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ShareTrait;
 use Illuminate\Database\Eloquent\Model;
 use Jedrzej\Searchable\SearchableTrait;
 use Jedrzej\Sortable\SortableTrait;
@@ -9,6 +10,7 @@ use Jedrzej\Sortable\SortableTrait;
 class Question extends Model
 {
     use SearchableTrait,SortableTrait;
+    use ShareTrait;
     public $searchable = [
         'title',
         'type',
@@ -77,13 +79,5 @@ class Question extends Model
             ];
         })->toJson();
         $this->attributes['options'] = $options;
-    }
-
-    public function scopeOfShare($query, $userId)
-    {
-        $userIds = ShareQuestion::where('user_id', $userId)->pluck('share_user_id')->toArray();
-        $userIds[] = $userId;
-
-        return $query->whereIn('user_id', $userIds);
     }
 }
