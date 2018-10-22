@@ -97,6 +97,8 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
                 $api->put('password', 'PasswordController@update');
                 // 绑定手机
                 $api->put('phone', 'PhoneController@update');
+                // 获取题目及考试统计信息
+                $api->get('stats/dashboard', 'StatController@dashboard');
             });
         });
     });
