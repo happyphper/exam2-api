@@ -40,7 +40,7 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
                 // 测试题目 CRUD
                 $api->resource('tests/{test}/questions', 'TestQuestionController');
                 // 用户
-                $api->resource('admin-users', 'AdminUserController');
+                $api->resource('teachers', 'TeacherController');
                 $api->resource('users', 'UserController');
                 // 用户批量导入
                 $api->post('bulk-import-users', 'UserController@bulk');

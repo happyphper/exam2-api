@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\AdminUserRequest;
+use App\Http\Requests\TeacherRequest;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Transformers\UserTransformer;
 
-class AdminUserController extends Controller
+class TeacherController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class AdminUserController extends Controller
      */
     public function index()
     {
-        $users = User::role('admin')->filtered()->paginate(self::limit());
+        $users = User::role('teacher')->filtered()->paginate(self::limit());
 
         return $this->response->paginator($users, new UserTransformer());
     }
@@ -24,17 +24,17 @@ class AdminUserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param AdminUserRequest $request
+     * @param TeacherRequest $request
      * @return \Dingo\Api\Http\Response
      */
-    public function store(AdminUserRequest $request)
+    public function store(TeacherRequest $request)
     {
         $user = new User($request->all());
         // 生成初始密码
         $user->password =bcrypt($request->password ?? 123456);
         $user->save();
 
-        $user->assignRole('admin');
+        $user->assignRole('teacher');
 
         return $this->response->item($user, new UserTransformer())->setStatusCode(201);
     }
@@ -43,11 +43,11 @@ class AdminUserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param AdminUserRequest $request
-     * @param User $user
+     * @param TeacherRequest $request
+     * @param User           $user
      * @return \Illuminate\Http\Response
      */
-    public function update(AdminUserRequest $request, User $admin_user)
+    public function update(TeacherRequest $request, User $admin_user)
     {
         $admin_user->fill($request->all())->save();
 
