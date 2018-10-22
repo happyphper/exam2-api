@@ -39,7 +39,7 @@ class StartTest extends Command
      */
     public function handle()
     {
-        $count = Test::where('started_at', '<', now())->where('status', TestStatus::Unstart)->update(['status' => TestStatus::Ongoing]);
+        $count = Test::where('started_at', '<', now())->where('questions_count', '>', 0)->where('status', TestStatus::Unstart)->update(['status' => TestStatus::Ongoing]);
 
         $this->info("{$count} 个考试的状态的已修改为开考状态。");
     }

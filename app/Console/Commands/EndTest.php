@@ -45,6 +45,7 @@ class EndTest extends Command
         // 获取所有进行并结束了的考试
         $tests = Test::where('status', TestStatus::Ongoing)
             ->where('ended_at', '<', now())
+            ->where('questions_count', '>', 0)
             ->get();
 
         \DB::transaction(function () use ($tests) {
