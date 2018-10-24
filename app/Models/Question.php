@@ -14,6 +14,8 @@ class Question extends Model
     public $searchable = [
         'title',
         'type',
+        'chapter',
+        'section',
         'course:title'
     ];
     public $sortable = ['*'];
@@ -25,6 +27,8 @@ class Question extends Model
         'answer',
         'explain',
         'course_id',
+        'chapter',
+        'section',
     ];
 
     protected $casts = [
@@ -59,9 +63,11 @@ class Question extends Model
 
     public function setAnswerAttribute($value)
     {
+        $value = is_string($value) ? json_decode($value, true) : $value;
+
         $answer = collect($value)->map(function ($item) {
             return (int)$item;
-        })->toJson();
+        })->sort()->values()->toJson();
 
         $this->attributes['answer'] = $answer;
     }

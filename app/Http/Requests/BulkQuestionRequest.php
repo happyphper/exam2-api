@@ -32,11 +32,11 @@ class BulkQuestionRequest extends FormRequest
             'questions'           => ['required', 'array', new ArrayQuestionUniqueRule()],
             'questions.*.title'   => ['required', 'string', 'min:1', 'max:191', new ArrayUniqueInDatabaseRule('title', new Question())],
             'questions.*.type'    => ['required', 'in:single,multiple',],
-            'questions.*.option1' => ['required', 'string'],
-            'questions.*.option2' => ['required', 'string'],
-            'questions.*.option3' => ['required', 'string'],
-            'questions.*.option4' => ['required', 'string'],
-            'questions.*.answer'  => ['required', 'array', 'distinct'],
+            'questions.*.option1' => ['required'],
+            'questions.*.option2' => ['required'],
+            'questions.*.option3' => ['required'],
+            'questions.*.option4' => ['required'],
+            'questions.*.answer'  => ['required', 'array'],
             'questions.*.explain' => ['nullable', 'regex:/.+/'],
         ];
     }

@@ -42,6 +42,8 @@ class QuestionController extends Controller
             return [
                 'title' => $question['title'],
                 'type' => $question['type'],
+                'chapter' => $question['chapter'] ?? 0,
+                'section' => $question['section'] ?? 0,
                 'options' => [
                     ['id' => 1, 'content' => $question['option1'], 'type' => 'text', 'status' => 0],
                     ['id' => 2, 'content' => $question['option2'], 'type' => 'text', 'status' => 0],
