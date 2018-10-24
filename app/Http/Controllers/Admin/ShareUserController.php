@@ -6,7 +6,7 @@ use App\Http\Requests\QuestionRequest;
 use App\Models\Question;
 use App\Models\ShareUser;
 use App\Models\User;
-use App\Transformers\ShareQuestionTransformer;
+use App\Transformers\ShareUserTransformer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -21,7 +21,7 @@ class ShareUserController extends Controller
     {
         $data = ShareUser::own()->get();
 
-        return $this->response->collection($data, new ShareQuestionTransformer());
+        return $this->response->collection($data, new ShareUserTransformer());
     }
 
     /**
@@ -43,7 +43,7 @@ class ShareUserController extends Controller
         $antherItem->user_id = $shareUser->id;
         $antherItem->save();
 
-        return $this->response->item($item, new ShareQuestionTransformer())->setStatusCode(201);
+        return $this->response->item($item, new ShareUserTransformer())->setStatusCode(201);
     }
 
     /**

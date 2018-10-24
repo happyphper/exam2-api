@@ -11,7 +11,7 @@ namespace App\Transformers;
 use App\Models\ShareUser;
 use League\Fractal\TransformerAbstract;
 
-class ShareQuestionTransformer extends TransformerAbstract
+class ShareUserTransformer extends TransformerAbstract
 {
     protected $availableIncludes = ['user', 'share_user'];
 
