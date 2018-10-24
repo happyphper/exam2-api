@@ -172,5 +172,6 @@ return [
         'answer'                => '答案',
         'group_id'              => '班级',
         'course_id'             => '课程',
+        'original_password'     => '原密码',
     ],
 ];
