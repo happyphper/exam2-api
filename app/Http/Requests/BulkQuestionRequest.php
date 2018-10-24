@@ -36,7 +36,7 @@ class BulkQuestionRequest extends FormRequest
             'questions.*.option2' => ['required'],
             'questions.*.option3' => ['required'],
             'questions.*.option4' => ['required'],
-            'questions.*.answer'  => ['required', 'array'],
+            'questions.*.answer'  => ['required'],
             'questions.*.explain' => ['nullable', 'regex:/.+/'],
         ];
     }

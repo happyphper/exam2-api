@@ -22,6 +22,8 @@ class QuestionTransformer extends TransformerAbstract
             'id' => $model->id,
             'title' => $model->title,
             'type' => $model->type,
+            'chapter' => $model->chapter,
+            'section' => $model->section,
             'options' => $model->options,
             'answer' => $model->answer,
             'explain' => $model->explain,
