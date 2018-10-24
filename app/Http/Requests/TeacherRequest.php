@@ -26,7 +26,7 @@ class TeacherRequest extends FormRequest
         switch ($this->method()) {
             case 'POST':
                 return [
-                    'name' => 'required|string|min:1|max:16|unique:users',
+                    'name' => 'required|string|min:1|max:16',
                     'email' => 'nullable|email|max:30|unique:users,email',
                     'phone' => 'nullable|regex:/1[3-9]\d{9}/|unique:users,phone',
                 ];
