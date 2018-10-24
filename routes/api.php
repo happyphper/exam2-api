@@ -65,7 +65,7 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
                 $api->resource('roles.permissions', 'RolePermissionController');
                 // 云存储 七牛
                 $api->post('cloud-storage', 'CloudStorageController@token');
-                $api->delete('cloud-storage/{name}', 'CloudStorageController@destroy');
+                $api->delete('cloud-storage', 'CloudStorageController@destroy');
                 // 考试记录
                 $api->get('test-results', 'TestResultController@index');
                 // 考试成绩分布、考试错题分布、个人成绩曲线

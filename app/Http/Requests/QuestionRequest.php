@@ -28,6 +28,8 @@ class QuestionRequest extends FormRequest
                 return [
                     'title' => 'required|string|min:1|max:191|unique:questions',
                     'type' => 'required|in:single,multiple',
+                    'chapter' => 'nullable|integer',
+                    'section' => 'nullable|integer',
                     'options' => 'required|array|distinct',
                     'answer' => 'required|array|distinct',
                     'explain' => 'nullable|max:191',
@@ -39,6 +41,8 @@ class QuestionRequest extends FormRequest
                     'title' => 'required|string|min:1|max:191|unique:questions,title,' . $this->question->id,
                     'type' => 'required|in:single,multiple',
                     'options' => 'required|array|distinct',
+                    'chapter' => 'nullable|integer',
+                    'section' => 'nullable|integer',
                     'answer' => 'required|array|distinct',
                     'explain' => 'nullable|max:191',
                     'course_id' => 'required|exists:courses,id'

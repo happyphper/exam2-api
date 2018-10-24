@@ -31,11 +31,11 @@ class CloudStorageController extends Controller
      * @param $name
      * @return \Dingo\Api\Http\Response
      */
-    public function destroy($name)
+    public function destroy()
     {
         $disk = Storage::disk('qiniu');
 
-        $disk->delete($name);
+        $disk->delete(request('key'));
 
         return $this->response->noContent();
     }
