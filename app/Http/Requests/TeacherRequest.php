@@ -28,14 +28,14 @@ class TeacherRequest extends FormRequest
                 return [
                     'name' => 'required|string|min:1|max:16',
                     'email' => 'nullable|email|max:30|unique:users,email',
-                    'phone' => 'nullable|regex:/1[3-9]\d{9}/|unique:users,phone',
+                    'phone' => 'required|regex:/1[3-9]\d{9}/|unique:users,phone',
                 ];
                 break;
             case 'PUT':
                 return [
                     'name' => 'required|string|min:1|max:16|unique:categories,name,' . $this->teacher->id,
-                    'email' => 'required|email|max:30|unique:users,email,' . $this->teacher->id,
-                    'phone' => 'nullable|regex:/1[3-9]\d{9}/|unique:users,phone,' . $this->teacher->id,
+                    'email' => 'nullable|email|max:30|unique:users,email,' . $this->teacher->id,
+                    'phone' => 'required|regex:/1[3-9]\d{9}/|unique:users,phone,' . $this->teacher->id,
                 ];
                 break;
         }
