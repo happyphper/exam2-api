@@ -47,11 +47,11 @@ class TeacherController extends Controller
      * @param User           $user
      * @return \Illuminate\Http\Response
      */
-    public function update(TeacherRequest $request, User $admin_user)
+    public function update(TeacherRequest $request, User $teacher)
     {
-        $admin_user->fill($request->all())->save();
+        $teacher->fill($request->all())->save();
 
-        return $this->response->item($admin_user, new UserTransformer());
+        return $this->response->item($teacher, new UserTransformer());
     }
 
     /**
@@ -61,9 +61,9 @@ class TeacherController extends Controller
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy(User $admin_user)
+    public function destroy(User $teacher)
     {
-        $admin_user->delete();
+        $teacher->delete();
 
         return $this->response->noContent();
     }

@@ -33,9 +33,9 @@ class TeacherRequest extends FormRequest
                 break;
             case 'PUT':
                 return [
-                    'name' => 'required|string|min:1|max:16|unique:categories,name,' . $this->admin_user->id,
-                    'email' => 'required|email|max:30|unique:users,email,' . $this->admin_user->id,
-                    'phone' => 'nullable|regex:/1[3-9]\d{9}/|unique:users,phone,' . $this->admin_user->id,
+                    'name' => 'required|string|min:1|max:16|unique:categories,name,' . $this->teacher->id,
+                    'email' => 'required|email|max:30|unique:users,email,' . $this->teacher->id,
+                    'phone' => 'nullable|regex:/1[3-9]\d{9}/|unique:users,phone,' . $this->teacher->id,
                 ];
                 break;
         }
