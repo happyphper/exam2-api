@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\ShareType;
 use App\Http\Requests\BulkQuestionRequest;
 use App\Http\Requests\QuestionRequest;
 use App\Models\Course;
@@ -20,7 +21,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $questions = Question::ofShare(auth()->id())->filtered()->sorted()->orderByDesc('created_at')->paginate(self::limit());
+        $questions = Question::ofShare(auth()->id(), ShareType::Question)->filtered()->sorted()->orderByDesc('created_at')->paginate(self::limit());
 
         return $this->response->paginator($questions, new QuestionTransformer());
     }

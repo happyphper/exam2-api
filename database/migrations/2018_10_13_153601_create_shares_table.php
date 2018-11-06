@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateShareUsersTable extends Migration
+class CreateSharesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateShareUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('share_users', function (Blueprint $table) {
+        Schema::create('shares', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->comment('受益人');
             $table->integer('share_user_id')->comment('被共享者');
+            $table->string('type');
             $table->timestamps();
 
-            $table->unique(['user_id', 'share_user_id']);
+            $table->unique(['user_id', 'share_user_id', 'type']);
         });
     }
 
@@ -30,6 +31,6 @@ class CreateShareUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('share_users');
+        Schema::dropIfExists('shares');
     }
 }

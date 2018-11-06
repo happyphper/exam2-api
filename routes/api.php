@@ -32,8 +32,8 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
                 // 题目 CRUD
                 $api->resource('questions', 'QuestionController');
                 $api->post('bulk-import-questions', 'QuestionController@bulk');
-                // 共享题库
-                $api->resource('share-users', 'ShareUserController');
+                // 共享管理
+                $api->resource('shares', 'ShareController');
                 // 考试 CRUD
                 $api->patch('exams/{exam}/end', 'ExamController@end');
                 $api->resource('exams', 'ExamController');

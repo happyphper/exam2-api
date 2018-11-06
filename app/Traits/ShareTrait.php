@@ -8,13 +8,15 @@
 
 namespace App\Traits;
 
-use App\Models\ShareUser;
+use App\Models\Share;
 
 trait ShareTrait
 {
-    public function scopeOfShare($query, $userId)
+    public function scopeOfShare($query, $userId, $type)
     {
-        $userIds = ShareUser::where('user_id', $userId)->pluck('share_user_id')->toArray();
+        $userIds = Share::where('user_id', $userId)
+            ->where('type', $type)
+            ->pluck('share_user_id')->toArray();
         $userIds[] = $userId;
 
         return $query->whereIn('user_id', $userIds);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\ShareType;
 use App\Http\Requests\ClassroomRequest;
 use App\Models\Classroom;
 use App\Http\Controllers\Controller;
@@ -16,7 +17,7 @@ class ClassroomController extends Controller
      */
     public function index()
     {
-        $classrooms = Classroom::ofShare(auth()->id())->filtered()->paginate(self::limit());
+        $classrooms = Classroom::ofShare(auth()->id(), ShareType::Classroom)->filtered()->paginate(self::limit());
 
         return $this->response->paginator($classrooms, new ClassroomTransformer());
     }

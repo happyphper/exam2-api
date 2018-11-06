@@ -4,10 +4,14 @@ namespace App\Models;
 
 use App\Traits\OwnTrait;
 use Illuminate\Database\Eloquent\Model;
+use Jedrzej\Searchable\SearchableTrait;
 
-class ShareUser extends Model
+class Share extends Model
 {
+    use SearchableTrait;
     use OwnTrait;
+
+    public $searchable = ['share_user:name', 'type'];
 
     public function user()
     {
