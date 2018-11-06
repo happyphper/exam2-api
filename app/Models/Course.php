@@ -44,8 +44,8 @@ class Course extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function tests()
+    public function exams()
     {
-        return $this->belongsTo(Test::class);
+        return $this->belongsTo(Exam::class);
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\BulkUserRequest;
 use App\Http\Requests\UserRequest;
-use App\Models\TestResult;
+use App\Models\ExamResult;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Transformers\UserTransformer;

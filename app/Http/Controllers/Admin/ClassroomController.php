@@ -70,8 +70,8 @@ class ClassroomController extends Controller
      */
     public function destroy(Classroom $classroom)
     {
-        if ($classroom->users()->exists() || $classroom->tests()->exists()) {
-            $this->response->errorForbidden(__('Test has users or tests,so you can not operate it.'));
+        if ($classroom->users()->exists() || $classroom->exams()->exists()) {
+            $this->response->errorForbidden(__('Exam has users or exams,so you can not operate it.'));
         }
 
         $classroom->delete();

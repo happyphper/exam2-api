@@ -17,8 +17,8 @@ class AppServiceProvider extends ServiceProvider
         \App\Models\Category::observe(\App\Observers\CategoryObserver::class);
         \App\Models\Question::observe(\App\Observers\QuestionObserver::class);
         \App\Models\QuestionResult::observe(\App\Observers\QuestionResultObserver::class);
-        \App\Models\TestQuestion::observe(\App\Observers\TestQuestionObserver::class);
-        \App\Models\Test::observe(\App\Observers\TestObserver::class);
+        \App\Models\ExamQuestion::observe(\App\Observers\ExamQuestionObserver::class);
+        \App\Models\Exam::observe(\App\Observers\ExamObserver::class);
         // \DB::listen(function ($query) {
         //     \Log::info($query->sql);
         //     \Log::info($query->bindings);

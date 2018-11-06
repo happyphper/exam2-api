@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateClassroomTestsTable extends Migration
+class CreateClassroomExamsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateClassroomTestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('classroom_tests', function (Blueprint $table) {
+        Schema::create('classroom_exams', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('test_id')->comment('测试与群组的关联表');
+            $table->integer('exam_id')->comment('测试与群组的关联表');
             $table->integer('classroom_id');
             $table->timestamps();
-            $table->index(['test_id', 'classroom_id']);
+            $table->index(['exam_id', 'classroom_id']);
         });
     }
 
@@ -29,6 +29,6 @@ class CreateClassroomTestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('classroom_tests');
+        Schema::dropIfExists('classroom_exams');
     }
 }

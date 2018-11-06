@@ -20,7 +20,7 @@ class QuestionResultTransformer extends TransformerAbstract
         return [
             'id' => $model->id,
             'user_id' => $model->user_id,
-            'test_id' => $model->test_id,
+            'exam_id' => $model->exam_id,
             'question_id' => $model->question_id,
             'is_right' => $model->is_right,
             'score' => $model->score ?? 0,

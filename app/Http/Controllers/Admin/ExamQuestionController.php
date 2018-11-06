@@ -2,41 +2,41 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enums\TestStatus;
-use App\Http\Requests\TestQuestionRequest;
-use App\Http\Requests\TestRequest;
+use App\Enums\ExamStatus;
+use App\Http\Requests\ExamQuestionRequest;
+use App\Http\Requests\ExamRequest;
+use App\Models\Exam;
 use App\Models\Question;
-use App\Models\Test;
-use App\Models\TestQuestion;
+use App\Models\ExamQuestion;
 use App\Transformers\QuestionTransformer;
 use App\Http\Controllers\Controller;
 
-class TestQuestionController extends Controller
+class ExamQuestionController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Test $test)
+    public function index(Exam $exam)
     {
-        return $this->response->collection($test->questions, new QuestionTransformer());
+        return $this->response->collection($exam->questions, new QuestionTransformer());
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param TestRequest $request
+     * @param ExamRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TestQuestionRequest $request, Test $test)
+    public function store(ExamQuestionRequest $request, Exam $exam)
     {
-        if ($test->status !== TestStatus::Unstart) {
+        if ($exam->status !== ExamStatus::Unstart) {
             $this->response->errorForbidden(__('Only unstart status allows delete or update.'));
         }
 
-        TestQuestion::create([
-            'test_id' => $test->id,
+        ExamQuestion::create([
+            'exam_id' => $exam->id,
             'question_id' => $request->question_id,
             'score' => $request->score
         ]);
@@ -49,17 +49,17 @@ class TestQuestionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Test $test
+     * @param ExamRequest $exam
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy($test, $question)
+    public function destroy($exam, $question)
     {
-        if ($test->status !== TestStatus::Unstart) {
+        if ($exam->status !== ExamStatus::Unstart) {
             $this->response->errorForbidden(__('Only unstart status allows delete or update.'));
         }
 
-        TestQuestion::where('test_id', $test)->where('question_id', $question)->delete();
+        ExamQuestion::where('exam_id', $exam)->where('question_id', $question)->delete();
 
         return $this->response->noContent();
     }

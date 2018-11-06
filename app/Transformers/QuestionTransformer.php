@@ -51,7 +51,7 @@ class QuestionTransformer extends TransformerAbstract
     public function includeResult(Question $model)
     {
         $item = QuestionResult::where('user_id', auth()->id())
-            ->where('test_id', request()->test)
+            ->where('exam_id', request()->exam)
             ->where('question_id', $model->id)
             ->first();
         if (!$item) {

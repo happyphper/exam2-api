@@ -14,7 +14,7 @@ class QuestionResult extends Model
 
     protected $fillable = [
         'classroom_id',
-        'test_id',
+        'exam_id',
         'question_id',
         'answer',
     ];
@@ -23,9 +23,9 @@ class QuestionResult extends Model
         'answer' => 'array'
     ];
 
-    public function test()
+    public function exam()
     {
-        return $this->belongsTo(Test::class);
+        return $this->belongsTo(Exam::class);
     }
 
     public function question()

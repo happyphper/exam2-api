@@ -21,7 +21,7 @@ class CourseTransformer extends TransformerAbstract
             'id' => $model->id,
             'title' => $model->title,
             'questions_count' => $model->questions_count ?? 0,
-            'tests_count' => $model->tests_count ?? 0,
+            'exams_count' => $model->exams_count ?? 0,
             'created_at' => $model->created_at ? $model->created_at->toDateTimeString() : null,
             'updated_at' => $model->updated_at ? $model->updated_at->toDateTimeString() : null,
         ];

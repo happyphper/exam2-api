@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTestResultsTable extends Migration
+class CreateExamResultsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateTestResultsTable extends Migration
      */
     public function up()
     {
-        Schema::create('test_results', function (Blueprint $table) {
+        Schema::create('exam_results', function (Blueprint $table) {
             $table->increments('id')->comment('考试记录表');
             $table->integer('classroom_id')->comment('群组 ID');
             $table->integer('course_id')->comment('课程 ID');
             $table->integer('user_id')->comment('用户 ID');
-            $table->integer('test_id')->comment('考试 ID');
+            $table->integer('exam_id')->comment('考试 ID');
             $table->integer('wrong_count')->default(0)->index()->comment('答题错题数');
             $table->integer('right_count')->default(0)->index()->comment('答题正确数');
             $table->integer('questions_count')->default(0)->index()->comment('题目总数');
@@ -29,8 +29,8 @@ class CreateTestResultsTable extends Migration
             $table->boolean('is_participated')->default(true)->comment('是否参加');
             $table->timestamps();
 
-            $table->unique(['user_id', 'test_id']);
-            $table->index('test_id');
+            $table->unique(['user_id', 'exam_id']);
+            $table->index('exam_id');
         });
     }
 

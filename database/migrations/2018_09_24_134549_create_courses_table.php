@@ -17,7 +17,7 @@ class CreateCoursesTable extends Migration
             $table->increments('id');
             $table->string('title')->comment('课程名字')->index();
             $table->integer('questions_count')->default(0)->comment('题目个数');
-            $table->integer('tests_count')->default(0)->comment('考试个数');
+            $table->integer('exams_count')->default(0)->comment('考试个数');
             $table->integer('user_id')->comment('创建人')->index();
             $table->timestamps();
         });

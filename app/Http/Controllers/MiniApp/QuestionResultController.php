@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\MiniApp;
 
-use App\Enums\TestStatus;
+use App\Enums\ExamStatus;
 use App\Http\Requests\QuestionResultRequest;
 use App\Models\Question;
 use App\Models\QuestionResult;
-use App\Models\Test;
-use App\Models\TestQuestion;
-use App\Models\TestResult;
+use App\Models\Exam;
+use App\Models\ExamQuestion;
+use App\Models\ExamResult;
 use App\Transformers\QuestionResultTransformer;
 use App\Http\Controllers\Controller;
 
@@ -18,26 +18,26 @@ class QuestionResultController extends Controller
      * 提交题目答案
      *
      * @param QuestionResultRequest $request
-     * @param TestResultController $record
+     * @param ExamResultController  $record
      * @return \Dingo\Api\Http\Response
      */
-    public function store(QuestionResultRequest $request, Test $test)
+    public function store(QuestionResultRequest $request, Exam $exam)
     {
         $user = auth()->user();
-        if ($test->status !== TestStatus::Ongoing) {
-            $this->response->errorForbidden(__('Test is not ongoing.'));
+        if ($exam->status !== ExamStatus::Ongoing) {
+            $this->response->errorForbidden(__('Exam is not ongoing.'));
         }
-        $testResult = TestResult::where('test_id', $test->id)->where('user_id', $user->id)->first();
-        if ($testResult->is_finished) {
-            $this->response->errorForbidden(__('Test is end.'));
+        $examResult = ExamResult::where('exam_id', $exam->id)->where('user_id', $user->id)->first();
+        if ($examResult->is_finished) {
+            $this->response->errorForbidden(__('Exam is end.'));
         }
 
         // 携带正确答案返回
         $request->offsetSet('include', 'question');
 
-        $result = QuestionResult::where('test_id', $test->id)
+        $result = QuestionResult::where('exam_id', $exam->id)
             ->where('user_id', auth()->id())
-            ->where('test_id', $test->id)
+            ->where('exam_id', $exam->id)
             ->where('question_id', $request->question_id)
             ->first();
         if ($result) {
@@ -50,7 +50,7 @@ class QuestionResultController extends Controller
             return (int)$item;
         })->toArray();
         sort($userAnswer);
-        $score = TestQuestion::where('test_id', $test->id)
+        $score = ExamQuestion::where('exam_id', $exam->id)
             ->where('question_id', $request->question_id)
             ->value('score');
         $answer = Question::where('id', $request->question_id)->value('answer');
@@ -60,7 +60,7 @@ class QuestionResultController extends Controller
         $result->answer = $userAnswer;
         $result->question_id = $request->question_id;
         $result->user_id = $user->id;
-        $result->test_id = $test->id;
+        $result->exam_id = $exam->id;
         $result->classroom_id = $user->classroom_id;
         $result->score = $isRight ? $score : 0;
         $result->is_right = $isRight;

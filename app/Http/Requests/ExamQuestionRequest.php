@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class TestQuestionRequest extends FormRequest
+class ExamQuestionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,7 +30,7 @@ class TestQuestionRequest extends FormRequest
                     'question_id' => [
                         'required',
                         'exists:questions,id',
-                        Rule::unique('test_questions')->where('question_id', $this->question_id)->where('test_id', $this->test->id)
+                        Rule::unique('exam_questions')->where('question_id', $this->question_id)->where('exam_id', $this->exam->id)
                     ],
                     'score' => [
                         'required',

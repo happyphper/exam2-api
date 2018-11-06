@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use App\Enums\TestStatus;
+use App\Enums\ExamStatus;
 use App\Traits\OwnTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Jedrzej\Searchable\SearchableTrait;
 use Jedrzej\Sortable\SortableTrait;
 
-class Test extends Model
+class Exam extends Model
 {
     use OwnTrait;
     use SearchableTrait, SortableTrait;
@@ -39,12 +39,12 @@ class Test extends Model
 
     public function questions()
     {
-        return $this->belongsToMany(Question::class, 'test_questions')->withPivot('score');
+        return $this->belongsToMany(Question::class, 'exam_questions')->withPivot('score');
     }
 
     public function classrooms()
     {
-        return $this->belongsToMany(Classroom::class, 'classroom_tests');
+        return $this->belongsToMany(Classroom::class, 'classroom_exams');
     }
 
     public function categories()
@@ -59,7 +59,7 @@ class Test extends Model
 
     public function result()
     {
-        return $this->hasOne(TestResult::class);
+        return $this->hasOne(ExamResult::class);
     }
 
     public function setStartedAtAttribute($value)

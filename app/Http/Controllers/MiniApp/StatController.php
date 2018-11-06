@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\MiniApp;
 
 use App\Models\QuestionResult;
-use App\Models\TestResult;
+use App\Models\ExamResult;
 use App\Http\Controllers\Controller;
 
 class StatController extends Controller
@@ -17,10 +17,10 @@ class StatController extends Controller
     {
         $me = auth()->user();
 
-        $testsCount = TestResult::where('user_id', $me->id)->count();
+        $examsCount = ExamResult::where('user_id', $me->id)->count();
 
         $questionsCount = QuestionResult::where('user_id', $me->id)->count();
 
-        return $this->response->array(['tests_count' => $testsCount, 'questions_count' => $questionsCount]);
+        return $this->response->array(['exams_count' => $examsCount, 'questions_count' => $questionsCount]);
     }
 }

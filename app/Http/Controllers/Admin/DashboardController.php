@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Classroom;
 use App\Models\Question;
-use App\Models\Test;
+use App\Models\Exam;
 
 class DashboardController extends Controller
 {
@@ -25,13 +25,13 @@ class DashboardController extends Controller
 
         $classrooms = Classroom::where('user_id', $meId)->count();
 
-        $tests = Test::where('user_id', $meId)->count();
+        $exams = Exam::where('user_id', $meId)->count();
 
         return $this->response->array([
             'courses_count' => $courses,
             'questions_count' => $questions,
             'classrooms_count' => $classrooms,
-            'tests_count' => $tests
+            'exams_count' => $exams
         ]);
     }
 }

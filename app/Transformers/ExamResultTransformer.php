@@ -8,19 +8,19 @@
 
 namespace App\Transformers;
 
-use App\Models\TestResult;
+use App\Models\ExamResult;
 use League\Fractal\TransformerAbstract;
 
-class TestResultTransformer extends TransformerAbstract
+class ExamResultTransformer extends TransformerAbstract
 {
-    public $availableIncludes = ['test', 'classroom', 'user', 'course'];
+    public $availableIncludes = ['exam', 'classroom', 'user', 'course'];
 
-    public function transform(TestResult $model)
+    public function transform(ExamResult $model)
     {
         return [
             'id' => $model->id,
             'user_id' => $model->user_id,
-            'test_id' => $model->test_id,
+            'exam_id' => $model->exam_id,
             'wrong_count' => $model->wrong_count ?? 0,
             'right_count' => $model->right_count ?? 0,
             'questions_count' => $model->questions_count ?? 0,
@@ -35,27 +35,27 @@ class TestResultTransformer extends TransformerAbstract
         ];
     }
 
-    public function includeTest(TestResult $result)
+    public function includeExam(ExamResult $result)
     {
-        return $this->item($result->test, new TestTransformer());
+        return $this->item($result->exam, new ExamTransformer());
     }
 
-    public function includeCourse(TestResult $result)
+    public function includeCourse(ExamResult $result)
     {
         return $this->item($result->course, new CourseTransformer());
     }
 
-    public function includeClassroom(TestResult $result)
+    public function includeClassroom(ExamResult $result)
     {
         return $this->item($result->classroom, new ClassroomTransformer());
     }
 
-    public function includeUser(TestResult $result)
+    public function includeUser(ExamResult $result)
     {
         return $this->item($result->user, new UserTransformer());
     }
 
-    private function getConsumeTime(TestResult $result)
+    private function getConsumeTime(ExamResult $result)
     {
         return $result->created_at->diffInSeconds($result->updated_at);
     }

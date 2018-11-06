@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enums\TestStatus;
-use App\Http\Requests\TestRequest;
-use App\Models\Test;
-use App\Models\TestResult;
+use App\Enums\ExamStatus;
+use App\Http\Requests\ExamRequest;
+use App\Models\Exam;
+use App\Models\ExamResult;
 use App\Models\User;
-use App\Transformers\TestTransformer;
+use App\Transformers\ExamTransformer;
 use App\Http\Controllers\Controller;
 
-class TestController extends Controller
+class ExamController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,72 +19,72 @@ class TestController extends Controller
      */
     public function index()
     {
-        $tests = Test::own()->filtered()->paginate(self::limit());
+        $exams = Exam::own()->filtered()->paginate(self::limit());
 
-        return $this->response->paginator($tests, new TestTransformer());
+        return $this->response->paginator($exams, new ExamTransformer());
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param TestRequest $request
+     * @param ExamRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TestRequest $request)
+    public function store(ExamRequest $request)
     {
-        $test = new Test($request->all());
-        $test->user_id = auth()->id();
-        $test->save();
-        $test->classrooms()->attach($request->classroom_ids);
+        $exam = new Exam($request->all());
+        $exam->user_id = auth()->id();
+        $exam->save();
+        $exam->classrooms()->attach($request->classroom_ids);
 
-        return $this->response->item($test, new TestTransformer())->setStatusCode(201);
+        return $this->response->item($exam, new ExamTransformer())->setStatusCode(201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param Test $test
+     * @param ExamRequest $exam
      * @return \Illuminate\Http\Response
      */
-    public function show(Test $test)
+    public function show(Exam $exam)
     {
-        return $this->response->item($test, new TestTransformer());
+        return $this->response->item($exam, new ExamTransformer());
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param TestRequest $request
-     * @param Test $test
+     * @param ExamRequest $request
+     * @param ExamRequest $exam
      * @return \Illuminate\Http\Response
      */
-    public function update(TestRequest $request, Test $test)
+    public function update(ExamRequest $request, Exam $exam)
     {
-        if ($test->status !== TestStatus::Unstart) {
+        if ($exam->status !== ExamStatus::Unstart) {
             $this->response->errorForbidden(__('Only unstart status allows delete or update.'));
         }
 
-        $test->fill($request->all())->save();
+        $exam->fill($request->all())->save();
 
-        $test->classrooms()->sync($request->classroom_ids);
+        $exam->classrooms()->sync($request->classroom_ids);
 
-        return $this->response->item($test, new TestTransformer());
+        return $this->response->item($exam, new ExamTransformer());
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param Test $test
+     * @param ExamRequest $exam
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy(Test $test)
+    public function destroy(Exam $exam)
     {
-        if ($test->status !== TestStatus::Unstart) {
+        if ($exam->status !== ExamStatus::Unstart) {
             $this->response->errorForbidden(__('Only unstart status allows delete or update.'));
         }
 
-        $test->delete();
+        $exam->delete();
 
         return $this->response->noContent();
     }
@@ -92,29 +92,29 @@ class TestController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param TestRequest $request
-     * @param Test $test
+     * @param ExamRequest $request
+     * @param ExamRequest $exam
      * @return \Illuminate\Http\Response
      */
-    public function end(Test $test)
+    public function end(Exam $exam)
     {
-        $course = $test->course()->first();
+        $course = $exam->course()->first();
 
         // 将所有未答题学员进行数据添加
         $users = User::whereIn('classroom_id', request('classroom_ids'))->get(['id', 'classroom_id']);
-        \DB::transaction(function () use ($users, $test, $course) {
-            $results = TestResult::whereIn('user_id', $users->pluck('id')->toArray())->where('test_id', $test->id)->get();
+        \DB::transaction(function () use ($users, $exam, $course) {
+            $results = Exam::whereIn('user_id', $users->pluck('id')->toArray())->where('exam_id', $exam->id)->get();
             foreach ($users as $user) {
                 $result = $results->where('user_id', $user->id)->first();
                 if ($result && !$result->is_finished) {
                     $result->is_finished = true;
                     $result->save();
                 } else {
-                    TestResult::create([
+                    ExamResult::create([
                         'classroom_id' => $user->classroom_id,
                         'course_id' => $course->id,
                         'user_id' => $user->id,
-                        'test_id' => $test->id,
+                        'exam_id' => $exam->id,
                         'is_finished' => true,
                         'is_participated' => false
                     ]);

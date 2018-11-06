@@ -8,47 +8,47 @@
 
 namespace App\Transformers;
 
-use App\Enums\TestStatus;
-use App\Models\Test;
+use App\Enums\ExamStatus;
+use App\Models\Exam;
 use League\Fractal\TransformerAbstract;
 
-class TestTransformer extends TransformerAbstract
+class ExamTransformer extends TransformerAbstract
 {
     protected $availableIncludes = ['classrooms', 'result', 'course', 'categories'];
 
-    public function transform(Test $model)
+    public function transform(Exam $model)
     {
         return [
             'id' => $model->id,
             'title' => $model->title,
             'started_at' => $model->started_at ? $model->started_at->toDateTimeString() : null,
             'ended_at' => $model->ended_at ? $model->ended_at->toDateTimeString() : null,
-            'status' => $model->status ?? TestStatus::Unstart,
-            'status_translate' => $model->status ? TestStatus::getDescription($model->status) : TestStatus::getDescription(TestStatus::Unstart),
+            'status' => $model->status ?? ExamStatus::Unstart,
+            'status_translate' => $model->status ? ExamStatus::getDescription($model->status) : ExamStatus::getDescription(ExamStatus::Unstart),
             'created_at' => $model->created_at ? $model->created_at->toDateTimeString() : null,
             'updated_at' => $model->updated_at ? $model->updated_at->toDateTimeString() : null,
         ];
     }
 
-    public function includeClassrooms(Test $model)
+    public function includeClassrooms(Exam $model)
     {
         return $this->collection($model->classrooms, new ClassroomTransformer());
     }
 
-    public function includeCategories(Test $model)
+    public function includeCategories(Exam $model)
     {
         return $this->collection($model->categories, new CategoryTransformer());
     }
 
-    public function includeCourse(Test $model)
+    public function includeCourse(Exam $model)
     {
         return $this->item($model->course, new CourseTransformer());
     }
 
-    public function includeResult(Test $model)
+    public function includeResult(Exam $model)
     {
         if ($result = $model->result()->where('user_id', auth()->id())->first()) {
-            return $this->item($result, new TestResultTransformer());
+            return $this->item($result, new ExamResultTransformer());
         }
         return $this->null();
     }

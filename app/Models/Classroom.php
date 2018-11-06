@@ -24,9 +24,9 @@ class Classroom extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function tests()
+    public function exams()
     {
-        return $this->belongsToMany(Test::class, 'classroom_tests');
+        return $this->belongsToMany(Exam::class, 'classroom_exams');
     }
 
 
@@ -39,7 +39,7 @@ class Classroom extends Model
     {
         $now = now();
 
-        return $this->hasManyThrough(Test::class, 'classroom_tests', 'test_id', 'id', 'id', 'classroom_id')
+        return $this->hasManyThrough(Exam::class, 'classroom_exams', 'exam_id', 'id', 'id', 'classroom_id')
             ->where('started_at', '<', $now)
             ->where('ended_at', '>', $now);
     }

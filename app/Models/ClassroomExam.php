@@ -4,23 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class ClassroomTest extends Pivot
+class ClassroomExam extends Pivot
 {
-    protected $table = 'classroom_tests';
+    protected $table = 'classroom_exams';
 
     public $incrementing = false;
 
     public $timestamps = false;
 
-    public $fillable = ['test_id',];
+    public $fillable = ['exam_id',];
 
     public function classroom()
     {
         return $this->belongsTo(Classroom::class);
     }
 
-    public function test()
+    public function exam()
     {
-        return $this->belongsTo(Test::class);
+        return $this->belongsTo(Exam::class);
     }
 }

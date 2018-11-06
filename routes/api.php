@@ -34,11 +34,11 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
                 $api->post('bulk-import-questions', 'QuestionController@bulk');
                 // 共享题库
                 $api->resource('share-users', 'ShareUserController');
-                // 测试 CRUD
-                $api->patch('tests/{test}/end', 'TestController@end');
-                $api->resource('tests', 'TestController');
-                // 测试题目 CRUD
-                $api->resource('tests/{test}/questions', 'TestQuestionController');
+                // 考试 CRUD
+                $api->patch('exams/{exam}/end', 'ExamController@end');
+                $api->resource('exams', 'ExamController');
+                // 考试题目 CRUD
+                $api->resource('exams/{exam}/questions', 'ExamQuestionController');
                 // 用户
                 $api->resource('teachers', 'TeacherController');
                 $api->resource('users', 'UserController');
@@ -49,15 +49,15 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
                 // 课程
                 $api->resource('courses', 'CourseController');
                 // 测试分类添加移除
-                $api->post('tests/{test}/categories', 'TestCategoryController@store');
-                $api->post('tests/{test}/categories/{category}', 'TestCategoryController@destroy');
+                $api->post('exams/{exam}/categories', 'ExamCategoryController@store');
+                $api->post('exams/{exam}/categories/{category}', 'ExamCategoryController@destroy');
                 // 群组测试
-                $api->resource('classrooms.tests', 'ClassroomTestController');
+                $api->resource('classrooms.exams', 'ClassroomExamController');
                 // 为 Model 添加/移除分类
                 $api->post('model/{type}/categories', 'ModelHasCategoryController@store');
                 $api->delete('model/{type}/categories/{category}', 'ModelHasCategoryController@destroy');
                 // 考试记录
-                $api->get('tests/{test}/classrooms/{classroom}/results', 'TestResultController@index');
+                $api->get('exams/{exam}/classrooms/{classroom}/results', 'ExamResultController@index');
                 // 权限
                 $api->resource('permissions', 'PermissionController');
                 $api->resource('roles', 'RoleController');
@@ -67,7 +67,7 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
                 $api->post('cloud-storage', 'CloudStorageController@token');
                 $api->delete('cloud-storage', 'CloudStorageController@destroy');
                 // 考试记录
-                $api->get('test-results', 'TestResultController@index');
+                $api->get('exam-results', 'ExamResultController@index');
                 // 考试成绩分布、考试错题分布、个人成绩曲线
                 $api->get('stat/grade-distribution', 'StatisticController@gradeDistribution');
                 $api->get('stat/error-question', 'StatisticController@errorQuestion');
@@ -85,14 +85,14 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
             $api->group(['middleware' => 'auth'], function ($api) {
                 $api->get('auth/me', 'AuthController@me')->name('miniapp.me');
                 // 今日测验
-                $api->get('today-tests', 'TestController@today');
+                $api->get('today-exams', 'ExamController@today');
                 // 开始考试
-                $api->get('tests/{test}/start', 'TestController@start');
+                $api->get('exams/{exam}/start', 'ExamController@start');
                 // 提交答案
-                $api->post('tests/{test}/questions', 'QuestionResultController@store');
+                $api->post('exams/{exam}/questions', 'QuestionResultController@store');
                 // 答题记录
-                $api->get('test-results', 'TestResultController@index');
-                $api->get('test-results/{result}', 'TestResultController@show');
+                $api->get('exam-results', 'ExamResultController@index');
+                $api->get('exam-results/{result}', 'ExamResultController@show');
                 // 同班同学
                 $api->get('classmates', 'ClassmateController@index');
                 // 修改密码

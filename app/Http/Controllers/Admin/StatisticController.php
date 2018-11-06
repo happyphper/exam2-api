@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\QuestionResult;
-use App\Models\TestResult;
+use App\Models\ExamResult;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -18,7 +18,7 @@ class StatisticController extends Controller
      */
     public function gradeDistribution(Request $request)
     {
-        $data = TestResult::where($request->only(['classroom_id', 'test_id']))->get(['score']);
+        $data = ExamResult::where($request->only(['classroom_id', 'exam_id']))->get(['score']);
 
         $stat = [
             ['name' => '60以下', 'label' => '60以下', 'value' => $data->where('score', '<', 60)->count()],
@@ -48,7 +48,7 @@ class StatisticController extends Controller
      */
     public function errorQuestion(Request $request)
     {
-        $data = QuestionResult::with('question:id,title')->where($request->only(['classroom_id', 'test_id']))
+        $data = QuestionResult::with('question:id,title')->where($request->only(['classroom_id', 'exam_id']))
             ->where(['is_right' => false])
             ->selectRaw('question_id, count(*) as error_count')
             ->classroomBy('question_id')->orderBy('error_count', 'desc')->get();
@@ -75,7 +75,7 @@ class StatisticController extends Controller
      */
     public function userGradeCurve(Request $request)
     {
-        $data = TestResult::where('user_id', $request->user_id)->orderBy('created_at', 'desc')->get(['score', 'created_at']);
+        $data = ExamResult::where('user_id', $request->user_id)->orderBy('created_at', 'desc')->get(['score', 'created_at']);
 
         $headers = $data->pluck('created_at')->map(function ($item) {
             return $item->toDateString();
@@ -100,7 +100,7 @@ class StatisticController extends Controller
      */
     public function userGradeData(Request $request)
     {
-        $data = TestResult::when($request->course_id, function ($query) use ($request) {
+        $data = ExamResult::when($request->course_id, function ($query) use ($request) {
             return $query->where($request->only('course_id'));
         })->when($request->classroom_id, function ($query) use ($request) {
             return $query->where($request->only('classroom_id'));
@@ -108,7 +108,7 @@ class StatisticController extends Controller
             $date = $request->input('created_at');
             $dataArray = collect($date)->map(function ($item) { return Carbon::parse($item); })->toArray();
             return $query->whereBetween('created_at', $dataArray);
-        })->with('test:id,title')->with('user:id,name')->with('course:id,title')->with('classroom:id,name')->orderBy('user_id')->get();
+        })->with('exam:id,title')->with('user:id,name')->with('course:id,title')->with('classroom:id,name')->orderBy('user_id')->get();
 
         $data = $data->classroomBy('user_id')->values()->toArray();
 
@@ -120,9 +120,9 @@ class StatisticController extends Controller
             $totalScore = 0;
             foreach ($dataGroup as $item) {
                 $totalScore += $item['score'];
-                $container[$index]['tests'][] = [
+                $container[$index]['exams'][] = [
                     'id' => $item['id'],
-                    'title' => $item['test']['title'],
+                    'title' => $item['exam']['title'],
                     'score' => $item['score']
                 ];
             }

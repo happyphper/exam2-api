@@ -2,18 +2,18 @@
 
 namespace App\Console\Commands;
 
-use App\Enums\TestStatus;
-use App\Models\Test;
+use App\Enums\ExamStatus;
+use App\Models\Exam;
 use Illuminate\Console\Command;
 
-class StartTest extends Command
+class StartExam extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'start:test';
+    protected $signature = 'start:exam';
 
     /**
      * The console command description.
@@ -39,7 +39,7 @@ class StartTest extends Command
      */
     public function handle()
     {
-        $count = Test::where('started_at', '<', now())->where('questions_count', '>', 0)->where('status', TestStatus::Unstart)->update(['status' => TestStatus::Ongoing]);
+        $count = Exam::where('started_at', '<', now())->where('questions_count', '>', 0)->where('status', ExamStatus::Unstart)->update(['status' => ExamStatus::Ongoing]);
 
         $this->info("{$count} 个考试的状态的已修改为开考状态。");
     }

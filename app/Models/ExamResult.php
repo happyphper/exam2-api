@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use Jedrzej\Searchable\SearchableTrait;
 use Jedrzej\Sortable\SortableTrait;
 
-class TestResult extends Model
+class ExamResult extends Model
 {
     use SearchableTrait,SortableTrait;
     public $searchable = [
-        'test_id',
+        'exam_id',
         'classroom_id',
-        'test:title',
+        'exam:title',
         'classroom:name',
         'user:name'
     ];
@@ -24,9 +24,9 @@ class TestResult extends Model
         'answer' => 'array'
     ];
 
-    public function test()
+    public function exam()
     {
-        return $this->belongsTo(Test::class);
+        return $this->belongsTo(Exam::class);
     }
 
     public function classroom()

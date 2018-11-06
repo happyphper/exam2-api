@@ -3,18 +3,18 @@
 namespace App\Observers;
 
 use App\Models\Question;
-use App\Models\Test;
+use App\Models\Exam;
 
-class TestObserver
+class ExamObserver
 {
     /**
      * 监听题目与考试的关联
      *
-     * @param Test $test
+     * @param Exam $exam
      */
-    public function saved(Test $test)
+    public function saved(Exam $exam)
     {
-        $test->course->increment('tests_count');
+        $exam->course->increment('exams_count');
     }
 
     /**
@@ -23,8 +23,8 @@ class TestObserver
      * @param Question $category
      * @throws \Exception
      */
-    public function deleting(Test $test)
+    public function deleting(Exam $exam)
     {
-        $test->course->decrement('tests_count');
+        $exam->course->decrement('exams_count');
     }
 }

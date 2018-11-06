@@ -8,31 +8,31 @@
 
 namespace App\Transformers;
 
-use App\Models\ClassroomTest;
+use App\Models\ClassroomExam;
 use League\Fractal\TransformerAbstract;
 
-class ClassroomTestTransformer extends TransformerAbstract
+class ClassroomExamTransformer extends TransformerAbstract
 {
-    protected $availableIncludes = ['classroom', 'test'];
+    protected $availableIncludes = ['classroom', 'exam'];
 
-    public function transform(ClassroomTest $model)
+    public function transform(ClassroomExam $model)
     {
         return [
             'id' => $model->id,
-            'test_id' => $model->test_id,
+            'exam_id' => $model->exam_id,
             'classroom_id' => $model->classroom_id,
             'created_at' => $model->created_at ? $model->created_at->toDateTimeString() : null,
             'updated_at' => $model->updated_at ? $model->updated_at->toDateTimeString() : null,
         ];
     }
 
-    public function includeClassroom(ClassroomTest $model)
+    public function includeClassroom(ClassroomExam $model)
     {
         return $this->item($model->classroom, new ClassroomTransformer());
     }
 
-    public function includeTest(ClassroomTest $model)
+    public function includeExam(ClassroomExam $model)
     {
-        return $this->item($model->test, new TestTransformer());
+        return $this->item($model->exam, new ExamTransformer());
     }
 }

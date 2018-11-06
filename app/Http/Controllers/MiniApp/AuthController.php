@@ -4,7 +4,7 @@ namespace App\Http\Controllers\MiniApp;
 
 use App\Http\Controllers\Controller;
 use App\Models\QuestionResult;
-use App\Models\TestResult;
+use App\Models\ExamResult;
 use App\Transformers\UserTransformer;
 
 class AuthController extends Controller
@@ -60,7 +60,7 @@ class AuthController extends Controller
         $me = auth()->user();
 
         return $this->response->item($me, new UserTransformer())->setMeta([
-            'tests_count' => TestResult::where('user_id', $me->id)->count(),
+            'exams_count' => ExamResult::where('user_id', $me->id)->count(),
             'questions_count' => QuestionResult::where('user_id', $me->id)->count(),
         ]);
     }

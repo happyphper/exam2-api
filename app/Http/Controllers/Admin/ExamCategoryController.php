@@ -9,23 +9,23 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TestCategoryRequest;
+use App\Http\Requests\ExamCategoryRequest;
 use App\Models\ModelHasCategory;
-use App\Models\Test;
+use App\Models\Exam;
 
-class TestCategoryController extends Controller
+class ExamCategoryController extends Controller
 {
     /**
      * 为考试指定分类
      */
-    public function store(Test $test, TestCategoryRequest $request)
+    public function store(Exam $exam, ExamCategoryRequest $request)
     {
         foreach ($request->category_ids as $category_id) {
-            if (!ModelHasCategory::where(['category_id' => $category_id, 'classified_id' => $test->id, 'classified_type' => Test::class])->count()) {
+            if (!ModelHasCategory::where(['category_id' => $category_id, 'classified_id' => $exam->id, 'classified_type' => Exam::class])->count()) {
                 ModelHasCategory::create([
                     'category_id' => $category_id,
-                    'classified_id' => $test->id,
-                    'classified_type' => Test::class
+                    'classified_id' => $exam->id,
+                    'classified_type' => Exam::class
                 ]);
             }
         }
@@ -33,11 +33,11 @@ class TestCategoryController extends Controller
         return $this->response->noContent();
     }
 
-    public function destroy($test, $category)
+    public function destroy($exam, $category)
     {
         $row = ModelHasCategory::where('category_id', $category)
-            ->where('classified_id', $test->id)
-            ->where('classified_type', Test::class)
+            ->where('classified_id', $exam->id)
+            ->where('classified_type', Exam::class)
             ->firstOrFail();
 
         $row->delete();
