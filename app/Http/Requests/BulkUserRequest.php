@@ -27,7 +27,7 @@ class BulkUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'group_id'           => ['required', 'exists:groups,id'],
+            'classroom_id'           => ['required', 'exists:classrooms,id'],
             'users' => ['required', 'array', new ArrayUserUniqueRule()],
             'users.*.name'       => ['required', 'string', 'min:1', 'max:16',],
             'users.*.email'      => ['sometimes', 'string', 'email', new ArrayUniqueInDatabaseRule('email', new User())],

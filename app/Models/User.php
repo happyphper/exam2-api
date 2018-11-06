@@ -18,7 +18,7 @@ class User extends Authenticatable implements JWTSubject
      *
      * @var array
      */
-    public $searchable = ['name', 'email', 'group:name', 'group:id', 'student_id', 'phone'];
+    public $searchable = ['name', 'email', 'classroom:name', 'classroom:id', 'student_id', 'phone'];
 
     /**
      * For sortable package
@@ -40,7 +40,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'student_id', 'phone', 'group_id'
+        'name', 'email', 'student_id', 'phone', 'classroom_id'
     ];
 
     /**
@@ -75,8 +75,8 @@ class User extends Authenticatable implements JWTSubject
     /**
      * 群组
      */
-    public function group()
+    public function classroom()
     {
-        return $this->belongsTo(Group::class);
+        return $this->belongsTo(Classroom::class);
     }
 }

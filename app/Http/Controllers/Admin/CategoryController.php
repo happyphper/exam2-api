@@ -18,7 +18,7 @@ class CategoryController extends Controller
      */
     public function index($type, Category $category)
     {
-        if (request() && !in_array(request()->type, ['group', 'question', 'course'])) {
+        if (request() && !in_array(request()->type, ['classroom', 'question', 'course'])) {
             $this->response->errorBadRequest('非法参数！');
         }
 
@@ -35,7 +35,7 @@ class CategoryController extends Controller
      */
     public function store($type, CategoryRequest $request, Category $category)
     {
-        if (request() && !in_array(request()->type, ['group', 'question', 'course'])) {
+        if (request() && !in_array(request()->type, ['classroom', 'question', 'course'])) {
             $this->response->errorBadRequest('非法参数！');
         }
 
@@ -55,7 +55,7 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, $type, $category)
     {
-        if (request() && !in_array(request()->type, ['group', 'question', 'course'])) {
+        if (request() && !in_array(request()->type, ['classroom', 'question', 'course'])) {
             $this->response->errorBadRequest('非法参数！');
         }
 
@@ -75,7 +75,7 @@ class CategoryController extends Controller
      */
     public function destroy($type, $category)
     {
-        if (request() && !in_array(request()->type, ['group', 'question', 'course'])) {
+        if (request() && !in_array(request()->type, ['classroom', 'question', 'course'])) {
             $this->response->errorBadRequest('非法参数！');
         }
 

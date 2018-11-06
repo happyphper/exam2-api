@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\MiniApp;
 
 use App\Enums\TestStatus;
-use App\Models\GroupTest;
+use App\Models\ClassroomTest;
 use App\Models\Test;
 use App\Models\TestResult;
 use App\Transformers\QuestionTransformer;
@@ -21,7 +21,7 @@ class TestController extends Controller
     {
         $me = auth()->user();
 
-        $testIds = GroupTest::where('group_id', $me->group_id)->pluck('test_id');
+        $testIds = ClassroomTest::where('classroom_id', $me->classroom_id)->pluck('test_id');
 
         $tests = Test::today()->whereIn('id', $testIds)->get();
 
@@ -46,21 +46,21 @@ class TestController extends Controller
             $this->response->errorForbidden(__('Test is end.'));
         }
 
-        $groupTest = GroupTest::where('group_id', $me->group_id)
+        $classroomTest = ClassroomTest::where('classroom_id', $me->classroom_id)
             ->where('test_id', $test->id)
             ->firstOrFail();
         if (!$result) {
             TestResult::create([
                 'user_id' => $me->id,
-                'test_id' => $groupTest->test_id,
-                'questions_count' => $groupTest->test->questions_count,
-                'total_score' => $groupTest->test->total_score,
-                'group_id' => $me->group_id,
+                'test_id' => $classroomTest->test_id,
+                'questions_count' => $classroomTest->test->questions_count,
+                'total_score' => $classroomTest->test->total_score,
+                'classroom_id' => $me->classroom_id,
                 'course_id' => $test->course_id,
             ]);
         }
 
-        $questions = $groupTest->test->questions()->select(['id', 'title', 'options', 'type', 'accuracy', 'answered_count'])->get();
+        $questions = $classroomTest->test->questions()->select(['id', 'title', 'options', 'type', 'accuracy', 'answered_count'])->get();
 
         $answeringCount = TestResult::where('test_id', $test->id)->count();
 

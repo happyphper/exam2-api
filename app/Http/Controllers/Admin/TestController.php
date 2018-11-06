@@ -35,7 +35,7 @@ class TestController extends Controller
         $test = new Test($request->all());
         $test->user_id = auth()->id();
         $test->save();
-        $test->groups()->attach($request->group_ids);
+        $test->classrooms()->attach($request->classroom_ids);
 
         return $this->response->item($test, new TestTransformer())->setStatusCode(201);
     }
@@ -66,7 +66,7 @@ class TestController extends Controller
 
         $test->fill($request->all())->save();
 
-        $test->groups()->sync($request->group_ids);
+        $test->classrooms()->sync($request->classroom_ids);
 
         return $this->response->item($test, new TestTransformer());
     }
@@ -101,7 +101,7 @@ class TestController extends Controller
         $course = $test->course()->first();
 
         // 将所有未答题学员进行数据添加
-        $users = User::whereIn('group_id', request('group_ids'))->get(['id', 'group_id']);
+        $users = User::whereIn('classroom_id', request('classroom_ids'))->get(['id', 'classroom_id']);
         \DB::transaction(function () use ($users, $test, $course) {
             $results = TestResult::whereIn('user_id', $users->pluck('id')->toArray())->where('test_id', $test->id)->get();
             foreach ($users as $user) {
@@ -111,7 +111,7 @@ class TestController extends Controller
                     $result->save();
                 } else {
                     TestResult::create([
-                        'group_id' => $user->group_id,
+                        'classroom_id' => $user->classroom_id,
                         'course_id' => $course->id,
                         'user_id' => $user->id,
                         'test_id' => $test->id,

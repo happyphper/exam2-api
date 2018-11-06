@@ -35,8 +35,8 @@ class ModelHasCategory extends Pivot
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
-    public function groups()
+    public function classrooms()
     {
-        return $this->morphedByMany(Group::class, 'classified');
+        return $this->morphedByMany(Classroom::class, 'classified');
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Enums\TestStatus;
-use App\Models\GroupTest;
+use App\Models\ClassroomTest;
 use App\Models\Test;
 use App\Models\TestResult;
 use App\Models\User;
@@ -50,9 +50,9 @@ class EndTest extends Command
 
         \DB::transaction(function () use ($tests) {
             $tests->each(function ($test) {
-                $groupIds = GroupTest::where('test_id', $test->id)->pluck('group_id');
+                $classroomIds = ClassroomTest::where('test_id', $test->id)->pluck('classroom_id');
                 // 将所有未答题学员进行数据添加
-                $users = User::whereIn('group_id', $groupIds->toArray())->get(['id', 'group_id']);
+                $users = User::whereIn('classroom_id', $classroomIds->toArray())->get(['id', 'classroom_id']);
                 $results = TestResult::whereIn('user_id', $users->pluck('id')->toArray())->where('test_id', $test->id)->get();
                 foreach ($users as $user) {
                     $result = $results->where('user_id', $user->id)->first();
@@ -61,7 +61,7 @@ class EndTest extends Command
                         $result->save();
                     } else {
                         TestResult::create([
-                            'group_id' => $user->group_id,
+                            'classroom_id' => $user->classroom_id,
                             'course_id' => $test->course_id,
                             'user_id' => $user->id,
                             'test_id' => $test->id,

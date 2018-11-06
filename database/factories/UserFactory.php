@@ -20,7 +20,7 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
         'password' => bcrypt('123456'), // secret
         'remember_token' => str_random(10),
         'student_id' => null,
-        'group_id' => 1,
+        'classroom_id' => 1,
         'phone' => random_int(13000000000, 19999999999),
     ];
 });

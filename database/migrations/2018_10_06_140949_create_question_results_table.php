@@ -16,7 +16,7 @@ class CreateQuestionResultsTable extends Migration
         Schema::create('question_results', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('test_id');
-            $table->integer('group_id');
+            $table->integer('classroom_id');
             $table->integer('question_id');
             $table->integer('user_id');
             $table->string('answer')->comment('答案');

@@ -89,7 +89,7 @@ class UserController extends Controller
 
         foreach ($users as $userData) {
             $user           = new User($userData);
-            $user->group_id = $request->group_id;
+            $user->classroom_id = $request->classroom_id;
             $user->password = $request->password ? bcrypt($request->password) : bcrypt(123456);
             $user->save();
         }

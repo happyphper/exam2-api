@@ -61,7 +61,7 @@ class QuestionResultController extends Controller
         $result->question_id = $request->question_id;
         $result->user_id = $user->id;
         $result->test_id = $test->id;
-        $result->group_id = $user->group_id;
+        $result->classroom_id = $user->classroom_id;
         $result->score = $isRight ? $score : 0;
         $result->is_right = $isRight;
         $result->save();

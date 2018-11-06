@@ -15,7 +15,7 @@ class CreateTestResultsTable extends Migration
     {
         Schema::create('test_results', function (Blueprint $table) {
             $table->increments('id')->comment('考试记录表');
-            $table->integer('group_id')->comment('群组 ID');
+            $table->integer('classroom_id')->comment('群组 ID');
             $table->integer('course_id')->comment('课程 ID');
             $table->integer('user_id')->comment('用户 ID');
             $table->integer('test_id')->comment('考试 ID');

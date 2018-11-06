@@ -45,19 +45,19 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
                 // 用户批量导入
                 $api->post('bulk-import-users', 'UserController@bulk');
                 // 群组
-                $api->resource('groups', 'GroupController');
+                $api->resource('classrooms', 'ClassroomController');
                 // 课程
                 $api->resource('courses', 'CourseController');
                 // 测试分类添加移除
                 $api->post('tests/{test}/categories', 'TestCategoryController@store');
                 $api->post('tests/{test}/categories/{category}', 'TestCategoryController@destroy');
                 // 群组测试
-                $api->resource('groups.tests', 'GroupTestController');
+                $api->resource('classrooms.tests', 'ClassroomTestController');
                 // 为 Model 添加/移除分类
                 $api->post('model/{type}/categories', 'ModelHasCategoryController@store');
                 $api->delete('model/{type}/categories/{category}', 'ModelHasCategoryController@destroy');
                 // 考试记录
-                $api->get('tests/{test}/groups/{group}/results', 'TestResultController@index');
+                $api->get('tests/{test}/classrooms/{classroom}/results', 'TestResultController@index');
                 // 权限
                 $api->resource('permissions', 'PermissionController');
                 $api->resource('roles', 'RoleController');

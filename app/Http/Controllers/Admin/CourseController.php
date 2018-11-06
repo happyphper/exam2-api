@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\CourseRequest;
+use App\Http\Requests\ClassroomRequest;
 use App\Models\Course;
 use App\Transformers\CourseTransformer;
 use App\Http\Controllers\Controller;
@@ -24,10 +24,10 @@ class CourseController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param CourseRequest $request
+     * @param ClassroomRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CourseRequest $request)
+    public function store(ClassroomRequest $request)
     {
         $course = new Course($request->all());
         $course->user_id = auth()->id();
@@ -39,11 +39,11 @@ class CourseController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param CourseRequest $request
-     * @param Course $course
+     * @param ClassroomRequest $request
+     * @param Course           $course
      * @return \Illuminate\Http\Response
      */
-    public function update(CourseRequest $request, Course $course)
+    public function update(ClassroomRequest $request, Course $course)
     {
         $course->fill($request->all())->save();
 

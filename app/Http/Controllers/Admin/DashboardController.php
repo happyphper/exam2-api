@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
-use App\Models\Group;
+use App\Models\Classroom;
 use App\Models\Question;
 use App\Models\Test;
 
@@ -23,7 +23,7 @@ class DashboardController extends Controller
 
         $questions = Question::where('user_id', $meId)->count();
 
-        $classrooms = Group::where('user_id', $meId)->count();
+        $classrooms = Classroom::where('user_id', $meId)->count();
 
         $tests = Test::where('user_id', $meId)->count();
 

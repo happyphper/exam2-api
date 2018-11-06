@@ -11,9 +11,9 @@ class TestResult extends Model
     use SearchableTrait,SortableTrait;
     public $searchable = [
         'test_id',
-        'group_id',
+        'classroom_id',
         'test:title',
-        'group:name',
+        'classroom:name',
         'user:name'
     ];
     public $sortable = ['*'];
@@ -29,9 +29,9 @@ class TestResult extends Model
         return $this->belongsTo(Test::class);
     }
 
-    public function group()
+    public function classroom()
     {
-        return $this->belongsTo(Group::class);
+        return $this->belongsTo(Classroom::class);
     }
 
     public function user()

@@ -30,7 +30,7 @@ class UserRequest extends FormRequest
                     'email' => 'nullable|email|max:30|unique:users,email',
                     'phone' => 'nullable|regex:/1[3-9]\d{9}/|unique:users,phone',
                     'student_id' => 'nullable|string|min:1|max:32|unique:users',
-                    'group_id' => 'nullable|exists:groups,id'
+                    'classroom_id' => 'nullable|exists:classrooms,id'
                 ];
                 break;
             case 'PUT':
@@ -39,7 +39,7 @@ class UserRequest extends FormRequest
                     'email' => 'required|email|max:30|unique:users,email,' . $this->user->id,
                     'phone' => 'nullable|regex:/1[3-9]\d{9}/|unique:users,phone,' . $this->user->id,
                     'student_id' => 'required|string|min:1|max:32|unique:users,student_id,' . $this->user->id,
-                    'group_id' => 'nullable|exists:groups,id'
+                    'classroom_id' => 'nullable|exists:classrooms,id'
                 ];
                 break;
         }

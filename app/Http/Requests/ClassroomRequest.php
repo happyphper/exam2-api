@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class GroupRequest extends FormRequest
+class ClassroomRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +26,7 @@ class GroupRequest extends FormRequest
         switch ($this->method()) {
             case 'POST':
                 return [
-                    'name' => [
+                    'title' => [
                         'required',
                         'string',
                         'min:1',
@@ -37,7 +36,7 @@ class GroupRequest extends FormRequest
                 break;
             case 'PUT':
                 return [
-                    'name' => [
+                    'title' => [
                         'required',
                         'string',
                         'min:1',

@@ -13,7 +13,7 @@ class QuestionResult extends Model
     public $sortable = ['*'];
 
     protected $fillable = [
-        'group_id',
+        'classroom_id',
         'test_id',
         'question_id',
         'answer',

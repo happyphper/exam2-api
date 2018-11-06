@@ -21,12 +21,12 @@ class CreateUsersTable extends Migration
             $table->string('student_id')->nullable()->comment('学号');
             $table->string('phone')->nullable()->comment('手机');
             $table->string('avatar')->nullable()->comment('头像');
-            $table->string('group_id')->nullable()->comment('群组');
+            $table->string('classroom_id')->nullable()->comment('群组');
             $table->rememberToken();
             $table->timestamps();
 
             $table->unique('student_id');
-            $table->index('group_id');
+            $table->index('classroom_id');
             $table->unique('phone');
         });
     }

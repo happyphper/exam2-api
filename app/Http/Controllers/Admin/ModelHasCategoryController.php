@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Category;
-use App\Models\Group;
+use App\Models\Classroom;
 use App\Models\ModelHasCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -20,10 +20,10 @@ class ModelHasCategoryController extends Controller
     public function store($type, Request $request)
     {
         // TODO 添加验证
-        if ($type === 'group') {
-            $model = Group::findOrFail($request->classified_id);
+        if ($type === 'classroom') {
+            $model = Classroom::findOrFail($request->classified_id);
         } else {
-            $model = Group::findOrFail($request->classified_id);
+            $model = Classroom::findOrFail($request->classified_id);
         }
 
         ModelHasCategory::create([
@@ -45,10 +45,10 @@ class ModelHasCategoryController extends Controller
     public function destroy(Request $request, $type, Category $category)
     {
         // TODO 添加验证
-        if ($type === 'group') {
-            $model = Group::findOrFail($request->classified_id);
+        if ($type === 'classroom') {
+            $model = Classroom::findOrFail($request->classified_id);
         } else {
-            $model = Group::findOrFail($request->classified_id);
+            $model = Classroom::findOrFail($request->classified_id);
         }
 
         ModelHasCategory::where('classified_id', $model->id)

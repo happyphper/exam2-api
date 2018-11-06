@@ -17,7 +17,7 @@ class ClassmateController extends Controller
     {
         $me = auth()->user();
 
-        $data = User::where('group_id', $me->group_id)->get();
+        $data = User::where('classroom_id', $me->classroom_id)->get();
 
         return $this->response->collection($data, new UserTransformer());
     }

@@ -13,7 +13,7 @@ use League\Fractal\TransformerAbstract;
 
 class UserTransformer extends TransformerAbstract
 {
-    protected $availableIncludes = ['roles', 'group'];
+    protected $availableIncludes = ['roles', 'classroom'];
 
     public function transform(User $model)
     {
@@ -22,7 +22,7 @@ class UserTransformer extends TransformerAbstract
             'name' => $model->name,
             'email' => $model->email,
             'phone' => $model->phone,
-            'group_id' => $model->group_id,
+            'classroom_id' => $model->classroom_id,
             'avatar' => $model->avatar ?? config('app.url') . '/images/avatar.png',
             'student_id' => $model->student_id,
             'created_at' => $model->created_at ? $model->created_at->toDateTimeString() : null,
@@ -30,12 +30,12 @@ class UserTransformer extends TransformerAbstract
         ];
     }
 
-    protected function includeGroup(User $model)
+    protected function includeClassroom(User $model)
     {
-        if (!$model->group) {
+        if (!$model->classroom) {
             return $this->null();
         }
-        return $this->item($model->group, new GroupTransformer());
+        return $this->item($model->classroom, new ClassroomTransformer());
     }
 
     protected function includeRoles(User $model)

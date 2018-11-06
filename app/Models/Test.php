@@ -20,7 +20,7 @@ class Test extends Model
         'started_at',
         'ended_at',
         'course:title',
-        'groups:name',
+        'classrooms:name',
         'status'
     ];
 
@@ -42,9 +42,9 @@ class Test extends Model
         return $this->belongsToMany(Question::class, 'test_questions')->withPivot('score');
     }
 
-    public function groups()
+    public function classrooms()
     {
-        return $this->belongsToMany(Group::class, 'group_tests');
+        return $this->belongsToMany(Classroom::class, 'classroom_tests');
     }
 
     public function categories()

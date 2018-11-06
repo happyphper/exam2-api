@@ -10,8 +10,8 @@ class UserObserver
 {
     public function created(User $user)
     {
-        if ($user->group) {
-            $user->group->increment('users_count');
+        if ($user->classroom) {
+            $user->classroom->increment('users_count');
         }
     }
 
@@ -26,7 +26,7 @@ class UserObserver
         \DB::transaction(function () use($user){
             TestResult::where('user_id', $user->id)->delete();
             QuestionResult::where('user_id', $user->id)->delete();
-            $user->group->decrement('users_count');
+            $user->classroom->decrement('users_count');
         });
     }
 }

@@ -8,16 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 use Jedrzej\Searchable\SearchableTrait;
 use Jedrzej\Sortable\SortableTrait;
 
-class Group extends Model
+class Classroom extends Model
 {
     use OwnTrait, ShareTrait;
     use SearchableTrait,SortableTrait;
 
-    public $searchable = ['name'];
+    public $searchable = ['title'];
 
     public $sortable = ['*'];
 
-    protected $fillable = ['name'];
+    protected $fillable = ['title'];
 
     /**
      * 测验
@@ -26,7 +26,7 @@ class Group extends Model
      */
     public function tests()
     {
-        return $this->belongsToMany(Test::class, 'group_tests');
+        return $this->belongsToMany(Test::class, 'classroom_tests');
     }
 
 
@@ -39,7 +39,7 @@ class Group extends Model
     {
         $now = now();
 
-        return $this->hasManyThrough(Test::class, 'group_tests', 'test_id', 'id', 'id', 'group_id')
+        return $this->hasManyThrough(Test::class, 'classroom_tests', 'test_id', 'id', 'id', 'classroom_id')
             ->where('started_at', '<', $now)
             ->where('ended_at', '>', $now);
     }

@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class GroupTest extends Pivot
+class ClassroomTest extends Pivot
 {
-    protected $table = 'group_tests';
+    protected $table = 'classroom_tests';
 
     public $incrementing = false;
 
@@ -14,9 +14,9 @@ class GroupTest extends Pivot
 
     public $fillable = ['test_id',];
 
-    public function group()
+    public function classroom()
     {
-        return $this->belongsTo(Group::class);
+        return $this->belongsTo(Classroom::class);
     }
 
     public function test()

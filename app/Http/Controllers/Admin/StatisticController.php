@@ -18,7 +18,7 @@ class StatisticController extends Controller
      */
     public function gradeDistribution(Request $request)
     {
-        $data = TestResult::where($request->only(['group_id', 'test_id']))->get(['score']);
+        $data = TestResult::where($request->only(['classroom_id', 'test_id']))->get(['score']);
 
         $stat = [
             ['name' => '60以下', 'label' => '60以下', 'value' => $data->where('score', '<', 60)->count()],
@@ -48,10 +48,10 @@ class StatisticController extends Controller
      */
     public function errorQuestion(Request $request)
     {
-        $data = QuestionResult::with('question:id,title')->where($request->only(['group_id', 'test_id']))
+        $data = QuestionResult::with('question:id,title')->where($request->only(['classroom_id', 'test_id']))
             ->where(['is_right' => false])
             ->selectRaw('question_id, count(*) as error_count')
-            ->groupBy('question_id')->orderBy('error_count', 'desc')->get();
+            ->classroomBy('question_id')->orderBy('error_count', 'desc')->get();
 
         $headers = $data->map(function ($item) {
             return $item->question->title;
@@ -102,21 +102,21 @@ class StatisticController extends Controller
     {
         $data = TestResult::when($request->course_id, function ($query) use ($request) {
             return $query->where($request->only('course_id'));
-        })->when($request->group_id, function ($query) use ($request) {
-            return $query->where($request->only('group_id'));
+        })->when($request->classroom_id, function ($query) use ($request) {
+            return $query->where($request->only('classroom_id'));
         })->when($request->created_at, function ($query) use ($request) {
             $date = $request->input('created_at');
             $dataArray = collect($date)->map(function ($item) { return Carbon::parse($item); })->toArray();
             return $query->whereBetween('created_at', $dataArray);
-        })->with('test:id,title')->with('user:id,name')->with('course:id,title')->with('group:id,name')->orderBy('user_id')->get();
+        })->with('test:id,title')->with('user:id,name')->with('course:id,title')->with('classroom:id,name')->orderBy('user_id')->get();
 
-        $data = $data->groupBy('user_id')->values()->toArray();
+        $data = $data->classroomBy('user_id')->values()->toArray();
 
         $container = [];
         foreach ($data as $index => $dataGroup) {
             $container[$index]['name'] = $dataGroup[0]['user']['name'];
             $container[$index]['course'] = $dataGroup[0]['course']['title'];
-            $container[$index]['group'] = $dataGroup[0]['group']['name'];
+            $container[$index]['classroom'] = $dataGroup[0]['classroom']['name'];
             $totalScore = 0;
             foreach ($dataGroup as $item) {
                 $totalScore += $item['score'];
