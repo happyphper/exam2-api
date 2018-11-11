@@ -108,7 +108,11 @@ class StatisticController extends Controller
             $date = $request->input('created_at');
             $dataArray = collect($date)->map(function ($item) { return Carbon::parse($item); })->toArray();
             return $query->whereBetween('created_at', $dataArray);
-        })->with('exam:id,title')->with('user:id,name')->with('course:id,title')->with('classroom:id,name')->orderBy('user_id')->get();
+        })->with('exam:id,title')->with('user:id,title')
+            ->with('course:id,title')
+            ->with('classroom:id,title')
+            ->orderBy('user_id')
+            ->get();
 
         $data = $data->classroomBy('user_id')->values()->toArray();
 
@@ -116,7 +120,7 @@ class StatisticController extends Controller
         foreach ($data as $index => $dataGroup) {
             $container[$index]['name'] = $dataGroup[0]['user']['name'];
             $container[$index]['course'] = $dataGroup[0]['course']['title'];
-            $container[$index]['classroom'] = $dataGroup[0]['classroom']['name'];
+            $container[$index]['classroom'] = $dataGroup[0]['classroom']['title'];
             $totalScore = 0;
             foreach ($dataGroup as $item) {
                 $totalScore += $item['score'];

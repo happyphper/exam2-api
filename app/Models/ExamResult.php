@@ -13,7 +13,7 @@ class ExamResult extends Model
         'exam_id',
         'classroom_id',
         'exam:title',
-        'classroom:name',
+        'classroom:title',
         'user:name'
     ];
     public $sortable = ['*'];
