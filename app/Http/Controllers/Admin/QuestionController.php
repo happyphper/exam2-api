@@ -40,26 +40,30 @@ class QuestionController extends Controller
         $questions = $request->questions;
 
         $questions = collect($questions)->map(function ($question, $index) use ($request, $questions) {
+            $options = [];
+            for ($i = 1; $i <= 10; $i++) {
+                isset($questions['option' . $i]) && array_push($options, [
+                    'id'      => $i,
+                    'content' => $question['option' . $i],
+                    'type'    => 'text',
+                    'status'  => 0,
+                ]);
+            }
             return [
-                'title' => $question['title'],
-                'type' => $question['type'],
+                'title'   => $question['title'],
+                'type'    => $question['type'],
                 'chapter' => $question['chapter'] ?? 0,
                 'section' => $question['section'] ?? 0,
-                'options' => [
-                    ['id' => 1, 'content' => $question['option1'], 'type' => 'text', 'status' => 0],
-                    ['id' => 2, 'content' => $question['option2'], 'type' => 'text', 'status' => 0],
-                    ['id' => 3, 'content' => $question['option3'], 'type' => 'text', 'status' => 0],
-                    ['id' => 4, 'content' => $question['option4'], 'type' => 'text', 'status' => 0],
-                ],
-                'answer' => $question['answer'],
+                'options' => $options,
+                'answer'  => $question['answer'],
                 'explain' => $question['explain'] ?? null,
             ];
         });
 
-        \DB::transaction(function ()  use( $questions, $course){
-            $questions->each(function ($question) use($course) {
-                $item = new Question($question);
-                $item->user_id = auth()->id();
+        \DB::transaction(function () use ($questions, $course) {
+            $questions->each(function ($question) use ($course) {
+                $item            = new Question($question);
+                $item->user_id   = auth()->id();
                 $item->course_id = $course->id;
                 $item->save();
             });
@@ -76,7 +80,7 @@ class QuestionController extends Controller
      */
     public function store(QuestionRequest $request)
     {
-        $question = new Question($request->all());
+        $question          = new Question($request->all());
         $question->user_id = auth()->id();
         $question->save();
 
@@ -98,7 +102,7 @@ class QuestionController extends Controller
      * Update the specified resource in storage.
      *
      * @param QuestionRequest $request
-     * @param Question $question
+     * @param Question        $question
      * @return \Illuminate\Http\Response
      */
     public function update(QuestionRequest $request, Question $question)
