@@ -45,37 +45,37 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root'   => storage_path('app'),
         ],
 
         'public' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'driver'     => 'local',
+            'root'       => storage_path('app/public'),
+            'url'        => env('APP_URL') . '/storage',
             'visibility' => 'public',
         ],
 
         's3' => [
             'driver' => 's3',
-            'key' => env('AWS_ACCESS_KEY_ID'),
+            'key'    => env('AWS_ACCESS_KEY_ID'),
             'secret' => env('AWS_SECRET_ACCESS_KEY'),
             'region' => env('AWS_DEFAULT_REGION'),
             'bucket' => env('AWS_BUCKET'),
-            'url' => env('AWS_URL'),
+            'url'    => env('AWS_URL'),
         ],
 
         'qiniu' => [
-            'driver'  => 'qiniu',
-            'domains' => [
-                'default'   => env('QINIU_HTTP_DOMAIN'),    //你的七牛域名
-                'https'     => env('QINIU_HTTPS_DOMAIN'),   //你的HTTPS域名
-                'custom'    => env('QINIU_CUSTOM_DOMAIN'),  //Useless 没啥用，请直接使用上面的 default 项
+            'driver'                 => 'qiniu',
+            'domains'                => [
+                'default' => env('QINIU_HTTP_DOMAIN'),      // 你的七牛域名
+                'https'   => env('QINIU_HTTPS_DOMAIN'),     // 你的HTTPS域名
+                'custom'  => env('QINIU_CUSTOM_DOMAIN'),    // Useless 没啥用，请直接使用上面的 default 项
             ],
-            'access_key'    => env('QINIU_AK'),  //AccessKey
-            'secret_key'    => env('QINIU_SK'),  //SecretKey
-            'bucket'        => env('QINIU_BUCKET'),  //Bucket名字
-            'notify_url'    => env('QINIU_NOTIFY_URL'),  //持久化处理回调地址
-            'access'        => 'public',  //空间访问控制 public 或 private
+            'access_key'             => env('QINIU_AK'),  //AccessKey
+            'secret_key'             => env('QINIU_SK'),  //SecretKey
+            'bucket'                 => env('QINIU_BUCKET'),  //Bucket名字
+            'notify_url'             => env('QINIU_NOTIFY_URL'),  //持久化处理回调地址
+            'access'                 => 'public',  //空间访问控制 public 或 private
             'hotlink_prevention_key' => null, // CDN 时间戳防盗链的 key。 设置为 null 则不启用本功能。
         ],
 

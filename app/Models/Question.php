@@ -9,19 +9,20 @@ use Jedrzej\Sortable\SortableTrait;
 
 class Question extends Model
 {
-    use SearchableTrait,SortableTrait;
+    use SearchableTrait, SortableTrait;
     use ShareTrait;
     public $searchable = [
         'title',
         'type',
         'chapter',
         'section',
-        'course:title'
+        'course:title',
     ];
-    public $sortable = ['*'];
+    public $sortable   = ['*'];
 
     protected $fillable = [
         'title',
+        'image',
         'type',
         'options',
         'answer',
@@ -33,7 +34,7 @@ class Question extends Model
 
     protected $casts = [
         'options' => 'array',
-        'answer' => 'array'
+        'answer'  => 'array',
     ];
 
     /**
@@ -61,6 +62,11 @@ class Question extends Model
         return $this->belongsTo(QuestionResult::class);
     }
 
+    public function getImageAttribute($value)
+    {
+        return $value ? config('filesystems.disks.qiniu.domains.default') . '/' . $value : null;
+    }
+
     public function setAnswerAttribute($value)
     {
         $value = is_string($value) ? json_decode($value, true) : $value;
@@ -72,18 +78,18 @@ class Question extends Model
         $this->attributes['answer'] = $answer;
     }
 
-    public function setOptionsAttribute($value)
+    public function getOptionsAttribute($value)
     {
-        $options = collect($value)->map(function ($item) {
+        $options = json_decode($value, true);
+        $options = collect($options)->map(function ($item) {
+            $content = $item['type'] === 'image' ? config('filesystems.disks.qiniu.domains.default') . '/' . $item['content'] : null;
             return [
-                'id' => $item['id'],
-                'content' => $item['type'] === 'image'
-                    ? config('filesystems.disks.qiniu.domains.default') . '/' . $item['content']
-                    : $item['content'],
-                'type' => $item['type'],
-                'status' => 0
+                'id'      => $item['id'],
+                'content' => $content,
+                'type'    => $item['type'],
+                'status'  => 0,
             ];
-        })->toJson();
-        $this->attributes['options'] = $options;
+        })->toArray();
+        return $options;
     }
 }
