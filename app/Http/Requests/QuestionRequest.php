@@ -26,7 +26,7 @@ class QuestionRequest extends FormRequest
         switch ($this->method()) {
             case 'POST':
                 return [
-                    'title' => 'required|string|min:1|max:191|unique:questions',
+                    'title' => 'required|string|min:1|max:191',
                     'type' => 'required|in:single,multiple',
                     'chapter' => 'nullable|integer',
                     'section' => 'nullable|integer',
@@ -38,7 +38,7 @@ class QuestionRequest extends FormRequest
                 break;
             case 'PUT':
                 return [
-                    'title' => 'required|string|min:1|max:191|unique:questions,title,' . $this->question->id,
+                    'title' => 'required|string|min:1|max:191',
                     'type' => 'required|in:single,multiple',
                     'options' => 'required|array|distinct',
                     'chapter' => 'nullable|integer',

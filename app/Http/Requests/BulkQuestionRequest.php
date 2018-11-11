@@ -29,8 +29,8 @@ class BulkQuestionRequest extends FormRequest
     {
         return [
             'course_id'           => ['required', 'exists:courses,id'],
-            'questions'           => ['required', 'array', new ArrayQuestionUniqueRule()],
-            'questions.*.title'   => ['required', 'string', 'min:1', 'max:191', new ArrayUniqueInDatabaseRule('title', new Question())],
+            'questions'           => ['required', 'array'],
+            'questions.*.title'   => ['required', 'string', 'min:1', 'max:191'],
             'questions.*.type'    => ['required', 'in:single,multiple',],
             'questions.*.option1' => ['required'],
             'questions.*.option2' => ['required'],

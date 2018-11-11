@@ -15,7 +15,7 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->increments('id')->comment('题目表');
-            $table->string('title')->unique()->comment('题目');
+            $table->string('title')->index()->comment('题目');
             $table->string('type')->comment('题目:single、multiple');
             $table->json('options')->comment('选项');
             $table->json('answer')->comment('正确选项');
