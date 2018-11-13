@@ -14,7 +14,7 @@ class ExamObserver
      */
     public function saved(Exam $exam)
     {
-        $exam->course->increment('exams_count');
+        $exam->course()->increment('exams_count');
     }
 
     /**
@@ -25,6 +25,6 @@ class ExamObserver
      */
     public function deleting(Exam $exam)
     {
-        $exam->course->decrement('exams_count');
+        $exam->course()->decrement('exams_count');
     }
 }
