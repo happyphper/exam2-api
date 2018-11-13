@@ -68,6 +68,7 @@ class Question extends Model
         $this->attributes['image'] = $value && str_contains($value, $domain) ? str_after($value, $domain) : $value;
     }
 
+
     public function getImageAttribute($value)
     {
         return $value ? config('filesystems.disks.qiniu.domains.default') . '/' . $value : null;
@@ -82,27 +83,6 @@ class Question extends Model
         })->sort()->values()->toJson();
 
         $this->attributes['answer'] = $answer;
-    }
-
-    public function setOptionsAttribute($value)
-    {
-        $domain = config('filesystems.disks.qiniu.domains.default');
-        $options = collect($value)->map(function ($item) use ($domain) {
-            if ($item['type'] === 'image') {
-                $content = str_contains($item['content'], $domain)
-                    ? trim(str_after($item['content'], $domain), '/')
-                    : $item['content'];
-            } else {
-                $content = $item['content'];
-            }
-            return [
-                'id'      => $item['id'],
-                'content' => $content,
-                'type'    => $item['type']
-            ];
-        })->toJson();
-
-        $this->attributes['options'] = $options;
     }
 
     public function getOptionsAttribute($value)
