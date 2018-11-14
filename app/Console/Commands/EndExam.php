@@ -59,7 +59,7 @@ class EndExam extends Command
                     if ($result && !$result->is_finished) {
                         $result->is_finished = true;
                         $result->save();
-                    } else {
+                    } else if (!$result) {
                         ExamResult::create([
                             'classroom_id' => $user->classroom_id,
                             'course_id' => $exam->course_id,

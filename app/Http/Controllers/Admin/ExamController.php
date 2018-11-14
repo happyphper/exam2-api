@@ -103,13 +103,13 @@ class ExamController extends Controller
         // 将所有未答题学员进行数据添加
         $users = User::whereIn('classroom_id', request('classroom_ids'))->get(['id', 'classroom_id']);
         \DB::transaction(function () use ($users, $exam, $course) {
-            $results = Exam::whereIn('user_id', $users->pluck('id')->toArray())->where('exam_id', $exam->id)->get();
+            $results = ExamResult::whereIn('user_id', $users->pluck('id')->toArray())->where('exam_id', $exam->id)->get();
             foreach ($users as $user) {
                 $result = $results->where('user_id', $user->id)->first();
                 if ($result && !$result->is_finished) {
                     $result->is_finished = true;
                     $result->save();
-                } else {
+                } else if (!$result) {
                     ExamResult::create([
                         'classroom_id' => $user->classroom_id,
                         'course_id' => $course->id,

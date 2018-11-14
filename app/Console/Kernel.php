@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('start:exam')->everyMinute();
 
-        $schedule->command('end:exam')->hourly();
+        $schedule->command('end:exam')->everyMinute();
     }
 
     /**
