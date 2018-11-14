@@ -85,6 +85,28 @@ class Question extends Model
         $this->attributes['answer'] = $answer;
     }
 
+    public function setOptionsAttribute($value)
+    {
+        $domain = config('filesystems.disks.qiniu.domains.default');
+
+        $options = collect($value)->map(function ($item) use ($domain) {
+            if ($item['type'] === 'image') {
+                $content = str_contains($item['content'], $domain)
+                    ? trim(str_after($item['content'], $domain), '/')
+                    : $item['content'];
+            } else {
+                $content = $item['content'];
+            }
+            return [
+                'id'      => $item['id'],
+                'content' => $content,
+                'type'    => $item['type']
+            ];
+        })->toJson();
+
+        $this->attributes['options'] = $options;
+    }
+
     public function getOptionsAttribute($value)
     {
         $options = json_decode($value, true);

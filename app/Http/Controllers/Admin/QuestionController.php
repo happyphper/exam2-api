@@ -46,7 +46,6 @@ class QuestionController extends Controller
                     'id'      => $i,
                     'content' => $question['option' . $i],
                     'type'    => 'text',
-                    'status'  => 0,
                 ]);
             }
             return [
