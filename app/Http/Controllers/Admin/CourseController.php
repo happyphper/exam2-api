@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\ShareType;
 use App\Http\Requests\ClassroomRequest;
 use App\Models\Course;
 use App\Transformers\CourseTransformer;
@@ -16,7 +17,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $data = Course::own()->filtered()->orderByDesc('created_at')->paginate(request('per_page', 25));
+        $data = Course::ofShare(auth()->id(), ShareType::Question)->filtered()->orderByDesc('created_at')->paginate(request('per_page', 25));
 
         return $this->response->paginator($data, new CourseTransformer());
     }

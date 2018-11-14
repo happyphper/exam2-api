@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use App\Traits\OwnTrait;
+use App\Traits\ShareTrait;
 use Illuminate\Database\Eloquent\Model;
 use Jedrzej\Searchable\SearchableTrait;
 use Jedrzej\Sortable\SortableTrait;
 
 class Course extends Model
 {
-    use OwnTrait;
+    use ShareTrait;
 
     use SearchableTrait,SortableTrait;
 
