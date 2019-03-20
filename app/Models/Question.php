@@ -76,7 +76,13 @@ class Question extends Model
 
     public function setAnswerAttribute($value)
     {
-        $value = is_string($value) ? json_decode($value, true) : $value;
+        if (is_string($value)) {
+            $value = $this->transformLetterToOptionNumber($value);
+        } else if (is_array($value)) {
+            $value = array_map(function ($item) {
+                return $this->transformLetterToOptionNumber($item);
+            }, $value);
+        }
 
         $answer = collect($value)->map(function ($item) {
             return (int)$item;
@@ -124,5 +130,29 @@ class Question extends Model
             ];
         })->toArray();
         return $options;
+    }
+
+    /**
+     * 字母转换为选项
+     *
+     * @param $letter
+     *
+     * @return int
+     */
+    public function transformLetterToOptionNumber(string $letter)
+    {
+        if (in_array($letter, range('A', 'Z'))) {
+            return ord($letter) - 64;
+        }
+
+        if (in_array($letter, range('a', 'z'))) {
+            return ord($letter) - 96;
+        }
+
+        if (is_numeric($letter)) {
+            return $letter;
+        }
+
+        return 1;
     }
 }

@@ -42,12 +42,13 @@ class QuestionController extends Controller
         $questions = collect($questions)->map(function ($question, $index) use ($request, $questions) {
             $options = [];
             for ($i = 1; $i <= 10; $i++) {
-                isset($questions['option' . $i]) && array_push($options, [
+                isset($question['option' . $i]) && array_push($options, [
                     'id'      => $i,
                     'content' => $question['option' . $i],
                     'type'    => 'text',
                 ]);
             }
+
             return [
                 'title'   => $question['title'],
                 'type'    => $question['type'],
@@ -58,7 +59,7 @@ class QuestionController extends Controller
                 'explain' => $question['explain'] ?? null,
             ];
         });
-
+       
         \DB::transaction(function () use ($questions, $course) {
             $questions->each(function ($question) use ($course) {
                 $item            = new Question($question);
