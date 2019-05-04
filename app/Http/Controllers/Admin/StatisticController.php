@@ -51,7 +51,7 @@ class StatisticController extends Controller
         $data = QuestionResult::with('question:id,title')->where($request->only(['classroom_id', 'exam_id']))
             ->where(['is_right' => false])
             ->selectRaw('question_id, count(*) as error_count')
-            ->classroomBy('question_id')->orderBy('error_count', 'desc')->get();
+            ->groupBy('question_id')->orderBy('error_count', 'desc')->get();
 
         $headers = $data->map(function ($item) {
             return $item->question->title;
@@ -114,7 +114,7 @@ class StatisticController extends Controller
             ->orderBy('user_id')
             ->get();
 
-        $data = $data->classroomBy('user_id')->values()->toArray();
+        $data = $data->groupBy('user_id')->values()->toArray();
 
         $container = [];
         foreach ($data as $index => $dataGroup) {
