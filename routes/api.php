@@ -36,6 +36,7 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
                 $api->resource('shares', 'ShareController');
                 // 考试 CRUD
                 $api->patch('exams/{exam}/end', 'ExamController@end');
+                $api->patch('exams/{exam}/start', 'ExamController@start');
                 $api->resource('exams', 'ExamController');
                 // 考试题目 CRUD
                 $api->resource('exams/{exam}/questions', 'ExamQuestionController');

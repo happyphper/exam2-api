@@ -124,4 +124,21 @@ class ExamController extends Controller
 
         return $this->response->noContent();
     }
+
+    /**
+     * 开考
+     *
+     * @param ExamRequest $request
+     * @param ExamRequest $exam
+     * @return \Illuminate\Http\Response
+     */
+    public function start(Exam $exam)
+    {
+        if ($exam->status === ExamStatus::Unstart) {
+            $exam->status = ExamStatus::Ongoing;
+            $exam->save();
+        }
+
+        return $this->response->noContent();
+    }
 }
