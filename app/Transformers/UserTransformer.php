@@ -24,6 +24,7 @@ class UserTransformer extends TransformerAbstract
             'phone' => $model->phone,
             'classroom_id' => $model->classroom_id,
             'avatar' => $model->avatar ?? config('app.url') . '/images/avatar.png',
+            'nickname' => $model->nickname ?: '',
             'student_id' => $model->student_id,
             'created_at' => $model->created_at ? $model->created_at->toDateTimeString() : null,
             'updated_at' => $model->updated_at ? $model->updated_at->toDateTimeString() : null,

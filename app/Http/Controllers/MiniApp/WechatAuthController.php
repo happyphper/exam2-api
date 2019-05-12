@@ -82,6 +82,9 @@ class WechatAuthController extends Controller
         $res = $this->code2Session($request->input('code'));
 
         $openId = $res['openid'];
+        if ($user->openid) {
+            $this->response->errorBadRequest('该微信已经绑定过账号了。');
+        }
 
         $userInfo = Cache::get($openId);
 
@@ -97,13 +100,16 @@ class WechatAuthController extends Controller
     }
 
     /**
-     * 更新用户信息
-     *
-     * @param Request $request
+     * 解绑
      */
-    public function update(Request $request)
+    public function unbind()
     {
+        $user = auth()->user();
 
+        $user->openid = null;
+        $user->save();
+
+        return $this->response->noContent();
     }
 
     /**
