@@ -81,6 +81,9 @@ $api->version('v1', ['middleware' => ['serializer:array', 'bindings']], function
 
         // 小程序
         $api->group(['prefix' => 'miniapp', 'namespace' => 'MiniApp', 'as' => 'miniapp'], function ($api) {
+            // 微信授权登录
+            $api->post('wechat/login', 'WechatAuthController@login')->name('miniapp.wechat.login');
+            $api->post('wechat/register', 'WechatAuthController@register')->name('miniapp.wechat.register');
             // 登录
             $api->post('auth/login', 'AuthController@login')->name('miniapp.login');
             $api->group(['middleware' => 'auth'], function ($api) {

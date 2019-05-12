@@ -16,6 +16,7 @@
         "laravel/framework": "5.7.*",
         "laravel/tinker": "~1.0",
         "liyu/dingo-serializer-switch": "^0.3.0",
+        "overtrue/laravel-wechat": "~4.0",
         "predis/predis": "^1.1",
         "spatie/laravel-permission": "^2.21",
         "tymon/jwt-auth": ">=1.0.0-rc.2",
